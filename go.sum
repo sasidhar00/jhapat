@@ -4,8 +4,8 @@ github.com/antlr4-go/antlr/v4 v4.13.0 h1:7XU6LscuCOmAs0n0WqshY6MIn0wP6gY3pI9N9nU
 github.com/antlr4-go/antlr/v4 v4.13.0/go.mod h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 github.com/coder/websocket v1.8.12 h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 github.com/coder/websocket v1.8.12/go.mod h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
-github.com/gofiber/fiber/v2 v2.52.5 h1:69p6IDYpCluK9YqH7/sTzVvM0oM2vV6G8YvK/02y6W0=
-github.com/gofiber/fiber/v2 v2.52.5/go.mod h1:69p6IDYpCluK9YqH7/sTzVvM0oM2vV6G8YvK/02y6W0=
+github.com/gofiber/fiber/v2 v2.52.5 h1:tWoP1MJQjGEe4GB5TUGOi7P2E0ZMMRx5ZTG4rT+yGMo=
+github.com/gofiber/fiber/v2 v2.52.5/go.mod h1:yS9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 github.com/google/uuid v1.6.0 h1:NI99vYGfyS97O9W9n7O9Y0T8p9O9W9n7O9Y0T8p9O9W9n7O9Y0=
 github.com/google/uuid v1.6.0/go.mod h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 github.com/klauspost/compress v1.17.9 h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
