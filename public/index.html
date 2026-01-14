@@ -6,45 +6,76 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
-        body { background: #e6ecf0; font-family: 'Inter', sans-serif; margin: 0; padding-top: 55px; -webkit-font-smoothing: antialiased; }
-        nav { background: #000; height: 55px; border-bottom: none; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; }
-        .nav-content { width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
-        .container { width: 1190px; margin: 0 auto; display: grid; grid-template-columns: 290px 590px 290px; gap: 15px; }
-        .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
-        .profile-bg { background: #1da1f2; height: 95px; background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=300'); background-size: cover; }
-        .profile-info { padding: 15px; position: relative; }
-        .avatar { width: 72px; height: 72px; border-radius: 8px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
-        .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
-        .login-box input, .login-box select { width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #e1e8ed; border-radius: 4px; box-sizing: border-box; font-size: 13px; font-family: inherit; }
-        .tweet-box { background: #e8f5fd; padding: 15px; border: 1px solid #bfe0f5; margin-bottom: 10px; border-radius: 8px; }
-        .merchant-box { background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
-        textarea { width: 100%; padding: 10px; border: 1px solid #ccd6dd; border-radius: 8px; resize: none; box-sizing: border-box; font-family: inherit; font-size: 14px; }
-        .tweet { background: white; margin-bottom: 10px; border-radius: 8px; border: 1px solid #e1e8ed; display: flex; flex-direction: column; overflow: hidden; }
-        .btn-claim { cursor: pointer; border: none; font-weight: 700; transition: opacity 0.2s; font-family: inherit; }
-        .qr-modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; flex-direction: column; color: white; }
-        #qrcode { background: white; padding: 20px; border-radius: 10px; }
-        .category-chip { background: white; border: 1px solid #1da1f2; color: #1da1f2; padding: 5px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; margin-right: 5px; font-weight: 600; display: inline-block; }
-        .category-chip:hover, .category-chip.active { background: #1da1f2; color: white; }
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 3000; right: 30px; bottom: 30px; font-size: 14px; }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-        .gold-card { background: #fff9db !important; border: 1px solid #fab005 !important; animation: glow 2s infinite alternate; }
-        @keyframes glow { from { box-shadow: 0 0 5px #ffd43b; } to { box-shadow: 0 0 15px #fab005; } }
-        .admin-dashboard { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e1e8ed; display: none; margin-bottom:15px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
-        footer { text-align: center; padding: 25px; border-top: 1px solid #e1e8ed; margin-top: 20px; color: #657786; font-size: 13px; }
-        .location-badge { background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 4px 10px; border-radius: 20px; font-size: 11px; margin-bottom: 10px; display: none; align-items: center; gap: 5px; }
-        .badge-gold { background: #fab005; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; font-weight: 800; text-transform: uppercase; display: inline-flex; align-items: center; }
-         @media (max-width: 1024px) {
-            .nav-content, .container { width: 100%; }
-            .container { grid-template-columns: 1fr; padding: 0 10px; gap: 20px; }
-            .sidebar, .right-sidebar { display: block; } /* Focus on the feed */
-            #topSearch { width: 120px; }
-            input, select, textarea, button { font-size: 16px !important; } /* Prevents Safari Auto-Zoom */
+<style>
+    /* 1. BASE DESKTOP STYLES (Kept exactly as yours) */
+    body { background: #e6ecf0; font-family: 'Inter', sans-serif; margin: 0; padding-top: 55px; -webkit-font-smoothing: antialiased; }
+    nav { background: #000; height: 55px; border-bottom: none; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; }
+    .nav-content { width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
+    .container { width: 1190px; margin: 0 auto; display: grid; grid-template-columns: 290px 590px 290px; gap: 15px; }
+    .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
+    .profile-bg { background: #1da1f2; height: 95px; background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=300'); background-size: cover; }
+    .profile-info { padding: 15px; position: relative; }
+    .avatar { width: 72px; height: 72px; border-radius: 8px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
+    .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
+    .login-box input, .login-box select { width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #e1e8ed; border-radius: 4px; box-sizing: border-box; font-size: 13px; font-family: inherit; }
+    .tweet-box { background: #e8f5fd; padding: 15px; border: 1px solid #bfe0f5; margin-bottom: 10px; border-radius: 8px; }
+    .merchant-box { background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+    textarea { width: 100%; padding: 10px; border: 1px solid #ccd6dd; border-radius: 8px; resize: none; box-sizing: border-box; font-family: inherit; font-size: 14px; }
+    .tweet { background: white; margin-bottom: 10px; border-radius: 8px; border: 1px solid #e1e8ed; display: flex; flex-direction: column; overflow: hidden; }
+    .btn-claim { cursor: pointer; border: none; font-weight: 700; transition: opacity 0.2s; font-family: inherit; }
+    .qr-modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; flex-direction: column; color: white; }
+    #qrcode { background: white; padding: 20px; border-radius: 10px; }
+    .category-chip { background: white; border: 1px solid #1da1f2; color: #1da1f2; padding: 5px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; margin-right: 5px; font-weight: 600; display: inline-block; }
+    .category-chip:hover, .category-chip.active { background: #1da1f2; color: white; }
+    #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 3000; right: 30px; bottom: 30px; font-size: 14px; }
+    #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+    @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    .gold-card { background: #fff9db !important; border: 1px solid #fab005 !important; animation: glow 2s infinite alternate; }
+    @keyframes glow { from { box-shadow: 0 0 5px #ffd43b; } to { box-shadow: 0 0 15px #fab005; } }
+    .admin-dashboard { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e1e8ed; display: none; margin-bottom:15px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+    footer { text-align: center; padding: 25px; border-top: 1px solid #e1e8ed; margin-top: 20px; color: #657786; font-size: 13px; }
+    .location-badge { background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 4px 10px; border-radius: 20px; font-size: 11px; margin-bottom: 10px; display: none; align-items: center; gap: 5px; }
+    .badge-gold { background: #fab005; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; font-weight: 800; text-transform: uppercase; display: inline-flex; align-items: center; }
+
+    /* 2. BEAUTIFUL MOBILE OPTIMIZATION */
+    @media (max-width: 1024px) {
+        body { padding-top: 50px; }
+        .nav-content, .container { width: 100%; box-sizing: border-box; }
+        
+        /* Stack into 1 column with clean spacing */
+        .container { 
+            grid-template-columns: 1fr; 
+            padding: 10px; 
+            gap: 10px; 
         }
-    
+
+        /* Make sidebars look like integrated cards */
+        .sidebar, .right-sidebar { 
+            display: block; 
+            width: 100%;
+        }
+
+        /* Nav search bar fix */
+        #topSearch { width: 140px; }
+
+        /* Safari Auto-Zoom Fix */
+        input, select, textarea, button { 
+            font-size: 16px !important; 
+            border-radius: 8px !important; /* Softer mobile look */
+            padding: 12px !important; 
+        }
+
+        /* Tweaking the tweets for a native app feel */
+        .tweet {
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 12px;
+        }
+    }
+</style>
     </style>
 </head>
 <body>
@@ -528,4 +559,5 @@
 </body>
 
 </html>
+
 
