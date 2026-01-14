@@ -1,5 +1,5 @@
 # STEP 1: Build the app in a Go environment
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 # Disable the security check that is causing the failures
 ENV GOSUMDB=off
