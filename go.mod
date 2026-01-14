@@ -1,6 +1,6 @@
 module jhapat
 
-go 1.25.5
+go 1.23
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.10
