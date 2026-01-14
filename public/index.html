@@ -37,6 +37,14 @@
         footer { text-align: center; padding: 25px; border-top: 1px solid #e1e8ed; margin-top: 20px; color: #657786; font-size: 13px; }
         .location-badge { background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 4px 10px; border-radius: 20px; font-size: 11px; margin-bottom: 10px; display: none; align-items: center; gap: 5px; }
         .badge-gold { background: #fab005; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; font-weight: 800; text-transform: uppercase; display: inline-flex; align-items: center; }
+         @media (max-width: 1024px) {
+            .nav-content, .container { width: 100%; }
+            .container { grid-template-columns: 1fr; padding: 0 10px; gap: 10px; }
+            .sidebar, .right-sidebar { display: none; } /* Focus on the feed */
+            #topSearch { width: 120px; }
+            input, select, textarea, button { font-size: 16px !important; } /* Prevents Safari Auto-Zoom */
+        }
+    
     </style>
 </head>
 <body>
@@ -518,4 +526,5 @@
     setInterval(loadTweets, 30000);
 </script>
 </body>
+
 </html>
