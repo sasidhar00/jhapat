@@ -56,7 +56,7 @@ var db *sql.DB
 func main() {
 
         dbURL := os.Getenv("TURSO_DATABASE_URL")
-        dbToken := TURSO_AUTH_TOKEN")
+        dbToken := os.Getenv("TURSO_AUTH_TOKEN")
         
         fullURL := fmt.Sprintf("%s?authToken=%s", dbURL, dbToken)
 
