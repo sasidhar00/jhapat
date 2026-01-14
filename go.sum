@@ -27,7 +27,7 @@ github.com/valyala/fasthttp v1.51.0/go.mod h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y2
 github.com/valyala/tcplisten v1.0.0 h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 github.com/valyala/tcplisten v1.0.0/go.mod h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 golang.org/x/crypto v0.31.0 h1:ihbySMvVjLAeSH1IbfcRTkD/iNscyz8rGzjF/E5hV6U=
-golang.org/x/crypto v0.31.0/go.mod h1:kDsLkvByYJ8LF89JKXi2Sg309hB9rE2YPjNfTjYqN00=
+golang.org/x/crypto v0.31.0/go.mod h1:kDsLvtWBEx7MV9tJOj9bnXsPbxwJQ6csT/x4KIN4Ssk=
 golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8 h1:xfD0iTVB3R1DToS2+D6S7S8R9O8R2M9L0V9oGfS0=
 golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8/go.mod h1:v7S9S9Yv0Vf0hW0it9S9zWp9p6T9T8O4Y29N3O9M4Y=
 golang.org/x/sys v0.28.0 h1:FvWWunM8Wo8VvHAnzCisv0is98s278BvTz8K6mD6UWA=
