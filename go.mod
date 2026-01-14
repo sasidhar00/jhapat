@@ -3,9 +3,10 @@ module jhapat
 go 1.23
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.10
-	github.com/tursodatabase/libsql-client-go v0.0.0-20251219100830-236aa1ff8acc
+    github.com/gofiber/fiber/v2 v2.52.5
+	github.com/tursodatabase/libsql-client-go v0.0.0-20240902231107-85af44d2f0a1
 	golang.org/x/crypto v0.31.0
+	golang.org/x/sys v0.28.0
 )
 
 require (
