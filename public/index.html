@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Jhapat</title>
-   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
@@ -53,26 +53,26 @@
     body { 
         background: #f7f7f7; 
         padding-top: 55px; 
-        padding-bottom: 75px; 
+        padding-bottom: 80px; 
         font-family: 'Outfit', sans-serif;
-        font-size: 16px; /* Increased base size */
     }
 
     .container { grid-template-columns: 1fr; padding: 0; gap: 0; }
     .sidebar, .right-sidebar { display: none; }
 
+    /* THE CARD */
     .tweet {
         background: white;
-        border: none;
-        border-bottom: 1px solid #ebebeb;
-        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
         padding: 0 0 20px 0 !important;
+        display: block !important;
     }
 
-    /* RESTORED & VISIBLE GOLD */
+    /* RESTORED: Gold Highlight */
     .gold-card { 
-        background: #fffbe6 !important; /* Slightly brighter yellow */
-        border-bottom: 3px solid #fab005 !important; 
+        background: #fffbe6 !important; 
+        border-bottom: 4px solid #fab005 !important; 
     }
 
     .image-wrapper {
@@ -82,7 +82,7 @@
         overflow: hidden;
     }
 
-    /* Large, Readable Badges */
+    /* Floating Badges */
     .badge-timer-float {
         position: absolute; bottom: 15px; right: 15px;
         background: rgba(0, 0, 0, 0.85); color: white;
@@ -95,30 +95,35 @@
         background: #fab005; color: #000; 
         padding: 6px 14px; border-radius: 8px; 
         font-size: 12px; font-weight: 800; 
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
+    /* Content & Typography */
     .tweet-content-mobile { padding: 18px 20px 0 20px; }
     
-    /* BIG READABLE TYPOGRAPHY */
-    .tweet-title { 
-        font-size: 20px; /* Big title */
-        font-weight: 700; 
-        color: #000; 
-        margin: 0; 
-        line-height: 1.2;
+    .tweet-title { font-size: 22px; font-weight: 700; color: #000; margin: 0; }
+    .tweet-meta { font-size: 16px; color: #555; margin: 8px 0; }
+
+    /* THE RESTORED JHAPAT BUTTON */
+    .mobile-action-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
     }
-    .tweet-meta {
-        font-size: 16px; /* Readable secondary text */
-        color: #555;
-        margin: 6px 0;
+
+    .btn-jhapat-mobile {
+        background: #1da1f1;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 16px;
+        box-shadow: 0 4px 12px rgba(29, 161, 241, 0.3);
+        text-transform: uppercase;
     }
-    .tweet-price { 
-        font-size: 22px; /* Prominent Price */
-        font-weight: 800; 
-        color: #000; 
-        margin-top: 10px; 
-    }
+
+    .tweet-price { font-size: 24px; font-weight: 800; color: #000; }
 }
 </style>
     </style>
@@ -545,8 +550,7 @@
 
  function renderDeals(data) {
     document.getElementById('feedContainer').innerHTML = data.map(t => `
-        <div class="tweet ${t.is_premium ? 'gold-card' : ''}" onclick="jhapatDeal(${t.id})">
-            
+        <div class="tweet ${t.is_premium ? 'gold-card' : ''}">
             <div class="image-wrapper">
                 <img src="${t.image || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600'}" style="width:100%; height:100%; object-fit:cover;">
                 
@@ -559,10 +563,14 @@
             <div class="tweet-content-mobile">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="tweet-title">${t.content}</h3>
-                    <span style="font-size:16px; font-weight:700;">★ 4.9</span>
+                    <span style="font-size:18px; font-weight:700;">★ 4.9</span>
                 </div>
                 <p class="tweet-meta">${t.user} • ${t.area || 'Nearby'}</p>
-                <p class="tweet-price">${t.price || 'Offer'}</p>
+                
+                <div class="mobile-action-row">
+                    <span class="tweet-price">${t.price || 'Offer'}</span>
+                    <button class="btn-jhapat-mobile" onclick="jhapatDeal(${t.id})">JHAPAT</button>
+                </div>
             </div>
         </div>
     `).join('');
@@ -622,6 +630,7 @@
 </body>
 
 </html>
+
 
 
 
