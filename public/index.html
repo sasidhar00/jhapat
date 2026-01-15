@@ -15,11 +15,34 @@
             margin: 0; 
             /* 60px Nav + 65px Filters = 125px. Fixes the overlap! */
             padding-top: 160px; 
-            padding-bottom: 80px; 
+            padding-bottom: 160px; 
             color: #222;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
+        footer {
+    text-align: center;
+    padding: 30px 15px;
+    color: #657786;
+    background: #fff;
+    border-top: 1px solid #eee;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.bottom-nav { 
+    display: none; 
+    position: fixed; 
+    bottom: 0; 
+    width: 100%; 
+    background: white; 
+    height: 70px; 
+    z-index: 5000; /* Stays above the footer */
+    border-top: 1px solid #eee;
+    justify-content: space-around; 
+    align-items: center; 
+}
 
         /* FIXED BLACK NAV */
         nav { 
@@ -291,9 +314,8 @@
     }
 }
 
-   function detectLocation() {
+  function detectLocation() {
     if ("geolocation" in navigator) {
-        // Show a loading state in the badge
         const badge = document.getElementById('geoBadge');
         badge.style.display = 'block';
         badge.innerHTML = "📍 Requesting location access...";
@@ -301,34 +323,38 @@
         navigator.geolocation.getCurrentPosition(async (position) => {
             const { latitude, longitude } = position.coords;
             try {
-                // Use a more reliable Nominatim query
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`);
+                // We add zoom=12 to get a wider area search
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
                 const data = await res.json();
                 
-                // Check multiple potential fields for city name
-                userCity = data.address.city || data.address.town || data.address.village || data.address.suburb;
+                // FIXED: Checking multiple fields so it never says "unavailable"
+                userCity = data.address.city || 
+                           data.address.town || 
+                           data.address.village || 
+                           data.address.suburb || 
+                           data.address.neighbourhood ||
+                           data.address.county;
                 
                 if (userCity) {
                     badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+                    // SUCCESS: Show the button now
                     document.getElementById('catNearby').style.display = 'inline-block';
                 } else {
-                    badge.innerHTML = "📍 Location found, but city name unavailable.";
+                    // Fallback so the button still works
+                    userCity = "My Area";
+                    document.getElementById('catNearby').style.display = 'inline-block';
                 }
             } catch (e) { 
-                badge.innerHTML = "📍 Location detection failed.";
-                console.error("Loc failed", e); 
+                badge.innerHTML = "📍 Connection error. Try again.";
             }
         }, (error) => {
-            // Error handling
-            if(error.code === 1) badge.innerHTML = "📍 Location access denied by user.";
-            else badge.innerHTML = "📍 GPS signal too weak.";
+            // Check if user blocked location
+            if(error.code === 1) badge.innerHTML = "📍 Location blocked. Please allow in browser 🔒";
+            else badge.innerHTML = "📍 GPS Timeout. Check your signal.";
         }, { 
-            enableHighAccuracy: true, 
-            timeout: 10000, 
-            maximumAge: 0 
+            enableHighAccuracy: true, // Required for many laptops/mobiles
+            timeout: 10000 
         });
-    } else {
-        alert("Geolocation is not supported by your browser.");
     }
 }
 
@@ -519,6 +545,7 @@
 
 </body>
 </html>
+
 
 
 
