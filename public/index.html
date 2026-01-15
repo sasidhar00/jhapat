@@ -2,13 +2,21 @@
 <html>
 <head>
     <title>Jhapat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
 <style>
     /* 1. BASE DESKTOP STYLES (Kept exactly as yours) */
-    body { background: #e6ecf0; font-family: 'Inter', sans-serif; margin: 0; padding-top: 55px; -webkit-font-smoothing: antialiased; }
+    body { 
+    background: #f7f7f7; /* Soft Airbnb-style background */
+    font-family: 'Outfit', sans-serif; 
+    margin: 0; 
+    padding-top: 55px; 
+    padding-bottom: 75px; 
+    -webkit-font-smoothing: antialiased; 
+    color: #222222;
+}
     nav { background: #000; height: 55px; border-bottom: none; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; }
     .nav-content { width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
     .container { width: 1190px; margin: 0 auto; display: grid; grid-template-columns: 290px 590px 290px; gap: 15px; }
@@ -41,40 +49,73 @@
     .badge-gold { background: #fab005; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; font-weight: 800; text-transform: uppercase; display: inline-flex; align-items: center; }
 
     /* 2. BEAUTIFUL MOBILE OPTIMIZATION */
-    @media (max-width: 1024px) {
-        body { padding-top: 50px; }
-        .nav-content, .container { width: 100%; box-sizing: border-box; }
-        
-        /* Stack into 1 column with clean spacing */
-        .container { 
-            grid-template-columns: 1fr; 
-            padding: 10px; 
-            gap: 10px; 
-        }
-
-        /* Make sidebars look like integrated cards */
-        .sidebar, .right-sidebar { 
-            display: block; 
-            width: 100%;
-        }
-
-        /* Nav search bar fix */
-        #topSearch { width: 140px; }
-
-        /* Safari Auto-Zoom Fix */
-        input, select, textarea, button { 
-            font-size: 16px !important; 
-            border-radius: 8px !important; /* Softer mobile look */
-            padding: 12px !important; 
-        }
-
-        /* Tweaking the tweets for a native app feel */
-        .tweet {
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 12px;
-        }
+ @media (max-width: 1024px) {
+    body { 
+        background: #f7f7f7; /* Soft Airbnb gray */
+        padding-top: 55px; 
+        padding-bottom: 75px; 
+        font-family: 'Outfit', sans-serif; /* Applied Outfit */
     }
+
+    /* 1. Full-Bleed Edge-to-Edge Container */
+    .container { 
+        grid-template-columns: 1fr; 
+        padding: 0; /* Removes side padding for edge-to-edge images */
+        gap: 0; 
+    }
+
+    /* 2. Hide Sidebars by default on mobile (Airbnb style) */
+    .sidebar, .right-sidebar { display: none; }
+
+    /* 3. The Airbnb "Edge-to-Edge" Card */
+    .tweet {
+        background: white !important;
+        border: none !important;
+        border-bottom: 1px solid #ebebeb;
+        border-radius: 0 !important; /* Airbnb images touch screen edges */
+        margin-bottom: 25px;
+        padding: 0 0 16px 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Image wrapper to force square/4:3 ratio */
+    .image-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1; 
+        overflow: hidden;
+    }
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* 4. Floating Badges (Urgency Badges) */
+    .badge-timer-float {
+        position: absolute; bottom: 12px; right: 12px;
+        background: rgba(0, 0, 0, 0.7); color: white;
+        padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    }
+    .badge-stock-float {
+        position: absolute; top: 12px; right: 12px;
+        background: #FF385C; /* Airbnb Red */
+        color: white; padding: 5px 10px; border-radius: 6px;
+        font-size: 11px; font-weight: 800;
+    }
+
+    /* 5. Mobile Content Spacing */
+    .tweet-content-mobile {
+        padding: 12px 16px 0 16px;
+    }
+
+    /* UI Fixes */
+    #topSearch { width: 130px; border-radius: 20px !important; }
+    input, select, textarea, button { 
+        font-size: 16px !important; 
+        padding: 12px !important; 
+    }
+}
 </style>
     </style>
 </head>
@@ -498,11 +539,34 @@
         container.innerHTML = `<div style="font-size:13px; font-weight:700; display:flex; align-items:center; gap:5px;">${randomDeal.user} <span class="badge-gold">👑 Sponsored</span></div><div style="font-size:12px; margin-top:5px; color:#444;">${randomDeal.content}</div><button onclick="jhapatDeal(${randomDeal.id})" style="background:#fab005; border:none; color:white; border-radius:10px; font-size:10px; padding:4px 8px; margin-top:10px; cursor:pointer; display:flex; align-items:center; gap:5px; font-weight:bold;"><img src="https://img.icons8.com/color/48/falcon.png" style="width:14px;"> Quick Jhapat</button>`;
     }
 
-    function renderDeals(data) {
-        document.getElementById('feedContainer').innerHTML = data.map(t => {
-            return `<div class="tweet ${t.is_premium ? 'gold-card' : ''}" style="box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom:10px; background:white; max-width: 500px; margin-left: auto; margin-right: auto;"><div style="padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f5f8fa;"><div style="display: flex; align-items: center; gap: 8px;"><img src="${t.avatar || 'https://i.pravatar.cc/150?u='+t.id}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;"><div><div style="font-weight: 700; font-size: 13px; display: flex; align-items: center;">${t.user} ${t.is_premium ? `<span class="badge-gold">👑 Sponsored</span>` : `<span style="color: #1da1f1; margin-left: 5px;">✓</span>`}</div><div style="color: #657786; font-size: 11px;">📍 ${t.area || 'Local'}</div></div></div></div>${t.image ? `<img src="${t.image}" style="width: 100%; height: 200px; object-fit: cover;">` : `<div style="height:60px; background:linear-gradient(45deg, #1da1f2, #00d2ff); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;">⚡ JHAPAT ACTIVE</div>`}<div style="padding: 10px 12px;"><div style="display: flex; justify-content: space-between; align-items: flex-start;"><p style="font-size: 14px; font-weight: 700; margin: 0; line-height: 1.2;">${t.content}</p><div style="background: #fffbe6; padding: 2px 8px; border-radius: 4px; color: #b7791f; font-weight: 800; font-size: 12px;">${t.price || 'Offer'}</div></div><div style="display: flex; gap: 12px; margin-top: 8px; font-size: 11px; color: #657786;"><span>⏳ <b id="timer-${t.id}">...</b></span><span>📦 <b>${t.left}</b> left</span></div><div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;"><span style="font-size: 16px; cursor:pointer;">❤️</span><button class="btn-claim" id="btn-${t.id}" onclick="jhapatDeal(${t.id})" style="background: ${t.is_premium ? '#fab005' : '#1da1f1'}; color: white; padding: 6px 16px; border-radius: 15px; font-size: 12px; font-weight: 700; border:none; cursor:pointer; display:flex; align-items:center; gap:5px;" ${t.left <= 0 ? 'disabled style="background:gray;"' : ''}><img src="https://img.icons8.com/color/48/falcon.png" style="width:14px;"> ${t.left <= 0 ? 'SOLD OUT' : 'JHAPAT'}</button></div></div></div>`;
-        }).join('');
-    }
+ function renderDeals(data) {
+    document.getElementById('feedContainer').innerHTML = data.map(t => `
+        <div class="tweet ${t.is_premium ? 'gold-card' : ''}" onclick="jhapatDeal(${t.id})">
+            
+            <div class="image-wrapper">
+                <img src="${t.image || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600'}">
+                
+                <div class="badge-stock-float">${t.left} LEFT</div>
+                <div class="badge-timer-float" id="timer-${t.id}">...</div>
+                
+                ${t.is_premium ? `
+                    <div style="position:absolute; top:12px; left:12px; background:white; color:black; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:800; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+                        ✨ STAR DEAL
+                    </div>
+                ` : ''}
+            </div>
+
+            <div class="tweet-content-mobile">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <h3 style="margin:0; font-size:17px; font-weight:600; letter-spacing:-0.3px;">${t.content}</h3>
+                    <span style="font-size:14px; font-weight:500;">★ 4.9</span>
+                </div>
+                <p style="margin:4px 0; color:#717171; font-size:15px;">${t.user} • ${t.area || 'Nearby'}</p>
+                <p style="margin:6px 0 0 0; font-weight:800; color:#222; font-size:17px;">${t.price || 'Offer'}</p>
+            </div>
+        </div>
+    `).join('');
+}
 
     async function postMerchantDeal() {
         const dealData = {
@@ -559,5 +623,6 @@
 </body>
 
 </html>
+
 
 
