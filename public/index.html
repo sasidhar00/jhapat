@@ -108,7 +108,7 @@
 <nav>
     <div class="nav-content">
         <div onclick="goHome()" style="cursor: pointer;">
-            <img src="/logo.png" alt="Logo" style="height: 40px;" onerror="this.src='https://img.icons8.com/color/48/falcon.png'">
+            <img src="/logo.png" alt="Logo" style="height: 120px;" onerror="this.src='/logo.png'">
         </div>
         <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search Jhapat" style="border-radius: 20px; padding: 10px 18px; background: #222; border: none; color: white; outline:none; font-family: inherit;">
         <div class="mobile-login-pill" onclick="toggleMobileLogin()">
@@ -291,24 +291,46 @@
     }
 }
 
-    function detectLocation() {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const { latitude, longitude } = position.coords;
-                try {
-                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-                    const data = await res.json();
-                    userCity = data.address.city || data.address.town || data.address.suburb;
-                    if (userCity) {
-                        const badge = document.getElementById('geoBadge');
-                        badge.style.display = 'block';
-                        badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-                        document.getElementById('catNearby').style.display = 'inline-block';
-                    }
-                } catch (e) { console.log("Loc failed"); }
-            });
-        }
+   function detectLocation() {
+    if ("geolocation" in navigator) {
+        // Show a loading state in the badge
+        const badge = document.getElementById('geoBadge');
+        badge.style.display = 'block';
+        badge.innerHTML = "📍 Requesting location access...";
+
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+                // Use a more reliable Nominatim query
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`);
+                const data = await res.json();
+                
+                // Check multiple potential fields for city name
+                userCity = data.address.city || data.address.town || data.address.village || data.address.suburb;
+                
+                if (userCity) {
+                    badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+                    document.getElementById('catNearby').style.display = 'inline-block';
+                } else {
+                    badge.innerHTML = "📍 Location found, but city name unavailable.";
+                }
+            } catch (e) { 
+                badge.innerHTML = "📍 Location detection failed.";
+                console.error("Loc failed", e); 
+            }
+        }, (error) => {
+            // Error handling
+            if(error.code === 1) badge.innerHTML = "📍 Location access denied by user.";
+            else badge.innerHTML = "📍 GPS signal too weak.";
+        }, { 
+            enableHighAccuracy: true, 
+            timeout: 10000, 
+            maximumAge: 0 
+        });
+    } else {
+        alert("Geolocation is not supported by your browser.");
     }
+}
 
     async function dbLogin() {
         const username = document.getElementById('loginUser').value;
@@ -497,6 +519,7 @@
 
 </body>
 </html>
+
 
 
 
