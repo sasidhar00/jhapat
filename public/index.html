@@ -8,20 +8,7 @@
     <style>
     /* 1. BASE DESKTOP STYLES (Kept exactly as yours) */
     body { background: #f7f7f7; font-family: 'Outfit', sans-serif; margin: 0; padding-top: 135px; -webkit-font-smoothing: antialiased; }
-  <nav>
-    <div class="nav-content">
-        <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="goHome()">
-            <img src="/logo.png" alt="Logo" style="height: 40px; width: auto;" onerror="this.src='https://img.icons8.com/color/48/falcon.png'">
-        </div>
-        
-        <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search..." style="background: #222; border: none; color: white; outline:none; font-family: inherit;">
-
-        <div class="mobile-login-trigger" onclick="toggleMenu()">
-            <span>Login</span>
-            <span style="font-size: 18px;">👤</span>
-        </div>
-    </div>
-</nav>
+    nav { background: #000; height: 60px; position: fixed; top: 0; width: 100%; z-index: 3000; display: flex; justify-content: center; align-items: center; }
     .nav-content { width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
     .container { width: 1190px; margin: 0 auto; display: grid; grid-template-columns: 290px 590px 290px; gap: 15px; }
     
@@ -80,40 +67,15 @@
     .location-badge { background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 8px 15px; border-radius: 25px; font-size: 14px; margin-bottom: 15px; display: none; align-items: center; gap: 8px; font-weight: 700; }
 
     /* 2. BEAUTIFUL MOBILE OPTIMIZATION */
-  /* --- IMPROVED MOBILE READABILITY & VISIBILITY --- */
-@media (max-width: 1024px) {
-    body { 
-        padding-top: 145px; /* Increased space for double header */
-        font-size: 17px; /* Increased base readability */
+    @media (max-width: 1024px) {
+        body { padding-top: 135px; background: white; }
+        .nav-content, .container { width: 100%; box-sizing: border-box; }
+        .container { grid-template-columns: 1fr; padding: 0; gap: 0; }
+        .sidebar, .right-sidebar { display: none; }
+        .tweet { border-radius: 0; border-left: none; border-right: none; margin-bottom: 30px; }
+        #topSearch { width: 130px; border-radius: 25px !important; }
+        input, select, textarea, .btn-jhapat-big { font-size: 16px !important; border-radius: 12px !important; padding: 14px !important; }
     }
-
-    /* Boost Title and Price Sizes */
-    .tweet-title { font-size: 26px !important; }
-    .tweet-price { font-size: 28px !important; }
-    .tweet-meta { font-size: 18px !important; color: #444 !important; }
-
-    /* Fix Header visibility */
-    nav { height: 70px !important; }
-    .nav-content { padding: 0 15px !important; }
-    
-    /* Login Button Visibility for Mobile */
-    .mobile-login-trigger {
-        display: flex !important;
-        align-items: center;
-        gap: 8px;
-        background: #333;
-        padding: 8px 15px;
-        border-radius: 20px;
-        color: white !important;
-        font-weight: 800;
-        font-size: 14px;
-    }
-    
-    #topSearch { width: 110px !important; }
-}
-
-/* Ensure the Login Label is hidden on Desktop */
-.mobile-login-trigger { display: none; }
 </style>
 </head>
 <body>
@@ -667,17 +629,6 @@
         } else alert("Something went wrong while claiming your deal.");
     }
 
-    async function toggleMenu() {
-       const m = document.getElementById('loginMenu');
-       const isVisible = m.style.display === 'block';
-       m.style.display = isVisible ? 'none' : 'block';
-    
-       if (!isVisible) {
-        // Scroll to the login box on mobile so it doesn't open "off-screen"
-          m.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
     window.onload = () => { 
         loadTweets(); 
         detectLocation(); 
@@ -686,4 +637,3 @@
 </script>
 </body>
 </html>
-
