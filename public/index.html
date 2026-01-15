@@ -267,6 +267,30 @@
         } catch(e) { console.error(e); }
     }
 
+    function filterNearby() {
+    if (!userCity) {
+        alert("Detecting your location... please wait or ensure GPS is on.");
+        detectLocation();
+        return;
+    }
+    
+    // De-activate other chips and activate the Nearby chip
+    document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+    document.getElementById('catNearby').classList.add('active');
+
+    // Filter deals where the 'area' includes your city name
+    const nearbyDeals = allDeals.filter(d => 
+        d.area && d.area.toLowerCase().includes(userCity.toLowerCase())
+    );
+
+    if (nearbyDeals.length === 0) {
+        document.getElementById('feedContainer').innerHTML = 
+            `<div style="padding:20px; text-align:center;">No Jhapats found in ${userCity} yet! 📍</div>`;
+    } else {
+        renderDeals(nearbyDeals);
+    }
+}
+
     function detectLocation() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(async (position) => {
@@ -473,5 +497,6 @@
 
 </body>
 </html>
+
 
 
