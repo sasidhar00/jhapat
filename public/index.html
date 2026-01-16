@@ -302,12 +302,35 @@
         </div>
     </div>
 
-    <div class="right-sidebar">
-        <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
-            <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
-            <div id="goldSpotlight"><p style="font-size:13px; color: #666;">Scanning local premium offers...</p></div>
+   <div class="right-sidebar">
+    <!-- Pehle Gold Spotlight -->
+    <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
+        <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
+        <div id="goldSpotlight">
+            <p style="font-size:13px; color: #666;">Scanning local premium offers...</p>
         </div>
     </div>
+
+    <!-- Uske neeche Post Jhapat box (merchant ke liye) -->
+    <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-top: 20px; display: none;">
+        <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
+        <textarea id="dealContent" rows="3" placeholder="Describe your super offer..."></textarea>
+        <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
+            <option value="Offer">🔥 Hot Offer</option>
+            <option value="Food">🍔 Food</option>
+            <option value="Shop">🛍️ Shop</option>
+        </select>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+            <input type="text" id="dealPrice" placeholder="Price (₹)">
+            <input type="text" id="dealArea" placeholder="Area / City">
+        </div>
+        <div style="margin-top:12px;">
+            <label style="font-size:12px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
+            <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
+        </div>
+        <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="postMerchantDeal()">Post Live Jhapat</button>
+    </div>
+</div>
 </div>
 
 <footer>powered by <strong>kanams.ai</strong></footer>
@@ -539,13 +562,35 @@
         renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(val)));
     }
 
-    function searchJhapats() {
-        const val = document.getElementById('searchJhapatsText').value.toLowerCase();
-        renderDeals(allDeals.filter(d => 
-            d.content.toLowerCase().includes(val) || 
-            (d.area && d.area.toLowerCase().includes(val))
-        ));
+function searchJhapats() {
+    const val = document.getElementById('searchJhapatsText').value.toLowerCase().trim();
+    
+    // Agar kuch nahi likha to sab dikhao
+    if (!val) {
+        renderDeals(allDeals);
+        return;
     }
+
+    // Dummy magic search – content ya area mein match karega
+    const filtered = allDeals.filter(deal => 
+        deal.content.toLowerCase().includes(val) || 
+        (deal.area && deal.area.toLowerCase().includes(val)) ||
+        (deal.price && deal.price.toLowerCase().includes(val)) ||
+        (deal.category && deal.category.toLowerCase().includes(val))
+    );
+
+    // Thoda drama add karo 😄
+    if (filtered.length === 0) {
+        document.getElementById('feedContainer').innerHTML = `
+            <p style="text-align:center; padding:30px; color:#888; font-size:18px;">
+                Oops! Koi Jhapat nahi mila "${val}" ke liye... 🥺<br>
+                Try "pizza", "food", "nearby" ya kuch aur!
+            </p>
+        `;
+    } else {
+        renderDeals(filtered);
+    }
+}
 
     async function postMerchantDeal() {
         if(!currentUser || currentUser.role !== 'merchant') return;
@@ -596,3 +641,4 @@
 </script>
 </body>
 </html>
+
