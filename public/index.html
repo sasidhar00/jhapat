@@ -583,6 +583,13 @@
     }
 
     window.onload = () => { loadTweets(); detectLocation(); };
+
+    // Check for new Jhapats every 1 minute
+setInterval(() => {
+    console.log("Checking for fresh Jhapats...");
+    loadTweets(); 
+}, 60000);
+    
 </script>
 
 <div class="bottom-nav">
@@ -602,6 +609,7 @@
 
 </body>
 </html>
+
 
 
 
