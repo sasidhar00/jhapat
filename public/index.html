@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
-        /* --- BRAND THEME & RESPONSIVE CORE --- */
         body { 
             background: #f7f7f7; 
             font-family: 'Montserrat', sans-serif; 
@@ -16,127 +15,83 @@
             padding-top: 140px; 
             padding-bottom: 70px; 
             color: #222;
-            font-size: 13px; /* Smaller base font */
-            -webkit-font-smoothing: antialiased;
+            font-size: 13px;
             overflow-x: hidden;
         }
+        
+        /* FIX: FOOTER CENTERED */
         footer {
+            clear: both;
             text-align: center;
-            padding: 20px 15px;
+            padding: 30px 15px;
             color: #657786;
             background: #fff;
             border-top: 1px solid #eee;
             width: 100%;
-            font-size: 11px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .bottom-nav { 
-            display: none; 
-            position: fixed; 
-            bottom: 0; 
-            width: 100%; 
-            background: white; 
-            height: 60px; 
-            z-index: 5000;
-            border-top: 1px solid #eee;
-            justify-content: space-around; 
-            align-items: center; 
+            display: block;
         }
 
         nav { 
             background: #000; 
             height: 50px; 
             position: fixed; 
-            top: 0; 
-            width: 100%; 
-            z-index: 3000; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+            top: 0; width: 100%; z-index: 3000; 
+            display: flex; justify-content: center; align-items: center; 
         }
         .nav-content { width: 100%; max-width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-sizing: border-box; }
         
         .category-container {
-            position: fixed;
-            top: 50px; 
-            width: 100%;
-            background: white;
-            z-index: 2500;
-            display: flex;
-            gap: 8px;
-            padding: 10px 15px;
-            overflow-x: auto;
-            border-bottom: 1px solid #eee;
-            scrollbar-width: none;
+            position: fixed; top: 50px; width: 100%; background: white; z-index: 2500;
+            display: flex; gap: 8px; padding: 10px 15px; overflow-x: auto; border-bottom: 1px solid #eee; scrollbar-width: none;
         }
         .category-chip { background: #f0f0f0; border: none; color: #444; padding: 6px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; font-weight: 700; white-space: nowrap; }
         .category-chip.active { background: #1da1f1; color: white; }
 
+        /* GRID SYSTEM RESTORED */
         .container { 
-            width: 100%; 
-            max-width: 1190px; 
-            margin: 0 auto; 
-            display: grid; 
-            grid-template-columns: 260px 1fr 260px; 
-            gap: 15px; 
-            padding: 0 10px; 
-            box-sizing: border-box; 
-            align-items: start;
+            width: 100%; max-width: 1190px; margin: 0 auto; 
+            display: grid; grid-template-columns: 260px 1fr 260px; gap: 15px; padding: 0 10px; box-sizing: border-box; 
         }
         
+        /* TICKER SCROLLING RESTORED */
+        .main-feed { height: 850px; overflow: hidden; position: relative; background: #fff; border-radius: 10px; border: 1px solid #e1e8ed; }
+        #feedContainer { display: flex; flex-direction: column; animation: tickerVertical 35s linear infinite; }
+        #feedContainer:hover { animation-play-state: paused; }
+        @keyframes tickerVertical { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+
         .tweet { background: white; border-radius: 10px; border: 1px solid #e1e8ed; margin-bottom: 20px; display: flex; flex-direction: column; overflow: hidden; position: relative; flex-shrink: 0; }
         .image-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #eee; }
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
+        
         .badge-gold-float { position: absolute; top: 8px; left: 8px; background: #fab005; color: #000; padding: 4px 8px; border-radius: 4px; font-weight: 900; font-size: 10px; }
         .new-tag { background: #00ba7c; color: white; padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 900; }
 
-        .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 10px; overflow: hidden; }
+        .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 10px; overflow: hidden; position: relative; }
         .profile-bg { background: #1da1f2; height: 70px; }
-        .avatar { width: 60px; height: 60px; border-radius: 10px; border: 3px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
+        .avatar { width: 60px; height: 60px; border-radius: 10px; border: 3px solid white; background: #ccd6dd; position: absolute; top: 40px; left: 15px; background-size: cover; background-position: center; z-index: 2; }
         .login-box { padding: 12px; border-top: 1px solid #f5f8fa; background: #fff; }
-        .login-box input, .login-box select { width: 100%; margin-bottom: 6px; padding: 10px; border: 1px solid #e1e8ed; border-radius: 6px; font-size: 13px; font-family: inherit; box-sizing: border-box;}
-
+        
         @media (max-width: 1024px) {
             body { padding-top: 130px; }
             .container { grid-template-columns: 1fr; }
             .sidebar, .right-sidebar { display: none; }
-            .bottom-nav { display: flex; }
-            .sidebar.mobile-visible { display: block !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 4000; background: white; padding-top: 50px; }
         }
-
-        .main-feed { height: 800px; overflow: hidden; position: relative; background: #fff; border-radius: 10px; border: 1px solid #e1e8ed; }
-        .search-container-fixed { position: sticky; top: 0; background: #fff; z-index: 1000; padding: 12px; border-bottom: 1px solid #eee; }
-        
-        #feedContentArea { display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative;}
-        #merchantPostBox { position: relative; z-index: 100; flex-shrink: 0; background: #fffbe6; }
-
-        #feedContainer { display: flex; flex-direction: column; padding-top: 10px; animation: tickerVertical 35s linear infinite; }
-        #feedContainer:hover, #merchantPostBox:focus-within ~ #feedContainer { animation-play-state: paused; }
-
-        @keyframes tickerVertical { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-
-        .pulse-dot { height: 8px; width: 8px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(0.9); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); } 100% { transform: scale(0.9); } }
     </style>
 </head>
 <body>
 
-<div id="toast">🔥 New Jhapat Alert!</div>
+<div id="toast" style="visibility:hidden; min-width:250px; background:#333; color:#fff; text-align:center; border-radius:8px; padding:16px; position:fixed; z-index:6000; right:30px; bottom:30px;">🔥 New Jhapat Alert!</div>
 
-<div id="qrModal" class="qr-modal" onclick="this.style.display='none'">
+<div id="qrModal" style="display:none; position:fixed; z-index:5000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; flex-direction:column; color:white;" onclick="this.style.display='none'">
     <div id="qrcode" style="background:white; padding:10px; border-radius:10px;"></div>
-    <h3 id="couponText" style="margin-top:15px; font-weight: 800; font-size: 16px;"></h3>
-    <p style="font-size: 12px;">Show this to merchant to redeem</p>
+    <h3 id="couponText" style="margin-top:15px; font-weight:800;"></h3>
 </div>
 
 <nav>
     <div class="nav-content">
         <div onclick="goHome()" style="cursor: pointer; color: white; font-weight: 900; font-size: 18px;">JHAPAT</div>
-        <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search..." style="border-radius: 20px; padding: 6px 15px; background: #222; border: none; color: white; outline:none; font-size: 12px; width: 40%;">
-        <div class="mobile-login-pill" onclick="toggleMobileLogin()" style="color: white; font-size: 12px; cursor: pointer;">Login 👤</div>
+        <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search..." style="border-radius:20px; padding:6px 15px; background:#222; border:none; color:white; outline:none; font-size:12px; width:40%;">
+        <div onclick="toggleMobileLogin()" style="color:white; font-size:12px; cursor:pointer;">Login 👤</div>
     </div>
 </nav>
 
@@ -146,85 +101,48 @@
     <div class="category-chip" onclick="filterCategory('Food')">🍔 Food</div>
     <div class="category-chip" onclick="filterCategory('Travel')">✈️ Travel</div>
     <div class="category-chip" onclick="filterCategory('Shop')">🛍️ Shop</div>
-    <div class="category-chip" onclick="filterCategory('Health')">🏋️ Health</div>
 </div>
 
 <div class="container">
     <div class="sidebar">
         <div class="profile-card">
             <div class="profile-bg"></div>
-            <div class="profile-info" style="padding: 10px; position: relative;">
+            <div style="padding: 10px; padding-top: 40px;">
                 <div class="avatar" id="sideAvatar"></div>
-                <div style="margin-top:35px;">
-                    <strong id="sideUsername" style="font-size: 14px; font-weight: 800;">Welcome Guest</strong><br>
-                    <span id="roleBadge" style="color:#657786; font-size: 11px;">@jhapat_user</span>
-                </div>
+                <strong id="sideUsername" style="font-size: 14px;">Welcome Guest</strong><br>
+                <span id="roleBadge" style="color:#657786; font-size: 11px;">@jhapat_user</span>
             </div>
             
             <div class="login-box" id="authBox">
-                <input type="text" id="loginUser" placeholder="Username">
-                <input type="password" id="loginPass" placeholder="Password">
-                <select id="loginRole">
-                    <option value="user">User</option>
-                    <option value="merchant">Merchant</option>
-                </select>
-                <div style="margin-bottom:8px;">
-                    <label style="font-size:10px; color:gray; font-weight: 700;">Profile Pic (Optional):</label>
-                    <input type="file" onchange="encodeImageFileAsURL(this, 'avatar')">
-                </div>
-                <div style="margin-bottom:10px; font-size:11px; color:#657786;">
-                    <input type="checkbox" id="acceptTerms" style="width: auto;"> Agree to <a href="/terms.html" style="color:#1da1f1;">Terms</a> & <a href="/privacy.html" style="color:#1da1f1;">Privacy</a>
-                </div>
-                <button style="background: #1da1f1; color: white; width: 100%; padding: 10px; border:none; border-radius:20px; font-weight:900; cursor:pointer; font-size: 12px;" onclick="dbRegister()">Register New</button>
-                <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 8px; padding: 8px; border-radius:20px; font-weight:900; cursor:pointer; font-size: 12px;" onclick="dbLogin()">Login</button>
-                <p style="text-align:center; font-size:11px; margin-top: 10px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; text-decoration: none;">Forgot Password?</a></p>
-                <button style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; font-size:10px; cursor:pointer; opacity: 0.5;" onclick="seedData()">[Dev] Seed Data</button>
+                <input type="text" id="loginUser" placeholder="Username" style="width:100%; margin-bottom:5px;">
+                <input type="password" id="loginPass" placeholder="Password" style="width:100%; margin-bottom:5px;">
+                <select id="loginRole" style="width:100%; margin-bottom:5px;"><option value="user">User</option><option value="merchant">Merchant</option></select>
+                <button style="background:#1da1f1; color:white; width:100%; padding:8px; border:none; border-radius:20px; font-weight:800; cursor:pointer;" onclick="dbLogin()">Login</button>
+                <button style="background:none; border:none; color:#1da1f1; width:100%; margin-top:5px; font-size:11px;" onclick="dbRegister()">Register New</button>
             </div>
-
-            <div class="login-box" id="resetBox" style="display:none;">
-                <h4 style="font-size: 13px;">Reset Password</h4>
-                <input type="text" id="resetUser" placeholder="Username">
-                <input type="text" id="resetKey" placeholder="Recovery Key">
-                <input type="password" id="resetNewPass" placeholder="New Password">
-                <button style="background:black; color:white; width:100%; border-radius:20px; padding:10px; font-size:12px;" onclick="dbReset()">Update</button>
-                <button style="background:none; border:none; color:gray; width:100%; margin-top:5px; font-size:11px;" onclick="location.reload()">Cancel</button>
-            </div>
-
-            <div class="login-box" id="logoutBox" style="display: none;">
-                <button style="background: #e0245e; color: white; width: 100%; padding:10px; border:none; border-radius:20px; font-weight:900; font-size: 12px;" onclick="dbLogout()">Logout</button>
+            
+            <div class="login-box" id="logoutBox" style="display:none;">
+                <button style="background:#e0245e; color:white; width:100%; padding:10px; border:none; border-radius:20px;" onclick="dbLogout()">Logout</button>
             </div>
         </div>
-        <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 8px; border-radius: 8px; font-size: 11px; margin-top: 10px; display: none; font-weight: 700;">📍 Detecting...</div>
-        <div style="text-align: right; margin-top: 5px;"><a href="javascript:void(0)" onclick="resetLocation()" style="font-size: 10px; color: #1da1f1; text-decoration: none;">🔄 Update Location</a></div>
+        <div id="geoBadge" style="background:#f0f7ff; color:#1da1f2; padding:8px; border-radius:8px; font-size:11px; display:none; font-weight:700;">📍 Detecting...</div>
     </div>
 
     <div class="main-feed">
-        <div class="search-container-fixed">
-            <div id="liveStatus" style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 11px; font-weight: 800; color: #ff0000;">
-                <span class="pulse-dot"></span> LIVE DEALS
-            </div>
-            <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="width: 100%; border-radius: 8px; padding: 8px; border: 1px solid #ddd; font-size: 12px; resize: none; box-sizing: border-box;"></textarea>
-            <button style="background: #1da1f1; color: white; width:100%; margin-top:8px; padding:10px; border-radius:20px; border:none; font-weight:900; font-size:12px; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
-        </div>
-
-        <div id="feedContentArea">
-            <div id="merchantPostBox" style="padding: 12px; border-bottom: 1px solid #ffe58f; display: none;">
-                <h4 style="margin:0 0 8px 0; color:#856404; font-size: 13px; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-                <textarea id="dealContent" rows="2" placeholder="Describe offer" style="width:100%; padding:8px; font-size:12px; border-radius:5px; border:1px solid #ddd;"></textarea>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-                    <input type="text" id="dealPrice" placeholder="Price" style="padding:8px; font-size:12px; border:1px solid #ddd; border-radius:5px;">
-                    <input type="text" id="dealArea" placeholder="Area" style="padding:8px; font-size:12px; border:1px solid #ddd; border-radius:5px;">
-                </div>
-                <button style="background: #faad14; color: white; width:100%; margin-top:10px; padding:10px; border-radius:20px; font-weight:900; font-size:12px; border:none; cursor:pointer;" onclick="postMerchantDeal()">Post Live</button>
+        <div id="feedContentArea" style="display:flex; flex-direction:column;">
+            <div id="merchantPostBox" style="background:#fffbe6; padding:12px; display:none; border-bottom:1px solid #ffe58f; z-index:100; position:relative;">
+                <h4 style="margin:0; font-size:13px;">🏪 Post a Live Jhapat</h4>
+                <textarea id="dealContent" rows="1" placeholder="Describe offer" style="width:100%; margin-top:5px;"></textarea>
+                <button style="background:#faad14; color:white; width:100%; margin-top:5px; padding:8px; border-radius:20px; border:none;" onclick="postMerchantDeal()">Post</button>
             </div>
             <div id="feedContainer"></div>
         </div>
     </div>
 
     <div class="right-sidebar">
-        <div class="profile-card" style="padding: 12px; border: 2px solid #fab005; background: #fffbe6;">
-            <strong style="color: #fab005; font-size: 13px; font-weight: 900; display: block; margin-bottom: 8px;">✨ Gold Spotlight</strong>
-            <div id="goldSpotlight"><p style="font-size:11px; color: #666;">Scanning premium offers...</p></div>
+        <div class="profile-card" style="padding:12px; border: 2px solid #fab005; background:#fffbe6;">
+            <strong style="color:#fab005; font-size:13px;">✨ Gold Spotlight</strong>
+            <div id="goldSpotlight" style="margin-top:10px;"><p style="font-size:11px; color:#666;">Scanning premium offers...</p></div>
         </div>
     </div>
 </div>
@@ -232,194 +150,62 @@
 <footer>powered by <strong>kanams.ai</strong></footer>
 
 <script>
-    let currentUser = null;
-    let allDeals = [];
-    let userCity = null;
-    let base64Avatar = "";
-
-    function encodeImageFileAsURL(element, type) {
-        const file = element.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => { if(type === 'avatar') base64Avatar = reader.result; }
-        if (file) reader.readAsDataURL(file);
-    }
-
-    async function seedData() {
-        if(!confirm("Populate sample jhapats?")) return;
-        try {
-            const res = await fetch('/api/admin/seed', { method: 'POST' });
-            if(res.ok) loadTweets();
-        } catch(e) { console.error(e); }
-    }
-
+    let currentUser = null; let allDeals = []; let userCity = null;
+    
     function detectLocation() {
         const badge = document.getElementById('geoBadge');
         const savedCity = localStorage.getItem('jhapat_cached_city');
-        if (userCity || savedCity) {
-            userCity = userCity || savedCity;
-            badge.style.display = 'block';
-            badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-            document.getElementById('catNearby').style.display = 'inline-block';
-            return; 
+        if (savedCity) {
+            userCity = savedCity; badge.style.display = 'block'; badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+            document.getElementById('catNearby').style.display = 'inline-block'; return;
         }
         if ("geolocation" in navigator) {
-            badge.style.display = 'block';
-            badge.innerHTML = "📍 Requesting location access...";
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const { latitude, longitude } = position.coords;
-                try {
-                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
-                    const data = await res.json();
-                    userCity = data.address.city || data.address.town || data.address.suburb || data.address.village;
-                    if (userCity) {
-                        localStorage.setItem('jhapat_cached_city', userCity);
-                        badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-                        document.getElementById('catNearby').style.display = 'inline-block';
-                    }
-                } catch (e) { badge.innerHTML = "📍 Connection error."; }
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&zoom=12`);
+                const data = await res.json();
+                userCity = data.address.city || data.address.town;
+                if(userCity) {
+                    localStorage.setItem('jhapat_cached_city', userCity);
+                    badge.style.display='block'; badge.innerHTML = `📍 Near <b>${userCity}</b>`;
+                    document.getElementById('catNearby').style.display = 'inline-block';
+                }
             });
         }
     }
 
-    async function dbLogin() {
-        const username = document.getElementById('loginUser').value;
-        const password = document.getElementById('loginPass').value;
-        const res = await fetch('/api/login', {
-            method: 'POST', headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
-        });
-        if(res.ok) {
-            currentUser = await res.json();
-            document.getElementById('sideUsername').innerText = "Welcome " + currentUser.username;
-            document.getElementById('roleBadge').innerText = "@" + currentUser.role;
-            if(currentUser.avatar) document.getElementById('sideAvatar').style.backgroundImage = `url(${currentUser.avatar})`;
-            document.getElementById('authBox').style.display = 'none';
-            document.getElementById('logoutBox').style.display = 'block';
-            document.getElementById('merchantPostBox').style.display = (currentUser.role === 'merchant') ? 'block' : 'none';
-            loadTweets();
-        } else alert("Invalid login");
-    }
-
-    async function dbRegister() {
-        if(!document.getElementById('acceptTerms').checked) return alert("Accept terms!");
-        const username = document.getElementById('loginUser').value;
-        const password = document.getElementById('loginPass').value;
-        const role = document.getElementById('loginRole').value;
-        const res = await fetch('/api/register', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, role, avatar: base64Avatar })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            alert("Success! Recovery Key: " + data.recovery_key);
-        } else alert("Registration failed");
-    }
-
-    function showReset() {
-        document.getElementById('authBox').style.display = 'none';
-        document.getElementById('resetBox').style.display = 'block';
-    }
-
-    async function dbReset() {
-        const username = document.getElementById('resetUser').value;
-        const recoveryKey = document.getElementById('resetKey').value;
-        const newPassword = document.getElementById('resetNewPass').value;
-        const res = await fetch('/api/reset-password', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, recoveryKey, newPassword })
-        });
-        if (res.ok) { alert("Updated!"); location.reload(); }
-        else alert("Incorrect details");
-    }
-
-    function dbLogout() { location.reload(); }
-
     async function loadTweets() {
-        try {
-            const res = await fetch('/api/tweets');
-            const data = await res.json() || [];
-            allDeals = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            renderDeals(allDeals);
-        } catch (e) { console.error(e); }
+        const res = await fetch('/api/tweets');
+        allDeals = await res.json() || [];
+        allDeals.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+        renderDeals(allDeals);
     }
 
     function renderDeals(data) {
         const container = document.getElementById('feedContainer');
-        if (!data || data.length === 0) {
-            container.style.animation = "none";
-            container.innerHTML = `<div style="padding:30px; text-align:center; color:gray;">No deals found.</div>`;
-            return;
-        }
-
-        // Restart animation on filter
-        container.style.animation = 'none';
-        container.offsetHeight; 
-        container.style.animation = "tickerVertical 35s linear infinite";
-
+        if(!data || data.length === 0) { container.innerHTML = "<p style='padding:20px;'>No deals.</p>"; return; }
         const topTen = data.slice(0, 10);
         const tickerList = [...topTen, ...topTen];
-        container.innerHTML = tickerList.map(t => {
-            const isNew = (new Date().getTime() - new Date(t.timestamp).getTime()) < (15 * 60 * 1000);
-            const imgHTML = t.image && t.image.length > 5 ? `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : '';
-            return `
-                <div class="tweet">
-                    <div style="padding: 10px; display: flex; align-items: center; justify-content: space-between;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width: 30px; height: 30px; border-radius: 5px;">
-                            <div>
-                                <div style="font-weight: 800; font-size: 13px;">${t.user}</div>
-                                <div style="color: #657786; font-size: 10px;">📍 ${t.area || 'Nearby'}</div>
-                            </div>
-                        </div>
-                        ${isNew ? '<span class="new-tag">NEW</span>' : ''}
-                    </div>
-                    ${imgHTML}
-                    <div style="padding: 15px;">
-                        <strong style="font-size: 16px; font-weight: 800; display:block; margin-bottom:10px;">${t.content}</strong>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-weight: 900; font-size: 18px;">${t.price}</span>
-                            <button onclick="jhapatDeal(${t.id})" style="background: #1da1f1; color: white; padding: 10px 25px; border:none; border-radius: 10px; font-weight: 900; cursor:pointer; font-size:12px;">JHAPAT</button>
-                        </div>
+        container.innerHTML = tickerList.map(t => `
+            <div class="tweet">
+                <div style="padding:10px; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width:30px; height:30px; border-radius:5px;">
+                        <div><strong style="font-size:12px;">${t.user}</strong><br><span style="font-size:10px; color:gray;">📍 ${t.area || 'Nearby'}</span></div>
                     </div>
                 </div>
-            `;
-        }).join('');
+                ${t.image ? `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : ''}
+                <div style="padding:15px;">
+                    <strong style="font-size:15px;">${t.content}</strong>
+                    <div style="display:flex; justify-content:space-between; margin-top:10px; align-items:center;">
+                        <span style="font-weight:900; font-size:18px;">${t.price}</span>
+                        <button onclick="jhapatDeal(${t.id})" style="background:#1da1f1; color:white; padding:8px 20px; border-radius:10px; border:none; font-weight:800; cursor:pointer;">JHAPAT</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
     }
-
-    const qrcode = new QRCode(document.getElementById("qrcode"), { width: 180, height: 180 });
-    async function jhapatDeal(id) {
-        if(!currentUser) { toggleMobileLogin(); return; }
-        const code = "JPT-" + Math.random().toString(36).substr(2, 6).toUpperCase();
-        const res = await fetch(`/api/jhapat/claim/${id}`, { 
-            method: 'POST', headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({username: currentUser.username, code: code}) 
-        });
-        if(res.ok) {
-            document.getElementById('qrModal').style.display = 'flex';
-            document.getElementById('couponText').innerText = "COUPON: " + code;
-            qrcode.clear(); qrcode.makeCode(code);
-            loadTweets();
-        }
-    }
-
-    function filterCategory(cat) {
-        document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-        if(!cat) { document.getElementById('catAll').classList.add('active'); renderDeals(allDeals); return; }
-        event.target.classList.add('active');
-        renderDeals(allDeals.filter(d => d.category === cat));
-    }
-
-    function resetLocation() {
-        localStorage.removeItem('jhapat_cached_city');
-        userCity = null;
-        detectLocation();
-    }
-
-    function toggleMobileLogin() { document.querySelector('.sidebar').classList.toggle('mobile-visible'); }
-    function goHome() { window.scrollTo(0, 0); loadTweets(); }
 
     window.onload = () => { loadTweets(); detectLocation(); };
-    setInterval(loadTweets, 30000);
 </script>
 
 </body>
