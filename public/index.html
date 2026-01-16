@@ -207,7 +207,7 @@
                 </div>
                 <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
                 <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
-                <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="#" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
+                <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
                 <button style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; font-size:11px; cursor:pointer; opacity: 0.5;" onclick="seedData()">[Dev] Seed Data</button>
             </div>
 
@@ -424,7 +424,7 @@
         } else alert("Registration failed");
     }
 
-function showReset() {
+    async function showReset() {
         document.getElementById('authBox').style.display = 'none';
         document.getElementById('resetBox').style.display = 'block';
     }
@@ -602,6 +602,7 @@ function showReset() {
 
 </body>
 </html>
+
 
 
 
