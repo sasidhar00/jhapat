@@ -138,18 +138,22 @@
             border-bottom: 1px solid #eee;
         }
 
-        #feedContentArea {
-            flex-grow: 1;
-            overflow: hidden;
-            position: relative;
-        }
+     /* This ensures the scrolling deals pass BEHIND the post box */
+#feedContentArea {
+    position: relative;
+    overflow: hidden; /* Clips the deals so they don't spill out of the main box */
+}
 
-        #feedContainer {
-            display: flex;
-            flex-direction: column;
-            padding-top: 20px;
-            animation: tickerVertical 35s linear infinite;
-        }
+#feedContainer {
+    /* Your existing animation: tickerVertical 35s linear infinite; */
+    position: relative;
+    z-index: 1; /* Lower than the post box */
+}
+
+/* Pause the ticker when the merchant is actually typing */
+#merchantPostBox:focus-within ~ #feedContainer {
+    animation-play-state: paused;
+}
 
         #feedContainer:hover { animation-play-state: paused; }
 
@@ -264,24 +268,28 @@
             <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
         </div>
 
-        <div id="feedContentArea">
-            <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
-                <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-                <textarea id="dealContent" rows="2" placeholder="Describe offer"></textarea>
-                <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
-                    <option value="Offer">🔥 Hot Offer</option>
-                    <option value="Food">🍔 Food</option>
-                    <option value="Shop">🛍️ Shop</option>
-                </select>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                    <input type="text" id="dealPrice" placeholder="Price">
-                    <input type="text" id="dealArea" placeholder="Area">
-                </div>
-                <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900;" onclick="postMerchantDeal()">Post Live Jhapat</button>
-            </div>
-            <div id="feedContainer"></div>
+<div id="feedContentArea" style="display: flex; flex-direction: column;">
+    
+    <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none; position: relative; z-index: 100;">
+        <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
+        <textarea id="dealContent" rows="2" placeholder="Describe offer" style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 10px; font-family: inherit; resize: none;"></textarea>
+        
+        <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px; border: 1px solid #ddd; font-weight: 600;">
+            <option value="Offer">🔥 Hot Offer</option>
+            <option value="Food">🍔 Food</option>
+            <option value="Shop">🛍️ Shop</option>
+        </select>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+            <input type="text" id="dealPrice" placeholder="Price" style="padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+            <input type="text" id="dealArea" placeholder="Area" style="padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
         </div>
+
+        <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900; cursor: pointer;" onclick="postMerchantDeal()">Post Live Jhapat</button>
     </div>
+
+    <div id="feedContainer"></div>
+</div>
 
     <div class="right-sidebar">
         <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
@@ -516,6 +524,7 @@ function detectLocation() {
 
 </body>
 </html>
+
 
 
 
