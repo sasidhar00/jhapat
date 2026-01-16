@@ -13,334 +13,177 @@
             background: #f7f7f7; 
             font-family: 'Montserrat', sans-serif; 
             margin: 0; 
-            /* 60px Nav + 65px Filters = 125px. Fixes the overlap! */
-            padding-top: 160px; 
-            padding-bottom: 80px; 
+            padding-top: 140px; 
+            padding-bottom: 70px; 
             color: #222;
+            font-size: 13px;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
         footer {
-           text-align: center;
-           padding: 30px 15px;
-          color: #657786;
-          background: #fff;
-          border-top: 1px solid #eee;
-          width: 100%;
-         position: relative;
-         z-index: 10;
-         margin-top: 0;
-}
+            text-align: center;
+            padding: 20px 15px;
+            color: #657786;
+            background: #fff;
+            border-top: 1px solid #eee;
+            width: 100%;
+            display: block;
+            clear: both;
+        }
 
-.bottom-nav { 
-    display: none; 
-    position: fixed; 
-    bottom: 0; 
-    width: 100%; 
-    background: white; 
-    height: 70px; 
-    z-index: 5000; /* Stays above the footer */
-    border-top: 1px solid #eee;
-    justify-content: space-around; 
-    align-items: center; 
-}
+        .bottom-nav { 
+            display: none; 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+            background: white; 
+            height: 60px; 
+            z-index: 5000;
+            border-top: 1px solid #eee;
+            justify-content: space-around; 
+            align-items: center; 
+        }
 
-        /* FIXED BLACK NAV */
+        /* FIXED NAV */
         nav { 
             background: #000; 
-            height: 60px; 
+            height: 50px; 
             position: fixed; 
-            top: 0; 
-            width: 100%; 
-            z-index: 3000; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+            top: 0; width: 100%; z-index: 3000; 
+            display: flex; justify-content: center; align-items: center; 
         }
         .nav-content { width: 100%; max-width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-sizing: border-box; }
         
-        /* STICKY CATEGORY BAR (Lowered below Nav) */
+        /* STICKY CATEGORY BAR */
         .category-container {
-            position: fixed;
-            top: 80px; 
-            width: 100%;
-            background: white;
-            z-index: 2500;
-            display: flex;
-            gap: 12px;
-            padding: 12px 20px;
-            overflow-x: auto;
-            border-bottom: 1px solid #eee;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            scrollbar-width: none;
+            position: fixed; top: 50px; width: 100%; background: white; z-index: 2500;
+            display: flex; gap: 8px; padding: 10px 15px; overflow-x: auto; border-bottom: 1px solid #eee; scrollbar-width: none;
         }
-        .category-container::-webkit-scrollbar { display: none; }
-        .category-chip { background: #f0f0f0; border: none; color: #444; padding: 10px 20px; border-radius: 25px; font-size: 14px; cursor: pointer; font-weight: 700; white-space: nowrap; }
+        .category-chip { background: #f0f0f0; border: none; color: #444; padding: 6px 15px; border-radius: 20px; font-size: 11px; cursor: pointer; font-weight: 700; white-space: nowrap; }
         .category-chip.active { background: #1da1f1; color: white; }
 
-        /* GRID SYSTEM */
-        .container { width: 100%; max-width: 1190px; margin: 0 auto; display: grid; grid-template-columns: 290px 590px 290px; gap: 15px; padding: 0 10px; box-sizing: border-box; }
+        /* GRID SYSTEM (3 COLUMNS) */
+        .container { 
+            width: 100%; max-width: 1190px; margin: 0 auto; 
+            display: grid; grid-template-columns: 260px 1fr 260px; gap: 15px; padding: 0 10px; box-sizing: border-box; align-items: start;
+        }
         
-        /* AIRBNB STYLE CARDS */
-        .tweet { background: white; border-radius: 12px; border: 1px solid #e1e8ed; margin-bottom: 25px; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s; position: relative; }
+        /* TICKER SYSTEM */
+        .main-feed { height: 850px; overflow: hidden; position: relative; background: #fff; border-radius: 10px; border: 1px solid #e1e8ed; }
+        #feedContentArea { display: flex; flex-direction: column; height: 100%; }
+        #feedContainer { display: flex; flex-direction: column; animation: tickerVertical 35s linear infinite; }
+        #feedContainer:hover { animation-play-state: paused; }
+        @keyframes tickerVertical { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+
+        /* CARDS */
+        .tweet { background: white; border-radius: 10px; border: 1px solid #e1e8ed; margin-bottom: 20px; display: flex; flex-direction: column; overflow: hidden; position: relative; flex-shrink: 0; }
         .image-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #eee; }
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* FLOATING BADGES */
-        .badge-gold-float { position: absolute; top: 12px; left: 12px; background: #fab005; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .badge-timer-float { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.85); color: white; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; }
+        .badge-gold-float { position: absolute; top: 8px; left: 8px; background: #fab005; color: #000; padding: 4px 8px; border-radius: 4px; font-weight: 900; font-size: 10px; }
+        .new-tag { background: #00ba7c; color: white; padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 900; }
 
         /* SIDEBARS */
-        .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
-        .profile-bg { background: #1da1f2; height: 95px; background-size: cover; }
-        .avatar { width: 72px; height: 72px; border-radius: 12px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
-        .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
-        .login-box input, .login-box select { width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 16px; font-family: inherit; }
+        .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 10px; overflow: hidden; position: relative; }
+        .profile-bg { background: #1da1f2; height: 70px; }
+        .avatar { width: 60px; height: 60px; border-radius: 10px; border: 3px solid white; background: #ccd6dd; position: absolute; top: 40px; left: 15px; background-size: cover; background-position: center; z-index: 2; }
+        .login-box { padding: 12px; border-top: 1px solid #f5f8fa; background: #fff; }
+        .login-box input, .login-box select { width: 100%; margin-bottom: 5px; padding: 8px; border: 1px solid #e1e8ed; border-radius: 6px; font-size: 12px; font-family: inherit; box-sizing: border-box;}
 
-        /* MOBILE OVERRIDES */
         @media (max-width: 1024px) {
-            body { padding-top: 155px; padding-bottom: 80px; }
-            .container { grid-template-columns: 1fr; padding: 0; gap: 0; }
+            body { padding-top: 130px; }
+            .container { grid-template-columns: 1fr; }
             .sidebar, .right-sidebar { display: none; }
-            .tweet { border-radius: 0; border-left: none; border-right: none; margin-bottom: 20px; }
-            .mobile-login-pill { display: flex !important; align-items: center; gap: 8px; background: #333; padding: 8px 16px; border-radius: 25px; color: white; font-weight: 700; font-size: 14px; cursor: pointer; }
-            #topSearch { width: 110px; }
-            
-            /* Full Screen Sidebar for Mobile Login */
-            .sidebar.mobile-visible { display: block !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 4000; background: white; overflow-y: auto; padding-top: 60px; }
+            .bottom-nav { display: flex; }
         }
 
-        .mobile-login-pill { display: none; }
-        .admin-dashboard { background: white; padding: 15px; border-radius: 12px; border: 1px solid #e1e8ed; display: none; margin-bottom:15px; }
-        .qr-modal { display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; color: white; padding: 20px; }
-        #toast { visibility: hidden; min-width: 250px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 6000; right: 30px; bottom: 30px; }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-/* NEWS TICKER ANIMATION */
-        #feedContainer {
-            display: flex;
-            flex-direction: column;
-            animation: tickerVertical 30s linear infinite;
-        }
-
-        /* Stops the ticker when you want to click a deal */
-        #feedContainer:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes tickerVertical {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); } /* Works with the cloned list below */
-        }
-
-        /* Wraps the feed so deals don't spill out */
-.main-feed {
-    height: 850px;
-    overflow: hidden; /* This hides the deals outside the window */
-    position: relative;
-    display: block; /* Changed from flex to block for better sticky support */
-}
-        #feedContentArea {
-    flex-grow: 1;
-    overflow: hidden;
-    position: relative;
-}
-
-        .pulse-dot {
-    height: 10px;
-    width: 10px;
-    background-color: #ff0000;
-    border-radius: 50%;
-    display: inline-block;
-    animation: pulse 1.5s infinite;
-}
-
-.search-container-fixed {
-    position: sticky;
-    top: 0;
-    background: #f7f7f7; /* Matches body background */
-    z-index: 1000; 
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-/* Ensure the feed has enough space so it doesn't start behind the box */
-#feedContainer {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    animation: tickerVertical 30s linear infinite;
-}
-        .new-tag {
-    background: #00ba7c;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 10px;
-    font-weight: 900;
-}
-@keyframes pulse {
-    0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
-    100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
-}
-
+        .qr-modal { display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; color: white; }
+        .pulse-dot { height: 8px; width: 8px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.9); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); } 100% { transform: scale(0.9); } }
     </style>
 </head>
 <body>
 
-<div id="toast">🔥 New Jhapat Alert!</div>
+<div id="toast" style="visibility:hidden; min-width:250px; background:#333; color:#fff; text-align:center; border-radius:8px; padding:16px; position:fixed; z-index:6000; right:30px; bottom:30px;">🔥 New Jhapat Alert!</div>
 
 <div id="qrModal" class="qr-modal" onclick="this.style.display='none'">
-    <div id="qrcode"></div>
-    <h3 id="couponText" style="margin-top:20px; font-weight: 800;"></h3>
-    <p>Show this to merchant to redeem</p>
+    <div id="qrcode" style="background:white; padding:10px; border-radius:10px;"></div>
+    <h3 id="couponText" style="margin-top:15px; font-weight: 800; font-size: 16px;"></h3>
 </div>
 
 <nav>
     <div class="nav-content">
-        <div onclick="goHome()" style="cursor: pointer;">
-            <img src="/logo.png" alt="Logo" style="height: 70px;" onerror="this.src='/logo.png'">
-        </div>
-        <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search Jhapat" style="border-radius: 20px; padding: 10px 18px; background: #222; border: none; color: white; outline:none; font-family: inherit;">
-        <div class="mobile-login-pill" onclick="toggleMobileLogin()">
-            <span>Login</span>
-            <span style="font-size: 18px;">👤</span>
-        </div>
+        <div onclick="goHome()" style="cursor: pointer; color: white; font-weight: 900; font-size: 18px;">JHAPAT</div>
+        <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search Jhapat" style="border-radius: 20px; padding: 6px 15px; background: #222; border: none; color: white; outline:none; font-size: 11px; width: 40%;">
+        <div onclick="toggleMobileLogin()" style="color: white; font-size: 11px; cursor: pointer;">Login 👤</div>
     </div>
 </nav>
 
-<div class="category-container" id="filterBar">
+<div class="category-container">
     <div class="category-chip active" id="catAll" onclick="filterCategory('')">All</div>
     <div class="category-chip" id="catNearby" onclick="filterNearby()" style="display:none;">🏠 Nearby</div>
     <div class="category-chip" onclick="filterCategory('Food')">🍔 Food</div>
     <div class="category-chip" onclick="filterCategory('Travel')">✈️ Travel</div>
     <div class="category-chip" onclick="filterCategory('Shop')">🛍️ Shop</div>
-    <div class="category-chip" onclick="filterCategory('Health')">🏋️ Health</div>
 </div>
 
 <div class="container">
     <div class="sidebar">
-        <div style="text-align: right; padding: 15px; display: none;" class="mobile-only-close" onclick="toggleMobileLogin()">
-            <span style="font-size: 30px; font-weight: 900; cursor: pointer;">✕</span>
-        </div>
-        
         <div class="profile-card">
             <div class="profile-bg"></div>
-            <div class="profile-info" style="padding: 15px; position: relative;">
+            <div style="padding: 10px; padding-top: 40px;">
                 <div class="avatar" id="sideAvatar"></div>
-                <div style="margin-top:40px;">
-                    <strong id="sideUsername" style="font-size: 18px; font-weight: 800;">Welcome Guest</strong><br>
-                    <span id="roleBadge" style="color:#657786; font-size: 13px;">@jhapat_user</span>
-                </div>
+                <strong id="sideUsername" style="font-size: 14px;">Welcome Guest</strong><br>
+                <span id="roleBadge" style="color:#657786; font-size: 11px;">@jhapat_user</span>
             </div>
             
             <div class="login-box" id="authBox">
                 <input type="text" id="loginUser" placeholder="Username">
                 <input type="password" id="loginPass" placeholder="Password">
-                <select id="loginRole">
-                    <option value="user">User</option>
-                    <option value="merchant">Merchant</option>
-                </select>
-                <div style="margin-bottom:12px;">
-                    <label style="font-size:11px; color:gray; font-weight: 700;">Profile Pic (Optional):</label>
-                    <input type="file" onchange="encodeImageFileAsURL(this, 'avatar')">
+                <select id="loginRole"><option value="user">User</option><option value="merchant">Merchant</option></select>
+                <div style="margin-bottom:8px; font-size:11px; color:#657786;">
+                    <input type="checkbox" id="acceptTerms" style="width: auto;"> Agree to <a href="/terms.html" style="color:#1da1f1;">Terms</a> & <a href="/privacy.html" style="color:#1da1f1;">Privacy</a>
                 </div>
-                <div style="margin-bottom:15px; font-size:12px; color:#657786;">
-                    <input type="checkbox" id="acceptTerms" style="width: auto;"> Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700;">Terms</a>
-                </div>
-                <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
-                <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
-                <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
-               
+                <button style="background: #1da1f1; color: white; width: 100%; padding: 8px; border:none; border-radius: 20px; font-weight: 800; cursor: pointer; font-size: 12px;" onclick="dbLogin()">Login</button>
+                <button style="background: none; border: none; color: #1da1f1; width: 100%; margin-top: 5px; font-size: 10px; cursor: pointer;" onclick="dbRegister()">Register New</button>
+                <p style="text-align:center; font-size:10px; margin-top: 8px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; text-decoration: none;">Forgot Password?</a></p>
             </div>
 
             <div class="login-box" id="resetBox" style="display:none;">
-                <h4 style="font-weight: 800;">Reset Password</h4>
+                <h4 style="margin:0 0 10px 0; font-size: 13px;">Reset Password</h4>
                 <input type="text" id="resetUser" placeholder="Username">
                 <input type="text" id="resetKey" placeholder="Recovery Key">
                 <input type="password" id="resetNewPass" placeholder="New Password">
-                <button style="background:black; color:white; width:100%; border-radius:25px; padding:12px; font-weight: 800;" onclick="dbReset()">Update Now</button>
-                <button style="background:none; border:none; color:gray; width:100%; margin-top:10px; cursor:pointer;" onclick="location.reload()">Cancel</button>
+                <button style="background:black; color:white; width:100%; border-radius:20px; padding:10px; font-size:12px; border:none; cursor:pointer;" onclick="dbReset()">Update Now</button>
+                <button style="background:none; border:none; color:gray; width:100%; margin-top:5px; font-size:11px; cursor:pointer;" onclick="location.reload()">Cancel</button>
             </div>
 
             <div class="login-box" id="logoutBox" style="display: none;">
-                <button style="background: #e0245e; color: white; width: 100%; padding:14px; border:none; border-radius:25px; font-weight:900;" onclick="dbLogout()">Logout</button>
-                <button id="adminBtn" style="background: #495057; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleAdminDashboard()">Admin Panel</button>
-                <button id="merchantBtn" style="background: #fb8c00; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleMerchantStats()">Merchant Stats</button>
+                <button style="background: #e0245e; color: white; width: 100%; padding: 8px; border:none; border-radius: 20px; font-size: 12px; cursor:pointer;" onclick="dbLogout()">Logout</button>
             </div>
         </div>
+        <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; padding: 8px; border-radius: 8px; font-size: 11px; display: none; font-weight: 700;">📍 Detecting...</div>
+        <div style="text-align: right; margin-top: 5px;"><a href="javascript:void(0)" onclick="resetLocation()" style="font-size: 10px; color: #1da1f1; text-decoration: none;">🔄 Update Location</a></div>
     </div>
 
-  <div class="main-feed">
-    <div class="search-container-fixed">
-        <div id="liveStatus" style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; font-weight: 800; color: #ff0000;">
-            <span class="pulse-dot"></span> LIVE DEALS
-        </div>
-        <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid #ddd; font-family: inherit; resize: none; box-sizing: border-box;"></textarea>
-        <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
-    </div>
-
-    <div id="feedContentArea">
-        <div id="feedContainer"></div>
-    </div>
-</div>
-        
-        <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-bottom: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
-
-        <div id="notificationPanel" class="admin-dashboard"><h3 style="font-weight: 900;">Alert History</h3><div id="notifList"></div></div>
-        <div id="messagePanel" class="admin-dashboard"><h3 style="font-weight: 900;">My Claimed Coupons</h3><div id="msgList"></div></div>
-        <div id="adminPanel" class="admin-dashboard"><h3 style="font-weight: 900;">Admin Management</h3><table id="adminTable"><thead><tr><th>User</th><th>Role</th><th>Gold Status</th></tr></thead><tbody id="adminBody"></tbody></table></div>
-        <div id="merchantPanel" class="admin-dashboard">
-            <h3 style="font-weight: 900;">Redeem Coupon</h3>
-            <div style="display:flex; gap:10px; margin-bottom: 20px;">
-                <input type="text" id="redeemCode" placeholder="JPT-XXXXX" style="flex:1; padding:12px; border-radius:8px; border:1px solid #ddd;">
-                <button onclick="redeemCoupon()" style="background:#1da1f1; color:white; padding:0 20px; border-radius:8px; border:none; font-weight:800;">Verify</button>
-            </div>
-            <h3 style="font-weight: 900;">Your Deal Analytics</h3>
-            <table id="statsTable"><thead><tr><th>Offer</th><th>Remaining</th></tr></thead><tbody id="statsBody"></tbody></table>
-        </div>
-
+    <div class="main-feed">
         <div id="feedContentArea">
-            <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
-                <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-                <textarea id="dealContent" rows="2" placeholder="Describe offer (e.g. 50% Off Burgers)"></textarea>
-                <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px; font-weight:600;">
-                    <option value="Offer">🔥 Hot Offer</option>
-                    <option value="Food">🍔 Food</option>
-                    <option value="Travel">✈️ Travel</option>
-                    <option value="Shop">🛍️ Shop</option>
-                    <option value="Health">🏋️ Health</option>
-                </select>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                    <input type="text" id="dealPrice" placeholder="Price (e.g. Rs 12)">
-                    <input type="text" id="dealArea" placeholder="Area">
+            <div id="merchantPostBox" style="background: #fffbe6; padding: 12px; display: none; border-bottom: 1px solid #ffe58f; z-index: 100; position: relative;">
+                <h4 style="margin:0; font-size: 13px; color: #856404;">🏪 Post a Live Jhapat</h4>
+                <textarea id="dealContent" rows="1" placeholder="Describe offer" style="width: 100%; margin-top: 5px; font-size: 12px; font-family: inherit;"></textarea>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="text" id="dealPrice" placeholder="Price" style="width: 50%;">
+                    <input type="text" id="dealArea" placeholder="Area" style="width: 50%;">
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                    <input type="number" id="dealLeft" placeholder="Quantity">
-                    <input type="text" id="dealTimer" placeholder="Expiry Hours (e.g. 2)">
-                </div>
-                <div style="margin-top: 10px;">
-                    <label style="font-size:11px; font-weight:800; color:gray;">Offer Photo:</label>
-                    <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
-                </div>
-                <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; font-weight:900; border:none; cursor:pointer;" onclick="postMerchantDeal()">Post Live Jhapat</button>
+                <button style="background: #faad14; color: white; width: 100%; margin-top: 8px; padding: 8px; border-radius: 20px; border: none; font-weight: 800; font-size: 12px; cursor:pointer;" onclick="postMerchantDeal()">Post Live</button>
             </div>
-            
-            <div style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #e1e8ed; margin-bottom: 20px;">
-                <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="font-weight: 600;"></textarea>
-                <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
-            </div>
-
             <div id="feedContainer"></div>
         </div>
     </div>
 
     <div class="right-sidebar">
-        <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
-            <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
-            <div id="goldSpotlight"><p style="font-size:13px; color: #666;">Scanning local premium offers...</p></div>
+        <div class="profile-card" style="padding: 12px; border: 2px solid #fab005; background: #fffbe6;">
+            <strong style="color: #fab005; font-size: 13px;">✨ Gold Spotlight</strong>
+            <div id="goldSpotlight" style="margin-top: 10px;"><p style="font-size: 11px; color: #666;">Scanning premium offers...</p></div>
         </div>
     </div>
 </div>
@@ -348,343 +191,104 @@
 <footer>powered by <strong>kanams.ai</strong></footer>
 
 <script>
-    let currentUser = null;
-    let allDeals = [];
-    let userCity = null;
-    let timerInterval = null;
-    let base64Avatar = "";
-    let base64DealImg = "";
+    let currentUser = null; let allDeals = []; let userCity = null;
+    const qrcode = new QRCode(document.getElementById("qrcode"), { width: 180, height: 180 });
 
-    function encodeImageFileAsURL(element, type) {
-        const file = element.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            if(type === 'avatar') base64Avatar = reader.result;
-            else base64DealImg = reader.result;
-        }
-        if (file) reader.readAsDataURL(file);
-    }
-
-    async function seedData() {
-        if(!confirm("Populate sample jhapats?")) return;
-        try {
-            const res = await fetch('/api/admin/seed', { method: 'POST' });
-            if(res.ok) loadTweets();
-        } catch(e) { console.error(e); }
-    }
-
-    function filterNearby() {
-    if (!userCity) {
-        alert("Detecting your location... please wait or ensure GPS is on.");
-        detectLocation();
-        return;
-    }
-    
-    // De-activate other chips and activate the Nearby chip
-    document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-    document.getElementById('catNearby').classList.add('active');
-
-    // Filter deals where the 'area' includes your city name
-    const nearbyDeals = allDeals.filter(d => 
-        d.area && d.area.toLowerCase().includes(userCity.toLowerCase())
-    );
-
-    if (nearbyDeals.length === 0) {
-        document.getElementById('feedContainer').innerHTML = 
-            `<div style="padding:20px; text-align:center;">No Jhapats found in ${userCity} yet! 📍</div>`;
-    } else {
-        renderDeals(nearbyDeals);
-    }
-}
-
-  function detectLocation() {
-    if ("geolocation" in navigator) {
+    function detectLocation() {
         const badge = document.getElementById('geoBadge');
-        badge.style.display = 'block';
-        badge.innerHTML = "📍 Requesting location access...";
-
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const { latitude, longitude } = position.coords;
-            try {
-                // We add zoom=12 to get a wider area search
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
-                const data = await res.json();
-                
-                // FIXED: Checking multiple fields so it never says "unavailable"
-                userCity = data.address.city || 
-                           data.address.town || 
-                           data.address.village || 
-                           data.address.suburb || 
-                           data.address.neighbourhood ||
-                           data.address.county;
-                
-                if (userCity) {
-                    badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-                    // SUCCESS: Show the button now
-                    document.getElementById('catNearby').style.display = 'inline-block';
-                } else {
-                    // Fallback so the button still works
-                    userCity = "My Area";
-                    document.getElementById('catNearby').style.display = 'inline-block';
-                }
-            } catch (e) { 
-                badge.innerHTML = "📍 Connection error. Try again.";
-            }
-        }, (error) => {
-            // Check if user blocked location
-            if(error.code === 1) badge.innerHTML = "📍 Location blocked. Please allow in browser 🔒";
-            else badge.innerHTML = "📍 GPS Timeout. Check your signal.";
-        }, { 
-            enableHighAccuracy: true, // Required for many laptops/mobiles
-            timeout: 10000 
-        });
+        const savedCity = localStorage.getItem('jhapat_cached_city');
+        if (savedCity) {
+            userCity = savedCity; badge.style.display = 'block'; badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+            document.getElementById('catNearby').style.display = 'inline-block'; return;
+        }
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&zoom=12`);
+                    const data = await res.json();
+                    userCity = data.address.city || data.address.town || data.address.village;
+                    if(userCity) {
+                        localStorage.setItem('jhapat_cached_city', userCity);
+                        badge.style.display='block'; badge.innerHTML = `📍 Near <b>${userCity}</b>`;
+                        document.getElementById('catNearby').style.display = 'inline-block';
+                    }
+                } catch(e) {}
+            });
+        }
     }
-}
+
+    async function loadTweets() {
+        try {
+            const res = await fetch('/api/tweets');
+            const data = await res.json() || [];
+            allDeals = data.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+            renderDeals(allDeals);
+        } catch(e) {}
+    }
+
+    function renderDeals(data) {
+        const container = document.getElementById('feedContainer');
+        if(!data || data.length === 0) { 
+            container.style.animation = "none";
+            container.innerHTML = "<p style='padding:20px; text-align:center;'>No deals found.</p>"; return; 
+        }
+        container.style.animation = 'none';
+        container.offsetHeight; // Reflow
+        container.style.animation = "tickerVertical 35s linear infinite";
+        const topTen = data.slice(0, 10); const tickerList = [...topTen, ...topTen];
+        container.innerHTML = tickerList.map(t => `
+            <div class="tweet">
+                <div style="padding:10px; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width:30px; height:30px; border-radius:5px;">
+                        <div><strong style="font-size:12px;">${t.user}</strong><br><span style="font-size:10px; color:gray;">📍 ${t.area || 'Nearby'}</span></div>
+                    </div>
+                    ${(new Date() - new Date(t.timestamp)) < 900000 ? '<span class="new-tag">NEW</span>' : ''}
+                </div>
+                ${t.image ? `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : ''}
+                <div style="padding:15px;">
+                    <strong style="font-size:15px;">${t.content}</strong>
+                    <div style="display:flex; justify-content:space-between; margin-top:10px; align-items:center;">
+                        <span style="font-weight:900; font-size:18px;">${t.price}</span>
+                        <button onclick="jhapatDeal(${t.id})" style="background:#1da1f1; color:white; padding:8px 20px; border-radius:10px; border:none; font-weight:800; cursor:pointer; font-size: 11px;">JHAPAT</button>
+                    </div>
+                </div>
+            </div>`).join('');
+    }
 
     async function dbLogin() {
         const username = document.getElementById('loginUser').value;
         const password = document.getElementById('loginPass').value;
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
-        });
+        const res = await fetch('/api/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username, password}) });
         if(res.ok) {
             currentUser = await res.json();
             document.getElementById('sideUsername').innerText = "Welcome " + currentUser.username;
-            document.getElementById('roleBadge').innerText = "@" + currentUser.role;
-            if(currentUser.avatar) document.getElementById('sideAvatar').style.backgroundImage = `url(${currentUser.avatar})`;
             document.getElementById('authBox').style.display = 'none';
             document.getElementById('logoutBox').style.display = 'block';
             document.getElementById('merchantPostBox').style.display = (currentUser.role === 'merchant') ? 'block' : 'none';
-            if(currentUser.role === 'admin') document.getElementById('adminBtn').style.display = 'block';
-            if(currentUser.role === 'merchant') document.getElementById('merchantBtn').style.display = 'block';
-            
-            // Auto close mobile sidebar after login
-            document.querySelector('.sidebar').classList.remove('mobile-visible');
             loadTweets();
-        } else alert("Invalid username or password");
-    }
-
-    async function dbRegister() {
-        if (!document.getElementById('acceptTerms').checked) return alert("Accept terms!");
-        const username = document.getElementById('loginUser').value;
-        const password = document.getElementById('loginPass').value;
-        const role = document.getElementById('loginRole').value;
-        const res = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, role, avatar: base64Avatar })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            alert("Success! Your Recovery Key is: " + data.recovery_key);
-        } else alert("Registration failed");
-    }
-
-    async function showReset() {
-        document.getElementById('authBox').style.display = 'none';
-        document.getElementById('resetBox').style.display = 'block';
+        } else alert("Invalid login");
     }
 
     async function dbReset() {
         const username = document.getElementById('resetUser').value;
         const recoveryKey = document.getElementById('resetKey').value;
         const newPassword = document.getElementById('resetNewPass').value;
-
-        if (!username || !recoveryKey || !newPassword) {
-            alert("Please fill all fields!");
-            return;
-        }
-
-        const res = await fetch('/api/reset-password', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, recoveryKey, newPassword })
-        });
-
-        if (res.ok) {
-            alert("🔥 Password Updated! You can now login.");
-            location.reload();
-        } else {
-            alert("❌ Reset Failed: Incorrect Username or Recovery Key");
-        }
+        const res = await fetch('/api/reset-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, recoveryKey, newPassword }) });
+        if (res.ok) { alert("Updated!"); location.reload(); } else alert("Failed");
     }
-    
+
+    function showReset() { document.getElementById('authBox').style.display = 'none'; document.getElementById('resetBox').style.display = 'block'; }
     function dbLogout() { location.reload(); }
-
-async function loadTweets() {
-    try {
-        const res = await fetch('/api/tweets');
-        const data = await res.json() || [];
-        
-        // SORTING LOGIC: This puts the newest Jhapats at the top of the array
-        allDeals = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        
-        renderDeals(allDeals);
-        renderGoldSpotlight();
-    } catch (e) {
-        console.error("Could not fetch latest deals", e);
-    }
-}
-
-// THE AUTO-PULSE: Every 30 seconds, it silently checks the DB for new deals
-setInterval(() => {
-    console.log("Syncing with live database...");
-    loadTweets();
-}, 30000);
-
-    function startTimerMath() {
-        if(timerInterval) clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-            allDeals.forEach(deal => {
-                const el = document.getElementById(`timer-${deal.id}`);
-                if (el) {
-                    const expiry = new Date(new Date(deal.timestamp).getTime() + (parseInt(deal.timer || 2) * 3600000));
-                    const diff = expiry - new Date();
-                    if (diff <= 0) {
-                        el.innerText = "EXPIRED";
-                        el.style.color = "red";
-                    } else {
-                        const h = Math.floor(diff / 3600000);
-                        const m = Math.floor((diff % 3600000) / 60000);
-                        const s = Math.floor((diff % 60000) / 1000);
-                        el.innerText = `${h}h ${m}m ${s}s`;
-                    }
-                }
-            });
-        }, 1000);
-    }
-
-  function renderDeals(data) {
-    if (!data || data.length === 0) return;
-
-    // 1. Sort by newest first
-    const sortedData = [...data].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    
-    // 2. Take top 10 and clone for the loop
-    const topTen = sortedData.slice(0, 10);
-    const tickerList = [...topTen, ...topTen];
-
-    document.getElementById('feedContainer').innerHTML = tickerList.map(t => {
-        // --- NEW BADGE LOGIC (15 Minutes) ---
-        const dealTime = new Date(t.timestamp).getTime();
-        const currentTime = new Date().getTime();
-        const isNew = (currentTime - dealTime) < (15 * 60 * 1000); 
-
-        const imgHTML = t.image && t.image.length > 5 ? 
-            `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD SPOTLIGHT</div>' : ''}</div>` : '';
-
-        return `
-            <div class="tweet ${t.is_premium ? 'gold-card' : ''}">
-                <div style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width: 40px; height: 40px; border-radius: 50%;">
-                        <div>
-                            <div style="font-weight: 800; font-size: 15px;">${t.user} ${t.is_premium ? '👑' : '✓'}</div>
-                            <div style="color: #657786; font-size: 11px; font-weight:700;">📍 ${t.area || 'Nearby'}</div>
-                        </div>
-                    </div>
-                    ${isNew ? '<span class="new-tag">NEW</span>' : ''}
-                </div>
-                ${imgHTML}
-                <div style="padding: 20px;">
-                    <strong style="font-size: 22px; font-weight: 800; display:block; margin-bottom:15px;">${t.content}</strong>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #000; font-weight: 900; font-size: 24px;">${t.price}</span>
-                        <button onclick="jhapatDeal(${t.id})" style="background: #1da1f1; color: white; padding: 15px 35px; border:none; border-radius: 15px; font-weight: 900; cursor:pointer;">JHAPAT</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-    const qrcode = new QRCode(document.getElementById("qrcode"), { width: 220, height: 220 });
-
-    async function jhapatDeal(id) {
-        if(!currentUser) {
-            alert("Login to grab this jhapat!");
-            toggleMobileLogin();
-            return;
-        }
-        const code = "JPT-" + Math.random().toString(36).substr(2, 6).toUpperCase();
-        const res = await fetch(`/api/jhapat/claim/${id}`, { 
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({username: currentUser.username, code: code}) 
-        });
-        if(res.ok) {
-            document.getElementById('qrModal').style.display = 'flex';
-            document.getElementById('couponText').innerText = "COUPON: " + code;
-            qrcode.clear(); qrcode.makeCode(code);
-            loadTweets();
-        }
-    }
-
-    function filterCategory(cat) {
-        document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-        if(!cat) {
-            document.getElementById('catAll').classList.add('active');
-            return renderDeals(allDeals);
-        }
-        event.target.classList.add('active');
-        renderDeals(allDeals.filter(d => d.category === cat));
-    }
-
-    function toggleMobileLogin() {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.classList.toggle('mobile-visible');
-    }
-
-    function goHome() { 
-        document.querySelector('.sidebar').classList.remove('mobile-visible');
-        window.scrollTo(0, 0);
-        loadTweets();
-    }
-
-    async function postMerchantDeal() {
-        const dealData = {
-            user: currentUser.username,
-            content: document.getElementById('dealContent').value,
-            category: document.getElementById('dealCategory').value,
-            price: document.getElementById('dealPrice').value,
-            area: document.getElementById('dealArea').value,
-            left: parseInt(document.getElementById('dealLeft').value) || 0,
-            timer: document.getElementById('dealTimer').value,
-            image: base64DealImg
-        };
-        const res = await fetch('/api/merchant/deal', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(dealData) });
-        if(res.ok) {
-            alert("Jhapat is Live!");
-            location.reload();
-        }
-    }
+    function goHome() { window.scrollTo(0,0); loadTweets(); }
+    function resetLocation() { localStorage.removeItem('jhapat_cached_city'); location.reload(); }
+    function toggleMobileLogin() { document.querySelector('.sidebar').classList.toggle('mobile-visible'); }
+    function filterCategory(cat) { renderDeals(cat ? allDeals.filter(d => d.category === cat) : allDeals); }
+    function filterNearby() { if(!userCity) return; renderDeals(allDeals.filter(d => d.area?.toLowerCase().includes(userCity.toLowerCase()))); }
 
     window.onload = () => { loadTweets(); detectLocation(); };
-
-    // Check for new Jhapats every 1 minute
-setInterval(() => {
-    console.log("Checking for fresh Jhapats...");
-    loadTweets(); 
-}, 60000);
-    
+    setInterval(loadTweets, 30000);
 </script>
-
-<div class="bottom-nav">
-    <div class="bottom-nav-item active" onclick="goHome()">
-        <span>🏠</span>
-        Home
-    </div>
-    <div class="bottom-nav-item" onclick="document.getElementById('searchJhapatsText').focus()">
-        <span>🔍</span>
-        Search
-    </div>
-    <div class="bottom-nav-item" onclick="toggleMobileLogin()">
-        <span>👤</span>
-        Profile
-    </div>
-</div>
 
 </body>
 </html>
