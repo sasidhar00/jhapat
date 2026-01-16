@@ -107,44 +107,50 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+        }
+        /* Super Prominent Gold Sponsor Style */
+        .gold-sponsor {
+            background: linear-gradient(135deg, #fff9e6, #ffe082, #ffecb3);
+            border: 4px solid #ffca28;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+        }
+        .gold-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(90deg, #ffd700, #ffea00, #ffd700);
+            color: #222;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            border: 3px solid white;
+            z-index: 10;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6); }
+            to   { box-shadow: 0 6px 25px rgba(255, 215, 0, 1); }
         }
         .image-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #eee; }
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .badge-gold-float { position: absolute; top: 12px; left: 12px; background: #fab005; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .new-tag { background: #00ba7c; color: white; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 900; }
         .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
         .profile-bg { background: #1da1f2; height: 95px; background-size: cover; }
         .avatar { width: 72px; height: 72px; border-radius: 12px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
         .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
         .login-box input, .login-box select, .login-box textarea { 
-            width: 100%; 
-            margin-bottom: 8px; 
-            padding: 12px; 
-            border: 1px solid #e1e8ed; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            font-family: inherit; 
-            box-sizing: border-box; 
+            width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 16px; font-family: inherit; box-sizing: border-box; 
         }
         @media (max-width: 1024px) {
-            body {
-                padding-top: 155px;
-                padding-bottom: 120px;
-            }
-            .container {
-                grid-template-columns: 1fr;
-                padding: 0 15px;
-                gap: 20px;
-            }
-            .sidebar, .right-sidebar {
-                display: block !important;
-                width: 100%;
-                margin: 0 auto;
-            }
-            .tweet {
-                border-radius: 12px;
-                margin-bottom: 15px;
-            }
+            body { padding-top: 155px; padding-bottom: 120px; }
+            .container { grid-template-columns: 1fr; padding: 0 15px; gap: 20px; }
+            .sidebar, .right-sidebar { display: block !important; width: 100%; margin: 0 auto; }
+            .tweet { border-radius: 12px; margin-bottom: 15px; }
             .mobile-login-pill { display: flex !important; }
             .bottom-nav { display: flex; }
             .sidebar.mobile-visible {
@@ -159,20 +165,8 @@
                 overflow-y: auto;
                 padding-top: 60px;
             }
-            .main-feed {
-                height: auto !important;
-                overflow: visible !important;
-                border: none;
-                background: transparent;
-                border-radius: 0;
-            }
-            #feedContainer {
-                animation: none !important;
-                padding: 10px 0;
-            }
-            #merchantPostBox {
-                margin: 20px 0;
-            }
+            .main-feed { height: auto !important; overflow: visible !important; border: none; background: transparent; border-radius: 0; }
+            #feedContainer { animation: none !important; padding: 10px 0; }
         }
         .main-feed {
             min-height: 600px;
@@ -294,15 +288,8 @@
         </div>
     </div>
 
+    <!-- Right sidebar now only has Post Jhapat box (Gold Spotlight is gone) -->
     <div class="right-sidebar">
-        <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
-            <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
-            <div id="goldSpotlight">
-                <p style="font-size:13px; color: #666;">Scanning local premium offers...</p>
-            </div>
-        </div>
-
-        <!-- Post Jhapat box - now correctly here! -->
         <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-top: 20px; display: none;">
             <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
             <textarea id="dealContent" rows="3" placeholder="Describe your super offer..."></textarea>
@@ -459,7 +446,6 @@
                 prevDealCount = allDeals.length;
             }
             renderDeals(allDeals);
-            updateGoldSpotlight();
         } catch (e) { console.error(e); }
     }
 
@@ -471,10 +457,14 @@
         }
         container.innerHTML = data.map(t => {
             const isNew = (new Date().getTime() - new Date(t.timestamp).getTime()) < (15 * 60 * 1000);
+            const isGold = t.is_premium === 1;
+
             const imgHTML = t.image && t.image.length > 5 ?
-                `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : '';
+                `<div class="image-wrapper"><img src="${t.image}"></div>` : '';
+
             return `
-                <div class="tweet ${t.is_premium ? 'gold-card' : ''}">
+                <div class="tweet ${isGold ? 'gold-sponsor' : ''}">
+                    ${isGold ? '<div class="gold-badge">Gold Sponsor - More Jhapats ✨</div>' : ''}
                     <div style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width: 40px; height: 40px; border-radius: 50%;">
@@ -615,16 +605,6 @@
 
     function toggleMerchantStats() {
         alert("Merchant stats coming soon! 🚀");
-    }
-
-    function updateGoldSpotlight() {
-        const premiums = allDeals.filter(d => d.is_premium);
-        const spotlight = document.getElementById('goldSpotlight');
-        if (premiums.length === 0) {
-            spotlight.innerHTML = '<p style="font-size:13px; color: #666;">No premium offers available now.</p>';
-        } else {
-            spotlight.innerHTML = premiums.map(p => `<div style="margin-bottom:10px;"><strong>${p.content}</strong> - ${p.price}</div>`).join('');
-        }
     }
 
     function showToast() {
