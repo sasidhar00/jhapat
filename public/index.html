@@ -136,10 +136,17 @@
 
         /* Wraps the feed so deals don't spill out */
         .main-feed {
-            height: 800px;
+            height: 850px;
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
+        #feedContentArea {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
 
         .pulse-dot {
     height: 10px;
@@ -150,11 +157,26 @@
     animation: pulse 1.5s infinite;
 }
 
+    .search-container-fixed {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100; /* Higher than the cards */
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+/* Ensure the feed has enough space so it doesn't start behind the box */
+#feedContainer {
+    padding-top: 10px;
+}
 @keyframes pulse {
     0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
     70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
     100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
 }
+
     </style>
 </head>
 <body>
@@ -222,7 +244,7 @@
                 <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
                 <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
                 <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
-                <button style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; font-size:11px; cursor:pointer; opacity: 0.5;" onclick="seedData()">[Dev] Seed Data</button>
+               
             </div>
 
             <div class="login-box" id="resetBox" style="display:none;">
@@ -246,6 +268,12 @@
         <div id="liveStatus" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 12px; font-weight: 800; color: #ff0000;">
         <span class="pulse-dot"></span> LIVE DEALS
         </div>
+        
+        <div class="search-container-fixed">
+        <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid #ddd; font-family: inherit; resize: none;"></textarea>
+        <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
+    </div>
+        
         <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-bottom: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
 
         <div id="notificationPanel" class="admin-dashboard"><h3 style="font-weight: 900;">Alert History</h3><div id="notifList"></div></div>
@@ -639,6 +667,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
