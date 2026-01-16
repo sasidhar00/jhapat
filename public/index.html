@@ -140,7 +140,21 @@
             overflow: hidden;
             position: relative;
         }
-        
+
+        .pulse-dot {
+    height: 10px;
+    width: 10px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+    100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
     </style>
 </head>
 <body>
@@ -229,6 +243,9 @@
     </div>
 
     <div class="main-feed">
+        <div id="liveStatus" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 12px; font-weight: 800; color: #ff0000;">
+        <span class="pulse-dot"></span> LIVE DEALS
+        </div>
         <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-bottom: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
 
         <div id="notificationPanel" class="admin-dashboard"><h3 style="font-weight: 900;">Alert History</h3><div id="notifList"></div></div>
@@ -455,13 +472,26 @@
     
     function dbLogout() { location.reload(); }
 
-    async function loadTweets() {
+async function loadTweets() {
+    try {
         const res = await fetch('/api/tweets');
-        allDeals = await res.json() || [];
+        const data = await res.json() || [];
+        
+        // SORTING LOGIC: This puts the newest Jhapats at the top of the array
+        allDeals = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
         renderDeals(allDeals);
         renderGoldSpotlight();
-        startTimerMath();
+    } catch (e) {
+        console.error("Could not fetch latest deals", e);
     }
+}
+
+// THE AUTO-PULSE: Every 30 seconds, it silently checks the DB for new deals
+setInterval(() => {
+    console.log("Syncing with live database...");
+    loadTweets();
+}, 30000);
 
     function startTimerMath() {
         if(timerInterval) clearInterval(timerInterval);
@@ -609,6 +639,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
