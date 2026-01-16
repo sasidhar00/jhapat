@@ -319,52 +319,55 @@
         } catch(e) { console.error(e); }
     }
 
-   async function detectLocation() {
+function detectLocation() {
     const badge = document.getElementById('geoBadge');
     
-    // 1. Check if we already know where the user is from a previous visit
+    // 1. Instant check: If userCity is already set in this session or localStorage
     const cachedCity = localStorage.getItem('jhapat_cached_city');
     
-    if (cachedCity) {
-        userCity = cachedCity;
+    if (userCity || cachedCity) {
+        userCity = userCity || cachedCity; // Use global variable if available, else use storage
         badge.style.display = 'block';
         badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
         document.getElementById('catNearby').style.display = 'inline-block';
-        console.log("Location loaded from cache:", userCity);
-        return; // EXIT HERE: Do not trigger the GPS popup!
+        return; 
     }
 
-    // 2. If no cache, request GPS access
+    // 2. If nothing is cached, proceed with GPS
     if ("geolocation" in navigator) {
         badge.style.display = 'block';
         badge.innerHTML = "📍 Requesting location access...";
         
         navigator.geolocation.getCurrentPosition(async (position) => {
             const { latitude, longitude } = position.coords;
+            
+            // Set a timeout for the fetch itself
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 4000); // 4 second fetch timeout
+
             try {
-                // Reversed Geocoding to get City Name
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`, { signal: controller.signal });
                 const data = await res.json();
+                clearTimeout(id);
                 
                 userCity = data.address.city || data.address.town || data.address.suburb || data.address.village || data.address.county;
                 
                 if (userCity) {
-                    // 3. SAVE to cache so we don't ask again
                     localStorage.setItem('jhapat_cached_city', userCity);
-                    
                     badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
                     document.getElementById('catNearby').style.display = 'inline-block';
+                } else {
+                    badge.innerHTML = "📍 Location found, city unknown.";
                 }
             } catch (e) { 
-                badge.innerHTML = "📍 Connection error."; 
+                badge.innerHTML = "📍 Connection error. Showing nearby."; 
+                userCity = "Nearby"; // Fallback so it stops requesting
             }
         }, (error) => {
-            // Handle cases where user blocks location
             badge.innerHTML = "📍 Location access denied.";
-            console.warn("User denied Geolocation");
         }, {
-            enableHighAccuracy: false, // Set to false to make the request faster/less intrusive
-            timeout: 5000
+            enableHighAccuracy: false, 
+            timeout: 5000 // 5 seconds for the GPS hardware to respond
         });
     }
 }
@@ -513,5 +516,6 @@
 
 </body>
 </html>
+
 
 
