@@ -223,9 +223,11 @@
                     <label style="font-size:11px; color:gray; font-weight: 700;">Profile Pic (Optional):</label>
                     <input type="file" onchange="encodeImageFileAsURL(this, 'avatar')">
                 </div>
-                <div style="margin-bottom:15px; font-size:12px; color:#657786;">
-                    <input type="checkbox" id="acceptTerms" style="width: auto;"> Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700;">Terms</a>
-                </div>
+              <div style="margin-bottom:15px; font-size:12px; color:#657786; line-height: 1.5;">
+                   <input type="checkbox" id="acceptTerms" style="width: auto; cursor: pointer;"> 
+                        Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Terms</a> 
+                         & <a href="/privacy.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Privacy</a>
+            </div>
                 <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
                 <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
                 <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
@@ -248,6 +250,9 @@
             </div>
         </div>
         <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-top: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
+        <div style="text-align: right; margin-top: 5px;">
+        <a href="javascript:void(0)" onclick="resetLocation()" style="font-size: 10px; color: #1da1f1; text-decoration: none; font-weight: 700;">🔄 Update Location</a>
+    </div>
     </div>
 
     <div class="main-feed">
@@ -314,26 +319,55 @@
         } catch(e) { console.error(e); }
     }
 
-    function detectLocation() {
-        if ("geolocation" in navigator) {
-            const badge = document.getElementById('geoBadge');
-            badge.style.display = 'block';
-            badge.innerHTML = "📍 Requesting location access...";
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const { latitude, longitude } = position.coords;
-                try {
-                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
-                    const data = await res.json();
-                    userCity = data.address.city || data.address.town || data.address.suburb || data.address.village;
-                    if (userCity) {
-                        badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-                        document.getElementById('catNearby').style.display = 'inline-block';
-                    }
-                } catch (e) { badge.innerHTML = "📍 Connection error."; }
-            });
-        }
+   function detectLocation() {
+    const badge = document.getElementById('geoBadge');
+    
+    // 1. Check if we already know where the user is from a previous visit
+    const cachedCity = localStorage.getItem('jhapat_cached_city');
+    
+    if (cachedCity) {
+        userCity = cachedCity;
+        badge.style.display = 'block';
+        badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+        document.getElementById('catNearby').style.display = 'inline-block';
+        console.log("Location loaded from cache:", userCity);
+        return; // EXIT HERE: Do not trigger the GPS popup!
     }
 
+    // 2. If no cache, request GPS access
+    if ("geolocation" in navigator) {
+        badge.style.display = 'block';
+        badge.innerHTML = "📍 Requesting location access...";
+        
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+                // Reversed Geocoding to get City Name
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
+                const data = await res.json();
+                
+                userCity = data.address.city || data.address.town || data.address.suburb || data.address.village || data.address.county;
+                
+                if (userCity) {
+                    // 3. SAVE to cache so we don't ask again
+                    localStorage.setItem('jhapat_cached_city', userCity);
+                    
+                    badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+                    document.getElementById('catNearby').style.display = 'inline-block';
+                }
+            } catch (e) { 
+                badge.innerHTML = "📍 Connection error."; 
+            }
+        }, (error) => {
+            // Handle cases where user blocks location
+            badge.innerHTML = "📍 Location access denied.";
+            console.warn("User denied Geolocation");
+        }, {
+            enableHighAccuracy: false, // Set to false to make the request faster/less intrusive
+            timeout: 5000
+        });
+    }
+}
     async function dbLogin() {
         const username = document.getElementById('loginUser').value;
         const password = document.getElementById('loginPass').value;
@@ -452,6 +486,18 @@
         renderDeals(allDeals.filter(d => d.category === cat));
     }
 
+    function resetLocation() {
+    // 1. Clear the memory
+    localStorage.removeItem('jhapat_cached_city');
+    // 2. Clear the variable
+    userCity = null;
+    // 3. Hide the badge temporarily
+    document.getElementById('geoBadge').style.display = 'none';
+    document.getElementById('catNearby').style.display = 'none';
+    // 4. Trigger the fresh GPS request
+    detectLocation();
+}
+
     function toggleMobileLogin() { document.querySelector('.sidebar').classList.toggle('mobile-visible'); }
     function goHome() { window.scrollTo(0, 0); loadTweets(); }
 
@@ -467,3 +513,4 @@
 
 </body>
 </html>
+
