@@ -52,14 +52,14 @@
             justify-content: center;
             align-items: center;
         }
-        .nav-content { 
-            width: 100%; 
-            max-width: 1190px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 0 15px; 
-            box-sizing: border-box; 
+        .nav-content {
+            width: 100%;
+            max-width: 1190px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
         .category-container {
             position: fixed;
@@ -76,16 +76,16 @@
             scrollbar-width: none;
         }
         .category-container::-webkit-scrollbar { display: none; }
-        .category-chip { 
-            background: #f0f0f0; 
-            border: none; 
-            color: #444; 
-            padding: 10px 20px; 
-            border-radius: 25px; 
-            font-size: 14px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            white-space: nowrap; 
+        .category-chip {
+            background: #f0f0f0;
+            border: none;
+            color: #444;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 700;
+            white-space: nowrap;
         }
         .category-chip.active { background: #1da1f1; color: white; }
         .container {
@@ -99,14 +99,14 @@
             box-sizing: border-box;
             align-items: start;
         }
-        .tweet { 
-            background: white; 
-            border-radius: 12px; 
-            border: 1px solid #e1e8ed; 
-            margin-bottom: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden; 
+        .tweet {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         .image-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #eee; }
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
@@ -116,51 +116,62 @@
         .profile-bg { background: #1da1f2; height: 95px; background-size: cover; }
         .avatar { width: 72px; height: 72px; border-radius: 12px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
         .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
-        .login-box input, .login-box select, .login-box textarea { width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .login-box input, .login-box select, .login-box textarea { 
+            width: 100%; 
+            margin-bottom: 8px; 
+            padding: 12px; 
+            border: 1px solid #e1e8ed; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-family: inherit; 
+            box-sizing: border-box; 
+        }
         @media (max-width: 1024px) {
-            body { 
-                padding-top: 155px; 
-                padding-bottom: 100px; 
+            body {
+                padding-top: 155px;
+                padding-bottom: 120px;
             }
-            .container { 
-                grid-template-columns: 1fr; 
-                padding: 0; 
-                gap: 0; 
+            .container {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+                gap: 20px;
             }
-            .sidebar, .right-sidebar { display: none; }
-            .tweet { 
-                border-radius: 0; 
-                border-left: none; 
-                border-right: none; 
-                margin-bottom: 15px; 
+            .sidebar, .right-sidebar {
+                display: block !important;
+                width: 100%;
+                margin: 0 auto;
+            }
+            .tweet {
+                border-radius: 12px;
+                margin-bottom: 15px;
             }
             .mobile-login-pill { display: flex !important; }
             .bottom-nav { display: flex; }
-            .sidebar.mobile-visible { 
-                display: block !important; 
-                position: fixed; 
-                top: 0; 
-                left: 0; 
-                width: 100%; 
-                height: 100%; 
-                z-index: 4000; 
-                background: white; 
-                overflow-y: auto; 
-                padding-top: 60px; 
+            .sidebar.mobile-visible {
+                display: block !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 4000;
+                background: white;
+                overflow-y: auto;
+                padding-top: 60px;
             }
             .main-feed {
                 height: auto !important;
                 overflow: visible !important;
-                border-radius: 0;
                 border: none;
                 background: transparent;
+                border-radius: 0;
             }
             #feedContainer {
                 animation: none !important;
-                padding: 10px;
+                padding: 10px 0;
             }
-            #feedContentArea {
-                overflow: visible !important;
+            #merchantPostBox {
+                margin: 20px 0;
             }
         }
         .main-feed {
@@ -230,7 +241,6 @@
                     <span id="roleBadge" style="color:#657786; font-size: 13px;">@jhapat_user</span>
                 </div>
             </div>
-          
             <div class="login-box" id="authBox">
                 <input type="text" id="loginUser" placeholder="Username">
                 <input type="password" id="loginPass" placeholder="Password">
@@ -242,11 +252,11 @@
                     <label style="font-size:11px; color:gray; font-weight: 700;">Profile Pic (Optional):</label>
                     <input type="file" onchange="encodeImageFileAsURL(this, 'avatar')">
                 </div>
-              <div style="margin-bottom:15px; font-size:12px; color:#657786; line-height: 1.5;">
-                   <input type="checkbox" id="acceptTerms" style="width: auto; cursor: pointer;">
-                        Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Terms</a>
-                         & <a href="/privacy.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Privacy</a>
-              </div>
+                <div style="margin-bottom:15px; font-size:12px; color:#657786; line-height: 1.5;">
+                    <input type="checkbox" id="acceptTerms" style="width: auto; cursor: pointer;">
+                    Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Terms</a>
+                    & <a href="/privacy.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Privacy</a>
+                </div>
                 <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
                 <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
                 <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
@@ -280,57 +290,38 @@
             <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
         </div>
         <div id="feedContentArea">
-            <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
-                <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-                <textarea id="dealContent" rows="2" placeholder="Describe offer"></textarea>
-                <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
-                    <option value="Offer">🔥 Hot Offer</option>
-                    <option value="Food">🍔 Food</option>
-                    <option value="Shop">🛍️ Shop</option>
-                </select>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                    <input type="text" id="dealPrice" placeholder="Price">
-                    <input type="text" id="dealArea" placeholder="Area">
-                </div>
-                <div style="margin-top:10px;">
-                    <label style="font-size:11px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
-                    <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
-                </div>
-                <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900;" onclick="postMerchantDeal()">Post Live Jhapat</button>
-            </div>
             <div id="feedContainer"></div>
         </div>
     </div>
 
-   <div class="right-sidebar">
-    <!-- Pehle Gold Spotlight -->
-    <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
-        <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
-        <div id="goldSpotlight">
-            <p style="font-size:13px; color: #666;">Scanning local premium offers...</p>
+    <div class="right-sidebar">
+        <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
+            <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
+            <div id="goldSpotlight">
+                <p style="font-size:13px; color: #666;">Scanning local premium offers...</p>
+            </div>
         </div>
-    </div>
 
-    <!-- Uske neeche Post Jhapat box (merchant ke liye) -->
-    <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-top: 20px; display: none;">
-        <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-        <textarea id="dealContent" rows="3" placeholder="Describe your super offer..."></textarea>
-        <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
-            <option value="Offer">🔥 Hot Offer</option>
-            <option value="Food">🍔 Food</option>
-            <option value="Shop">🛍️ Shop</option>
-        </select>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-            <input type="text" id="dealPrice" placeholder="Price (₹)">
-            <input type="text" id="dealArea" placeholder="Area / City">
+        <!-- Post Jhapat box - now correctly here! -->
+        <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-top: 20px; display: none;">
+            <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
+            <textarea id="dealContent" rows="3" placeholder="Describe your super offer..."></textarea>
+            <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
+                <option value="Offer">🔥 Hot Offer</option>
+                <option value="Food">🍔 Food</option>
+                <option value="Shop">🛍️ Shop</option>
+            </select>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                <input type="text" id="dealPrice" placeholder="Price (₹)">
+                <input type="text" id="dealArea" placeholder="Area / City">
+            </div>
+            <div style="margin-top:12px;">
+                <label style="font-size:12px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
+                <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
+            </div>
+            <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="postMerchantDeal()">Post Live Jhapat</button>
         </div>
-        <div style="margin-top:12px;">
-            <label style="font-size:12px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
-            <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
-        </div>
-        <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="postMerchantDeal()">Post Live Jhapat</button>
     </div>
-</div>
 </div>
 
 <footer>powered by <strong>kanams.ai</strong></footer>
@@ -349,7 +340,7 @@
         reader.onloadend = () => {
             if(type === 'avatar') base64Avatar = reader.result;
             else base64DealImg = reader.result;
-        }
+        };
         if (file) reader.readAsDataURL(file);
     }
 
@@ -364,7 +355,6 @@
     function detectLocation() {
         const badge = document.getElementById('geoBadge');
         const cachedCity = localStorage.getItem('jhapat_cached_city');
-      
         if (userCity || cachedCity) {
             userCity = userCity || cachedCity;
             badge.style.display = 'block';
@@ -372,11 +362,9 @@
             document.getElementById('catNearby').style.display = 'inline-block';
             return;
         }
-
         if ("geolocation" in navigator) {
             badge.style.display = 'block';
             badge.innerHTML = "📍 Requesting location...";
-          
             navigator.geolocation.getCurrentPosition(async (position) => {
                 const { latitude, longitude } = position.coords;
                 try {
@@ -411,12 +399,15 @@
             if(currentUser.avatar) document.getElementById('sideAvatar').style.backgroundImage = `url(${currentUser.avatar})`;
             document.getElementById('authBox').style.display = 'none';
             document.getElementById('logoutBox').style.display = 'block';
+
             if(currentUser.role === 'merchant') {
                 document.getElementById('merchantPostBox').style.display = 'block';
                 document.getElementById('merchantBtn').style.display = 'block';
             }
             loadTweets();
-        } else alert("Invalid login 😕");
+        } else {
+            alert("Invalid login 😕");
+        }
     }
 
     async function dbRegister() {
@@ -478,12 +469,10 @@
             container.innerHTML = '<p style="text-align:center; padding:20px; color:#777;">No deals right now... keep checking! 😊</p>';
             return;
         }
-
         container.innerHTML = data.map(t => {
             const isNew = (new Date().getTime() - new Date(t.timestamp).getTime()) < (15 * 60 * 1000);
-            const imgHTML = t.image && t.image.length > 5 ? 
+            const imgHTML = t.image && t.image.length > 5 ?
                 `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : '';
-
             return `
                 <div class="tweet ${t.is_premium ? 'gold-card' : ''}">
                     <div style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
@@ -548,13 +537,13 @@
         detectLocation();
     }
 
-    function toggleMobileLogin() { 
-        document.querySelector('.sidebar').classList.toggle('mobile-visible'); 
+    function toggleMobileLogin() {
+        document.querySelector('.sidebar').classList.toggle('mobile-visible');
     }
 
-    function goHome() { 
-        window.scrollTo(0, 0); 
-        loadTweets(); 
+    function goHome() {
+        window.scrollTo(0, 0);
+        loadTweets();
     }
 
     function filterOffers() {
@@ -562,55 +551,65 @@
         renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(val)));
     }
 
-function searchJhapats() {
-    const val = document.getElementById('searchJhapatsText').value.toLowerCase().trim();
-    
-    // Agar kuch nahi likha to sab dikhao
-    if (!val) {
-        renderDeals(allDeals);
-        return;
+    function searchJhapats() {
+        const val = document.getElementById('searchJhapatsText').value.toLowerCase().trim();
+        if (!val) {
+            renderDeals(allDeals);
+            return;
+        }
+        const filtered = allDeals.filter(deal =>
+            deal.content.toLowerCase().includes(val) ||
+            (deal.area && deal.area.toLowerCase().includes(val)) ||
+            (deal.price && deal.price.toLowerCase().includes(val)) ||
+            (deal.category && deal.category.toLowerCase().includes(val))
+        );
+        if (filtered.length === 0) {
+            document.getElementById('feedContainer').innerHTML = `
+                <p style="text-align:center; padding:30px; color:#888; font-size:18px;">
+                    Oops! No Jhapat found for "${val}"... 🥺<br>
+                    Try "pizza", "food", "nearby" or something else!
+                </p>
+            `;
+        } else {
+            renderDeals(filtered);
+        }
     }
-
-    // Dummy magic search – content ya area mein match karega
-    const filtered = allDeals.filter(deal => 
-        deal.content.toLowerCase().includes(val) || 
-        (deal.area && deal.area.toLowerCase().includes(val)) ||
-        (deal.price && deal.price.toLowerCase().includes(val)) ||
-        (deal.category && deal.category.toLowerCase().includes(val))
-    );
-
-    // Thoda drama add karo 😄
-    if (filtered.length === 0) {
-        document.getElementById('feedContainer').innerHTML = `
-            <p style="text-align:center; padding:30px; color:#888; font-size:18px;">
-                Oops! Koi Jhapat nahi mila "${val}" ke liye... 🥺<br>
-                Try "pizza", "food", "nearby" ya kuch aur!
-            </p>
-        `;
-    } else {
-        renderDeals(filtered);
-    }
-}
 
     async function postMerchantDeal() {
-        if(!currentUser || currentUser.role !== 'merchant') return;
-        const content = document.getElementById('dealContent').value;
+        if(!currentUser || currentUser.role !== 'merchant') {
+            alert("Only merchants can post deals! 😊");
+            return;
+        }
+        const content = document.getElementById('dealContent').value.trim();
+        if (!content) {
+            alert("Please write something about your offer!");
+            return;
+        }
         const category = document.getElementById('dealCategory').value;
-        const price = document.getElementById('dealPrice').value;
-        const area = document.getElementById('dealArea').value;
+        const price = document.getElementById('dealPrice').value.trim() || "Special Price";
+        const area = document.getElementById('dealArea').value.trim() || "Your City";
         const res = await fetch('/api/tweets', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({user: currentUser.username, content, category, price, area, image: base64DealImg, avatar: currentUser.avatar})
+            body: JSON.stringify({
+                user: currentUser.username,
+                content,
+                category,
+                price,
+                area,
+                image: base64DealImg,
+                avatar: currentUser.avatar
+            })
         });
         if(res.ok) {
-            loadTweets();
+            alert("Great! Your Jhapat is posted! 🎉");
             document.getElementById('dealContent').value = '';
             document.getElementById('dealPrice').value = '';
             document.getElementById('dealArea').value = '';
             base64DealImg = '';
+            loadTweets();
         } else {
-            alert('Failed to post deal');
+            alert('Oops! Something went wrong while posting.');
         }
     }
 
@@ -634,11 +633,10 @@ function searchJhapats() {
         setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
 
-    window.onload = () => { 
-        loadTweets(); 
-        detectLocation(); 
+    window.onload = () => {
+        loadTweets();
+        detectLocation();
     };
 </script>
 </body>
 </html>
-
