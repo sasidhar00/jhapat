@@ -377,6 +377,7 @@ app.Post("/api/admin/update-tier", func(c *fiber.Ctx) error {
 	}
 app.Delete("/api/admin/delete-jhapat/:id", func(c *fiber.Ctx) error {
     id := c.Params("id")
+	fmt.Println("Attempting to delete ID:", id) // Add this to debug
     _, err := db.Exec("DELETE FROM jhapats WHERE id = ?", id)
     if err != nil {
         return c.Status(500).SendString("Delete failed")
