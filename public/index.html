@@ -751,11 +751,8 @@ function detectLocation() {
     function renderDeals(data) {
 
         if (!data || data.length === 0) return;
-
         const topTen = data.slice(0, 10);
-
         const tickerList = [...topTen, ...topTen];
-
         document.getElementById('feedContainer').innerHTML = tickerList.map(t => {
             const isNew = (new Date().getTime() - new Date(t.timestamp).getTime()) < (15 * 60 * 1000);
             const imgHTML = t.image && t.image.length > 5 ? `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : '';
@@ -778,22 +775,26 @@ function detectLocation() {
                     </div>
                     ${imgHTML}
 
-                    <div style="padding: 20px;">
+                 <div style="padding: 20px;">
+    <div style="margin-bottom: 10px; font-size: 14px; color: #1da1f1; font-weight: 700;">
+        ${t.category ? `🏷️ ${t.category}` : '🔥 Hot Deal'}
+    </div>
 
-                        <strong style="font-size: 22px; font-weight: 800; display:block; margin-bottom:15px;">${t.content}</strong>
+    <strong style="font-size: 22px; font-weight: 800; display:block; margin-bottom:10px;">${t.content}</strong>
 
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span style="font-weight: 900; font-size: 24px;">${t.price}</span>
 
-                            <span style="font-weight: 900; font-size: 24px;">${t.price}</span>
+        <div style="font-size: 15px; font-weight: 700; color: #e0245e;">
+            ⏰ ${t.timer} left • ${t.left} units remaining
+        </div>
 
-                            <button onclick="jhapatDeal(${t.id})" style="background: #1da1f1; color: white; padding: 15px 35px; border:none; border-radius: 15px; font-weight: 900; cursor:pointer;">JHAPAT</button>
-
-                        </div>
-
-                    </div>
-
+        <button onclick="jhapatDeal(${t.id})" style="background: #1da1f1; color: white; padding: 12px 30px; border:none; border-radius: 15px; font-weight: 900; cursor:pointer;">
+            JHAPAT NOW!
+        </button>
+    </div>
+</div>
                 </div>
-
             `;
 
         }).join('');
@@ -1005,8 +1006,8 @@ async function deleteJhapat(id) {
             image: base64DealImg,
             timer: "1h",
             left: 10,
-            price,
-            area
+            price: document.getElementById('dealPrice').value,
+            area: document.getElementById('dealArea').value
         };
         const res = await fetch('/api/merchant/deal', {
             method: 'POST',
@@ -1032,4 +1033,5 @@ async function deleteJhapat(id) {
 </body>
 
 </html> 
+
 
