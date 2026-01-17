@@ -9,7 +9,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	//_ "github.com/mattn/go-sqlite3"
         _ "github.com/tursodatabase/libsql-client-go/libsql"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -27,6 +26,8 @@ type Jhapat struct {
 	Left      int    `json:"left"`
 	Price     string `json:"price"`
 	Area      string `json:"area"`
+	Verified  int    `json:"verified"`
+	Tier      string `json:"tier"`
 	IsPremium int    `json:"is_premium"`
 	Timestamp string `json:"timestamp"`
 }
@@ -36,7 +37,7 @@ type User struct {
 	Username    string `json:"username"`
 	Password    string `json:"password"`
 	Role        string `json:"role"`
-	IsGold      int    `json:"is_gold"`
+	Tier        string `json:"tier"`
 	Status      string `json:"status"`
 	RecoveryKey string `json:"recovery_key"`
 	Avatar      string `json:"avatar"`
@@ -72,12 +73,14 @@ func main() {
 		user TEXT, handle TEXT, content TEXT, category TEXT, avatar TEXT, 
 		image TEXT, timer TEXT, claimed INTEGER, 
 		left INTEGER, price TEXT, area TEXT, 
+		verified INTEGER DEFAULT 0,
+		tier TEXT,
 		is_premium INTEGER DEFAULT 0, timestamp TEXT)`)
 
 	db.Exec(`CREATE TABLE IF NOT EXISTS users (
 		id INTEGER PRIMARY KEY AUTOINCREMENT, 
 		username TEXT UNIQUE, password TEXT, role TEXT,
-		is_gold INTEGER DEFAULT 0,
+		tier TEXT DEFAULT 'free',
 		status TEXT DEFAULT 'approved',
 		recovery_key TEXT,
 		avatar TEXT)`)
@@ -116,7 +119,7 @@ func main() {
 		hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(u.Password), 10)
 		recoveryKey := fmt.Sprintf("REC-%d", time.Now().UnixNano()%1000000)
 
-		_, err := db.Exec("INSERT INTO users (username, password, role, is_gold, status, recovery_key, avatar) VALUES (?, ?, ?, 0, ?, ?, ?)",
+		_, err := db.Exec("INSERT INTO users (username, password, role, tier, status, recovery_key, avatar) VALUES (?, ?, ?, 'free', ?, ?, ?)",
 			u.Username, string(hashedPassword), u.Role, status, recoveryKey, u.Avatar)
 		if err != nil {
 			return c.Status(500).SendString("User already exists")
@@ -134,15 +137,14 @@ func main() {
 			return c.JSON(fiber.Map{
 				"username": "admin",
 				"role":     "admin",
-				"is_gold":   1,
+				"tier":     "gold",
 				"status":    "approved",
 			})
 		}
 
-		var dbPass, dbRole, dbStatus, dbAvatar string
-		var isGold int
-		err := db.QueryRow("SELECT password, role, is_gold, status, avatar FROM users WHERE username = ?", u.Username).
-			Scan(&dbPass, &dbRole, &isGold, &dbStatus, &dbAvatar)
+		var dbPass, dbRole, dbStatus, dbAvatar, tier string
+		err := db.QueryRow("SELECT password, role, tier, status, avatar FROM users WHERE username = ?", u.Username).
+			Scan(&dbPass, &dbRole, &tier, &dbStatus, &dbAvatar)
 		if err != nil {
 			return c.Status(401).SendString("Invalid credentials")
 		}
@@ -154,7 +156,7 @@ func main() {
 		if dbRole == "merchant" && dbStatus != "approved" {
 			return c.Status(403).SendString("Account pending approval")
 		}
-		return c.JSON(fiber.Map{"username": u.Username, "role": dbRole, "is_gold": isGold, "avatar": dbAvatar})
+		return c.JSON(fiber.Map{"username": u.Username, "role": dbRole, "tier": tier, "avatar": dbAvatar})
 	})
 
 	app.Get("/api/tweets", func(c *fiber.Ctx) error {
@@ -167,7 +169,7 @@ func main() {
 		var feed []Jhapat
 		for rows.Next() {
 			var t Jhapat
-			err := rows.Scan(&t.ID, &t.User, &t.Handle, &t.Content, &t.Category, &t.Avatar, &t.Image, &t.Timer, &t.Claimed, &t.Left, &t.Price, &t.Area, &t.IsPremium, &t.Timestamp)
+			err := rows.Scan(&t.ID, &t.User, &t.Handle, &t.Content, &t.Category, &t.Avatar, &t.Image, &t.Timer, &t.Claimed, &t.Left, &t.Price, &t.Area, &t.Verified, &t.Tier, &t.IsPremium, &t.Timestamp)
 			if err != nil {
 				continue
 			}
@@ -187,7 +189,7 @@ func main() {
 		var feed []Jhapat
 		for rows.Next() {
 			var t Jhapat
-			rows.Scan(&t.ID, &t.User, &t.Handle, &t.Content, &t.Category, &t.Avatar, &t.Image, &t.Timer, &t.Claimed, &t.Left, &t.Price, &t.Area, &t.IsPremium, &t.Timestamp)
+			rows.Scan(&t.ID, &t.User, &t.Handle, &t.Content, &t.Category, &t.Avatar, &t.Image, &t.Timer, &t.Claimed, &t.Left, &t.Price, &t.Area, &t.Verified, &t.Tier, &t.IsPremium, &t.Timestamp)
 			feed = append(feed, t)
 		}
 		return c.JSON(feed)
@@ -274,17 +276,21 @@ func main() {
 		if err := c.BodyParser(t); err != nil {
 			return c.Status(400).SendString("Invalid deal data")
 		}
-		var isGold int
+		var tier string
 		var avatar string
-		db.QueryRow("SELECT is_gold, avatar FROM users WHERE username = ?", t.User).Scan(&isGold, &avatar)
+		db.QueryRow("SELECT tier, avatar FROM users WHERE username = ?", t.User).Scan(&tier, &avatar)
 
 		now := time.Now().Format(time.RFC3339)
+		isPremium := 0
+		if tier == "gold" {
+			isPremium = 1
+		}
 
 		// Updated INSERT with category field
 		_, err := db.Exec(`INSERT INTO jhapats 
-			(user, handle, content, category, avatar, image, timer, claimed, left, price, area, is_premium, timestamp) 
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-			t.User, "@merchant", t.Content, t.Category, avatar, t.Image, t.Timer, 0, t.Left, t.Price, t.Area, isGold, now)
+			(user, handle, content, category, avatar, image, timer, claimed, left, price, area, verified, tier, is_premium, timestamp) 
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )`,
+			t.User, "@merchant", t.Content, t.Category, avatar, t.Image, t.Timer, 0, t.Left, t.Price, t.Area, 1, tier, isPremium, now)
 
 		if err != nil {
 			return c.Status(500).SendString("Could not post deal")
@@ -293,12 +299,12 @@ func main() {
 	})
 
 	app.Get("/api/admin/users", func(c *fiber.Ctx) error {
-		rows, _ := db.Query("SELECT id, username, role, is_gold, status FROM users WHERE role = 'merchant'")
+		rows, _ := db.Query("SELECT id, username, role, tier, status FROM users WHERE role = 'merchant'")
 		defer rows.Close()
 		var users []User
 		for rows.Next() {
 			var u User
-			rows.Scan(&u.ID, &u.Username, &u.Role, &u.IsGold, &u.Status)
+			rows.Scan(&u.ID, &u.Username, &u.Role, &u.Tier, &u.Status)
 			users = append(users, u)
 		}
 		return c.JSON(users)
@@ -313,92 +319,61 @@ func main() {
 		return c.SendStatus(200)
 	})
 
-	app.Post("/api/admin/toggle-gold/:id", func(c *fiber.Ctx) error {
-		id := c.Params("id")
-		var current int
-		var username string
-		db.QueryRow("SELECT is_gold, username FROM users WHERE id = ?", id).Scan(&current, &username)
-
-		newStatus := 0
-		if current == 0 {
-			newStatus = 1
+	app.Post("/api/admin/update-tier", func(c *fiber.Ctx) error {
+		type Update struct {
+			Username string `json:"username"`
+			Tier string `json:"tier"`
 		}
-
-		db.Exec("UPDATE users SET is_gold = ? WHERE id = ?", newStatus, id)
-		db.Exec("UPDATE jhapats SET is_premium = ? WHERE user = ?", newStatus, username)
-
+		u := new(Update)
+		if err := c.BodyParser(u); err != nil {
+			return err
+		}
+		_, err := db.Exec("UPDATE users SET tier = ? WHERE username = ?", u.Tier, u.Username)
+		if err != nil {
+			return err
+		}
+		isPremium := 0
+		if u.Tier == "gold" {
+			isPremium = 1
+		}
+		db.Exec("UPDATE jhapats SET is_premium = ?, tier = ? WHERE user = ?", isPremium, u.Tier, u.Username)
 		return c.SendStatus(200)
 	})
 
-// 2. Fetch ALL users for the Admin Dashboard (Scale-friendly)
-app.Get("/api/admin/all-users", func(c *fiber.Ctx) error {
-    rows, err := db.Query("SELECT id, username, role, is_gold, status FROM users ORDER BY username ASC")
-    if err != nil {
-        return c.Status(500).SendString("Database error")
-    }
-    defer rows.Close()
-    var users []User
-    for rows.Next() {
-        var u User
-        rows.Scan(&u.ID, &u.Username, &u.Role, &u.IsGold, &u.Status)
-        users = append(users, u)
-    }
-    return c.JSON(users)
-})
+	app.Delete("/api/admin/delete-jhapat/:id", func(c *fiber.Ctx) error {
+		id := c.Params("id")
+		_, err := db.Exec("DELETE FROM jhapats WHERE id = ?", id)
+		if err != nil {
+			return c.Status(500).SendString("Failed to delete")
+		}
+		return c.SendStatus(200)
+	})
 
-// 3. Update Merchant Tier (Gold/Silver/Free) - Handshake Fix
-app.Post("/api/admin/update-tier", func(c *fiber.Ctx) error {
-    type UpdateReq struct {
-        Username string `json:"username"`
-        Tier     string `json:"tier"` 
-    }
-    req := new(UpdateReq)
-    if err := c.BodyParser(req); err != nil {
-        return c.Status(400).SendString("Invalid Request")
-    }
+	app.Post("/api/admin/seed", func(c *fiber.Ctx) error {
+		now := time.Now().Format(time.RFC3339)
+		db.Exec(`INSERT INTO jhapats (user, handle, content, category, avatar, image, timer, claimed, left, price, area, verified, tier, is_premium, timestamp) 
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			"The Falcon Grill", "@falcon", "50% Off Signature Wings", "Food", "https://i.pravatar.cc/150?u=falcon", "", "2h", 25, 10, "Rs 12.00", "Banjara Hills", 1, "gold", 1, now)
+		return c.SendStatus(200)
+	})
 
-    isGold := 0
-    if req.Tier == "gold" { isGold = 1 }
-
-    // This updates the user record
-    _, err := db.Exec("UPDATE users SET is_gold = ? WHERE username = ?", isGold, req.Username)
-    // This updates all existing deals for that merchant so they turn "Gold" in the feed
-    db.Exec("UPDATE jhapats SET is_premium = ? WHERE user = ?", isGold, req.Username)
-
-    if err != nil {
-        return c.Status(500).SendString("Update failed")
-    }
-    return c.SendStatus(200)
-})
-	
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
 	}
-app.Delete("/api/admin/delete-jhapat/:id", func(c *fiber.Ctx) error {
-    id := c.Params("id")
-	fmt.Println("Attempting to delete ID:", id) // Add this to debug
-    _, err := db.Exec("DELETE FROM jhapats WHERE id = ?", id)
-    if err != nil {
-        return c.Status(500).SendString("Delete failed")
-    }
-    return c.SendStatus(200)
-})
-
-	
 	log.Fatal(app.Listen(":" + port))
 }
 
 func seedData() {
 	adminPass, _ := bcrypt.GenerateFromPassword([]byte("admin123"), 10)
-	db.Exec("INSERT OR IGNORE INTO users (username, password, role, is_gold, status) VALUES (?, ?, ?, 0, 'approved')", "admin", string(adminPass), "admin")
+	db.Exec("INSERT OR IGNORE INTO users (username, password, role, tier, status) VALUES (?, ?, ?, 'free', 'approved')", "admin", string(adminPass), "admin")
 	var count int
 	db.QueryRow("SELECT COUNT(*) FROM jhapats").Scan(&count)
-	if count < 5 {
+	if count < 2 {
 		now := time.Now().Format(time.RFC3339)
 		// Added seed data with category
-		db.Exec(`INSERT INTO jhapats (user, handle, content, category, avatar, image, timer, claimed, left, price, area, is_premium, timestamp) 
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-			"The Falcon Grill", "@falcon", "50% Off Signature Wings", "Food", "https://i.pravatar.cc/150?u=falcon", "", "2h", 25, 10, "Rs 12.00", "Banjara Hills", 0, now)
+		db.Exec(`INSERT INTO jhapats (user, handle, content, category, avatar, image, timer, claimed, left, price, area, verified, tier, is_premium, timestamp) 
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			"The Falcon Grill", "@falcon", "50% Off Signature Wings", "Food", "https://i.pravatar.cc/150?u=falcon", "", "2h", 25, 10, "Rs 12.00", "Banjara Hills", 1, "gold", 1, now)
 	}
 }
