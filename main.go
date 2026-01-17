@@ -338,15 +338,15 @@ func main() {
 }
 
 func seedData() {
-//	adminPass, _ := bcrypt.GenerateFromPassword([]byte("admin123"), 10)
-//	db.Exec("INSERT OR IGNORE INTO users (username, password, role, is_gold, status) VALUES (?, ?, ?, 0, 'approved')", "admin", string(adminPass), "admin")
-//	var count int
-//	db.QueryRow("SELECT COUNT(*) FROM jhapats").Scan(&count)
-//	if count < 2 {
-//		now := time.Now().Format(time.RFC3339)
+	adminPass, _ := bcrypt.GenerateFromPassword([]byte("admin123"), 10)
+	db.Exec("INSERT OR IGNORE INTO users (username, password, role, is_gold, status) VALUES (?, ?, ?, 0, 'approved')", "admin", string(adminPass), "admin")
+	var count int
+	db.QueryRow("SELECT COUNT(*) FROM jhapats").Scan(&count)
+	if count < 5 {
+		now := time.Now().Format(time.RFC3339)
 		// Added seed data with category
-//		db.Exec(`INSERT INTO jhapats (user, handle, content, category, avatar, image, timer, claimed, left, price, area, is_premium, timestamp) 
-//			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-//			"The Falcon Grill", "@falcon", "50% Off Signature Wings", "Food", "https://i.pravatar.cc/150?u=falcon", "", "2h", 25, 10, "Rs 12.00", "Banjara Hills", 0, now)
-//	}
+		db.Exec(`INSERT INTO jhapats (user, handle, content, category, avatar, image, timer, claimed, left, price, area, is_premium, timestamp) 
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			"The Falcon Grill", "@falcon", "50% Off Signature Wings", "Food", "https://i.pravatar.cc/150?u=falcon", "", "2h", 25, 10, "Rs 12.00", "Banjara Hills", 0, now)
+	}
 }
