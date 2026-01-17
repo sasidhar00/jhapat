@@ -330,6 +330,47 @@ func main() {
 		return c.SendStatus(200)
 	})
 
+// 2. Fetch ALL users for the Admin Dashboard (Scale-friendly)
+app.Get("/api/admin/all-users", func(c *fiber.Ctx) error {
+    rows, err := db.Query("SELECT id, username, role, is_gold, status FROM users ORDER BY username ASC")
+    if err != nil {
+        return c.Status(500).SendString("Database error")
+    }
+    defer rows.Close()
+    var users []User
+    for rows.Next() {
+        var u User
+        rows.Scan(&u.ID, &u.Username, &u.Role, &u.IsGold, &u.Status)
+        users = append(users, u)
+    }
+    return c.JSON(users)
+})
+
+// 3. Update Merchant Tier (Gold/Silver/Free) - Handshake Fix
+app.Post("/api/admin/update-tier", func(c *fiber.Ctx) error {
+    type UpdateReq struct {
+        Username string `json:"username"`
+        Tier     string `json:"tier"` 
+    }
+    req := new(UpdateReq)
+    if err := c.BodyParser(req); err != nil {
+        return c.Status(400).SendString("Invalid Request")
+    }
+
+    isGold := 0
+    if req.Tier == "gold" { isGold = 1 }
+
+    // This updates the user record
+    _, err := db.Exec("UPDATE users SET is_gold = ? WHERE username = ?", isGold, req.Username)
+    // This updates all existing deals for that merchant so they turn "Gold" in the feed
+    db.Exec("UPDATE jhapats SET is_premium = ? WHERE user = ?", isGold, req.Username)
+
+    if err != nil {
+        return c.Status(500).SendString("Update failed")
+    }
+    return c.SendStatus(200)
+})
+	
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
