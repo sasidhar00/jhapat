@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
     <title>Jhapat | Flash Deals</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
     <style>
-
         /* --- BRAND THEME & RESPONSIVE CORE --- */
 
         body { 
@@ -205,23 +195,15 @@
         /* MOBILE OVERRIDES */
 
         @media (max-width: 1024px) {
-
             body { padding-top: 155px; padding-bottom: 80px; }
-
             .container { grid-template-columns: 1fr; padding: 0; gap: 0; }
-
             .sidebar, .right-sidebar { display: none; }
-
             .tweet { border-radius: 0; border-left: none; border-right: none; margin-bottom: 20px; }
-
             .mobile-login-pill { display: flex !important; align-items: center; gap: 8px; background: #333; padding: 8px 16px; border-radius: 25px; color: white; font-weight: 700; font-size: 14px; cursor: pointer; }
-
             .bottom-nav { display: flex; }
-
             #topSearch { width: 110px; }
-
             .sidebar.mobile-visible { display: block !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 4000; background: white; overflow-y: auto; padding-top: 60px; }
-
+            .right-sidebar { display: block !important; }
         }
 
         /* TICKER SYSTEM FIX */
@@ -463,65 +445,39 @@
                 <span class="pulse-dot"></span> LIVE DEALS
 
             </div>
-
             <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid #ddd; font-family: inherit; resize: none; box-sizing: border-box;"></textarea>
-
             <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
-
         </div>
-
         <div id="feedContentArea">
+             <div id="feedContainer"></div>
+        </div>
+    </div>
 
-            <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
-
+    <div class="right-sidebar">
+        <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
+            <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
+            <div id="goldSpotlight"><p style="font-size:13px; color: #666;">Scanning local premium offers...</p></div>
+        </div>
+        <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
                 <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-
                 <textarea id="dealContent" rows="2" placeholder="Describe offer"></textarea>
-
                 <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
-
                     <option value="Offer">🔥 Hot Offer</option>
-
                     <option value="Food">🍔 Food</option>
-
                     <option value="Shop">🛍️ Shop</option>
-
                 </select>
-
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-
                     <input type="text" id="dealPrice" placeholder="Price">
-
                     <input type="text" id="dealArea" placeholder="Area">
-
                 </div>
                 <div style="margin-top:10px;">
                     <label style="font-size:11px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
                     <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
                 </div>
-
                 <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900;" onclick="postMerchantDeal()">Post Live Jhapat</button>
-
             </div>
-
-            <div id="feedContainer"></div>
-
-        </div>
-
+        
     </div>
-
-    <div class="right-sidebar">
-
-        <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
-
-            <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
-
-            <div id="goldSpotlight"><p style="font-size:13px; color: #666;">Scanning local premium offers...</p></div>
-
-        </div>
-
-    </div>
-
 </div>
 
 <footer>powered by <strong>kanams.ai</strong></footer>
@@ -867,11 +823,17 @@ function detectLocation() {
         }
     }
 
-    function filterCategory(cat) {
-        document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-        if(!cat) { renderDeals(allDeals); return; }
-        renderDeals(allDeals.filter(d => d.category === cat));
+   function filterCategory(cat) {
+    document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+    const clicked = document.querySelector(`.category-chip[onclick="filterCategory('${cat}')"]`);
+    if (clicked) clicked.classList.add('active');
+    if(!cat) { 
+        document.getElementById('catAll').classList.add('active');
+        renderDeals(allDeals); 
+        return; 
     }
+    renderDeals(allDeals.filter(d => d.category === cat));
+}
     function resetLocation() {
    // 1. Clear the memory
     localStorage.removeItem('jhapat_cached_city');
@@ -1009,14 +971,20 @@ async function deleteJhapat(id) {
             `).join('');
         } catch (e) { console.error(e); }
     }
-    async function filterNearby() {
-        if (!userCity) return;
-        try {
-            const res = await fetch(`/api/tweets/nearby/${encodeURIComponent(userCity)}`);
-            const data = await res.json();
-            renderDeals(data);
-        } catch(e){}
+  async function filterNearby() {
+    document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+    document.getElementById('catNearby').classList.add('active');
+    if (!userCity) { 
+        alert("Oops, location not set yet – click 'Update Location' first!"); 
+        detectLocation(); 
+        return; 
     }
+    try {
+        const res = await fetch(`/api/tweets/nearby/${encodeURIComponent(userCity)}`);
+        const data = await res.json();
+        renderDeals(data);
+    } catch(e){ alert("Tiny bug – check internet or location!"); }
+}
     function searchJhapats() {
         const query = document.getElementById('searchJhapatsText').value.toLowerCase();
         renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(query) || d.user.toLowerCase().includes(query)));
@@ -1064,3 +1032,4 @@ async function deleteJhapat(id) {
 </body>
 
 </html> 
+
