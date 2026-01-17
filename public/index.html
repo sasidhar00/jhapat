@@ -465,11 +465,17 @@
                     <option value="Offer">🔥 Hot Offer</option>
                     <option value="Food">🍔 Food</option>
                     <option value="Shop">🛍️ Shop</option>
+                    <option value="Travel"> Travel</option>
+                    <option value="Health"> Health</option>
                 </select>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
                     <input type="text" id="dealPrice" placeholder="Price">
                     <input type="text" id="dealArea" placeholder="Area">
                 </div>
+               <div style="margin-top:10px;">
+                    <label style="font-size:13px; font-weight:700;">How many units to give?</label>
+                    <input type="number" id="dealLeft" value="10" min="1" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
+              </div>
                 <div style="margin-top:10px;">
                     <label style="font-size:11px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
                     <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
@@ -1005,7 +1011,7 @@ async function deleteJhapat(id) {
             category,
             image: base64DealImg,
             timer: "1h",
-            left: 10,
+            left: parseInt(document.getElementById('dealLeft').value) || 10,
             price: document.getElementById('dealPrice').value,
             area: document.getElementById('dealArea').value
         };
@@ -1033,5 +1039,6 @@ async function deleteJhapat(id) {
 </body>
 
 </html> 
+
 
 
