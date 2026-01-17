@@ -62,7 +62,6 @@
 
         }
 
-
         .bottom-nav { 
 
             display: none; 
@@ -86,7 +85,6 @@
             align-items: center; 
 
         }
-
 
         /* FIXED NAV */
 
@@ -152,7 +150,6 @@
 
         .category-chip.active { background: #1da1f1; color: white; }
 
-
         /* GRID SYSTEM FIX - ENSURES 3 COLUMNS */
 
         .container { 
@@ -187,13 +184,11 @@
 
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-
         /* FLOATING BADGES */
 
         .badge-gold-float { position: absolute; top: 12px; left: 12px; background: #fab005; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 
         .new-tag { background: #00ba7c; color: white; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 900; }
-
 
         /* SIDEBARS */
 
@@ -206,7 +201,6 @@
         .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
 
         .login-box input, .login-box select { width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 16px; font-family: inherit; }
-
 
         /* MOBILE OVERRIDES */
 
@@ -230,7 +224,6 @@
 
         }
 
-
         /* TICKER SYSTEM FIX */
 
         .main-feed {
@@ -251,7 +244,6 @@
 
         }
 
-
         .search-container-fixed {
 
             position: sticky;
@@ -268,7 +260,6 @@
 
         }
 
-
         #feedContentArea {
 
             flex-grow: 1;
@@ -278,7 +269,6 @@
             position: relative;
 
         }
-
 
         #feedContainer {
 
@@ -292,9 +282,7 @@
 
         }
 
-
         #feedContainer:hover { animation-play-state: paused; }
-
 
         @keyframes tickerVertical {
 
@@ -304,13 +292,11 @@
 
         }
 
-
         /* PULSE DOT */
 
         .pulse-dot { height: 10px; width: 10px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
 
         @keyframes pulse { 0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { transform: scale(0.9); } }
-
 
         .admin-dashboard { background: white; padding: 15px; border-radius: 12px; border: 1px solid #e1e8ed; display: none; margin-bottom:15px; }
 
@@ -364,7 +350,6 @@
     <p>Show this to merchant to redeem</p>
 </div>
 
-
 <nav>
     <div class="nav-content">
         <div onclick="goHome()" style="cursor: pointer;">
@@ -378,7 +363,6 @@
     </div>
 </nav>
 
-
 <div class="category-container" id="filterBar">
     <div class="category-chip active" id="catAll" onclick="filterCategory('')">All</div>
     <div class="category-chip" id="catNearby" onclick="filterNearby()" style="display:none;">🏠 Nearby</div>
@@ -387,7 +371,6 @@
     <div class="category-chip" onclick="filterCategory('Shop')">🛍️ Shop</div>
     <div class="category-chip" onclick="filterCategory('Health')">🏋️ Health</div>
 </div>
-
 
 <div class="container">
     <div class="sidebar">
@@ -433,7 +416,6 @@
                 <button style="background:none; border:none; color:gray; width:100%; margin-top:10px; cursor:pointer;" onclick="location.reload()">Cancel</button>
             </div>
 
-
             <div class="login-box" id="logoutBox" style="display: none;">
                 <button style="background: #e0245e; color: white; width: 100%; padding:14px; border:none; border-radius:25px; font-weight:900;" onclick="dbLogout()">Logout</button>
                 <button id="adminBtn" style="background: #495057; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleAdminDashboard()">Admin Panel</button>
@@ -458,6 +440,12 @@
         </div>
     </div>
 </div>
+<div id="merchantStats" class="admin-dashboard" style="display:none; border: 2px solid #fb8c00; margin-top: 15px;">
+    <h3 style="margin-top:0; font-weight: 900; color: #fb8c00;">📊 Merchant Stats</h3>
+    <div id="merchantDealList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
+        <p>Loading deals...</p>
+    </div>
+</div>
         
         <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-top: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
         <div style="text-align: right; margin-top: 5px;">
@@ -465,7 +453,6 @@
     </div>
 
     </div>
-
 
     <div class="main-feed">
 
@@ -482,7 +469,6 @@
             <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
 
         </div>
-
 
         <div id="feedContentArea">
 
@@ -509,6 +495,10 @@
                     <input type="text" id="dealArea" placeholder="Area">
 
                 </div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:11px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
+                    <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
+                </div>
 
                 <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900;" onclick="postMerchantDeal()">Post Live Jhapat</button>
 
@@ -519,7 +509,6 @@
         </div>
 
     </div>
-
 
     <div class="right-sidebar">
 
@@ -535,9 +524,7 @@
 
 </div>
 
-
 <footer>powered by <strong>kanams.ai</strong></footer>
-
 
 <script>
 
@@ -552,7 +539,6 @@
     let base64Avatar = "";
 
     let base64DealImg = "";
-
 
     function encodeImageFileAsURL(element, type) {
 
@@ -572,7 +558,6 @@
 
     }
 
-
     async function seedData() {
 
         if(!confirm("Populate sample jhapats?")) return;
@@ -586,7 +571,6 @@
         } catch(e) { console.error(e); }
 
     }
-
 
 function detectLocation() {
 
@@ -614,7 +598,6 @@ function detectLocation() {
 
     }
 
-
     // 2. If nothing is cached, proceed with GPS
 
     if ("geolocation" in navigator) {
@@ -636,7 +619,6 @@ function detectLocation() {
             const controller = new AbortController();
 
             const id = setTimeout(() => controller.abort(), 4000); // 4 second fetch timeout
-
 
             try {
 
@@ -710,10 +692,10 @@ function detectLocation() {
 
             // TEACHER NOTE: This is the logic that reveals the dashboard
             if (currentUser.role === 'admin') {
-                document.getElementById('adminPanel').style.display = 'block';
-                loadAdminData();
+                document.getElementById('adminBtn').style.display = 'block';
             } else if (currentUser.role === 'merchant') {
                 document.getElementById('merchantPostBox').style.display = 'block';
+                document.getElementById('merchantBtn').style.display = 'block';
             }
             
             loadTweets();
@@ -748,7 +730,6 @@ function detectLocation() {
 
     }
 
-
     function showReset() {
 
         document.getElementById('authBox').style.display = 'none';
@@ -756,7 +737,6 @@ function detectLocation() {
         document.getElementById('resetBox').style.display = 'block';
 
     }
-
 
     async function dbReset() {
 
@@ -782,9 +762,7 @@ function detectLocation() {
 
     }
 
-
     function dbLogout() { location.reload(); }
-
 
     async function loadTweets() {
 
@@ -798,10 +776,21 @@ function detectLocation() {
 
             renderDeals(allDeals);
 
+            const goldDeals = allDeals.filter(d => d.is_premium === 1).slice(0,3);
+
+            document.getElementById('goldSpotlight').innerHTML = goldDeals.map(d => `
+
+                <div style="margin-bottom:10px; font-size:13px;">
+
+                    <strong>${d.user}</strong>: ${d.content} <span style="color:#fab005;">${d.price}</span>
+
+                </div>
+
+            `).join('');
+
         } catch (e) { console.error(e); }
 
     }
-
 
     function renderDeals(data) {
 
@@ -854,7 +843,6 @@ function detectLocation() {
         }).join('');
 
     }
-
 
     const qrcode = new QRCode(document.getElementById("qrcode"), { width: 220, height: 220 });
 
@@ -909,12 +897,13 @@ async function loadAdminData() {
         
         merchantContainer.innerHTML = users.map(user => `
             <div class="admin-row">
-                <span><b>${user.username}</b> (${user.tier || 'Free'})</span>
+                <span><b>${user.username}</b> (${user.tier || 'Free'}) ${user.status === 'pending' ? '<span style="color:red;">Pending</span>' : ''}</span>
                 <select onchange="updateMerchantTier('${user.username}', this.value)" style="font-size: 10px; padding: 2px;">
                     <option value="free" ${user.tier === 'free' ? 'selected' : ''}>Free</option>
                     <option value="silver" ${user.tier === 'silver' ? 'selected' : ''}>Silver</option>
                     <option value="gold" ${user.tier === 'gold' ? 'selected' : ''}>Gold</option>
                 </select>
+                ${user.status === 'pending' ? `<button onclick="approveMerchant(${user.id})" style="background:green; color:white; padding:2px 5px; border:none; border-radius:4px;">Approve</button>` : ''}
             </div>
         `).join('');
 
@@ -937,6 +926,14 @@ async function updateMerchantTier(username, tier) {
         body: JSON.stringify({ username, tier })
     });
     if (res.ok) alert("Tier updated!");
+}
+
+async function approveMerchant(id) {
+    const res = await fetch(`/api/admin/approve/${id}`, {method: 'POST'});
+    if (res.ok) {
+        alert("Approved!");
+        loadAdminData();
+    }
 }
 
 async function adminDeleteJhapat(id) {
@@ -985,6 +982,77 @@ async function deleteJhapat(id) {
 }
     function toggleMobileLogin() { document.querySelector('.sidebar').classList.toggle('mobile-visible'); }
     function goHome() { window.scrollTo(0, 0); loadTweets(); }
+    function toggleAdminDashboard() {
+        const panel = document.getElementById('adminPanel');
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        if (panel.style.display === 'block') {
+            loadAdminData();
+        }
+    }
+    async function toggleMerchantStats() {
+        const panel = document.getElementById('merchantStats');
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        if (panel.style.display === 'block') {
+            loadMerchantData();
+        }
+    }
+    async function loadMerchantData() {
+        try {
+            const res = await fetch(`/api/merchant/stats/${currentUser.username}`);
+            const deals = await res.json();
+            const dealContainer = document.getElementById('merchantDealList');
+            dealContainer.innerHTML = deals.map(deal => `
+                <div class="admin-row">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;">${deal.content}</span>
+                    <span>Claimed: ${deal.claimed} / Left: ${deal.left}</span>
+                </div>
+            `).join('');
+        } catch (e) { console.error(e); }
+    }
+    async function filterNearby() {
+        if (!userCity) return;
+        try {
+            const res = await fetch(`/api/tweets/nearby/${encodeURIComponent(userCity)}`);
+            const data = await res.json();
+            renderDeals(data);
+        } catch(e){}
+    }
+    function searchJhapats() {
+        const query = document.getElementById('searchJhapatsText').value.toLowerCase();
+        renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(query) || d.user.toLowerCase().includes(query)));
+    }
+    function filterOffers() {
+        const query = document.getElementById('topSearch').value.toLowerCase();
+        renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(query)));
+    }
+    async function postMerchantDeal() {
+        const content = document.getElementById('dealContent').value;
+        const category = document.getElementById('dealCategory').value;
+        const price = document.getElementById('dealPrice').value;
+        const area = document.getElementById('dealArea').value;
+        const deal = {
+            user: currentUser.username,
+            content,
+            category,
+            image: base64DealImg,
+            timer: "1h",
+            left: 10,
+            price,
+            area
+        };
+        const res = await fetch('/api/merchant/deal', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(deal)
+        });
+        if (res.ok) {
+            base64DealImg = "";
+            document.getElementById('dealContent').value = "";
+            document.getElementById('dealPrice').value = "";
+            document.getElementById('dealArea').value = "";
+            loadTweets();
+        }
+    }
     window.onload = () => { loadTweets(); detectLocation(); };
     setInterval(loadTweets, 30000);
 </script>
@@ -996,6 +1064,3 @@ async function deleteJhapat(id) {
 </body>
 
 </html> 
-
-
-
