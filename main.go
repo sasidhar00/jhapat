@@ -334,6 +334,16 @@ func main() {
 	if port == "" {
 		port = "3000"
 	}
+app.Delete("/api/admin/delete-jhapat/:id", func(c *fiber.Ctx) error {
+    id := c.Params("id")
+    _, err := db.Exec("DELETE FROM jhapats WHERE id = ?", id)
+    if err != nil {
+        return c.Status(500).SendString("Delete failed")
+    }
+    return c.SendStatus(200)
+})
+
+	
 	log.Fatal(app.Listen(":" + port))
 }
 
