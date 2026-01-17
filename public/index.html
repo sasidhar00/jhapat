@@ -319,7 +319,39 @@
         #toast { visibility: hidden; min-width: 250px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 6000; right: 30px; bottom: 30px; }
 
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+/* Blue Tick Style */
+.blue-tick {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    background-color: #1da1f1;
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    margin-left: 4px;
+}
 
+/* Tier Badges */
+.tier-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+    margin-left: 5px;
+}
+.tier-gold { background: #fab005; color: #000; }
+.tier-silver { background: #ccd6dd; color: #000; }
+
+/* Admin List Rows */
+.admin-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
     </style>
 
 </head>
@@ -384,107 +416,78 @@
 
 
 <div class="container">
-
     <div class="sidebar">
-
         <div class="profile-card">
-
             <div class="profile-bg"></div>
-
             <div class="profile-info" style="padding: 15px; position: relative;">
-
                 <div class="avatar" id="sideAvatar"></div>
-
                 <div style="margin-top:40px;">
-
                     <strong id="sideUsername" style="font-size: 18px; font-weight: 800;">Welcome Guest</strong><br>
-
                     <span id="roleBadge" style="color:#657786; font-size: 13px;">@jhapat_user</span>
-
                 </div>
-
             </div>
-
-            
+         
 
             <div class="login-box" id="authBox">
-
                 <input type="text" id="loginUser" placeholder="Username">
-
                 <input type="password" id="loginPass" placeholder="Password">
-
                 <select id="loginRole">
-
                     <option value="user">User</option>
-
-                    <option value="merchant">Merchant</option>
-
-                </select>
-
+                   <option value="merchant">Merchant</option>
+               </select>
                 <div style="margin-bottom:12px;">
-
                     <label style="font-size:11px; color:gray; font-weight: 700;">Profile Pic (Optional):</label>
-
                     <input type="file" onchange="encodeImageFileAsURL(this, 'avatar')">
-
                 </div>
-
               <div style="margin-bottom:15px; font-size:12px; color:#657786; line-height: 1.5;">
-
                    <input type="checkbox" id="acceptTerms" style="width: auto; cursor: pointer;"> 
-
                         Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Terms</a> 
-
                          & <a href="/privacy.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Privacy</a>
-
             </div>
-
                 <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
-
                 <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
-
                 <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
-
                 <button style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; font-size:11px; cursor:pointer; opacity: 0.5;" onclick="seedData()">[Dev] Seed Data</button>
-
             </div>
-
 
             <div class="login-box" id="resetBox" style="display:none;">
-
                 <h4 style="font-weight: 800;">Reset Password</h4>
-
                 <input type="text" id="resetUser" placeholder="Username">
-
                 <input type="text" id="resetKey" placeholder="Recovery Key">
-
                 <input type="password" id="resetNewPass" placeholder="New Password">
-
                 <button style="background:black; color:white; width:100%; border-radius:25px; padding:12px; font-weight: 800;" onclick="dbReset()">Update Now</button>
-
                 <button style="background:none; border:none; color:gray; width:100%; margin-top:10px; cursor:pointer;" onclick="location.reload()">Cancel</button>
-
             </div>
 
 
             <div class="login-box" id="logoutBox" style="display: none;">
-
                 <button style="background: #e0245e; color: white; width: 100%; padding:14px; border:none; border-radius:25px; font-weight:900;" onclick="dbLogout()">Logout</button>
-
                 <button id="adminBtn" style="background: #495057; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleAdminDashboard()">Admin Panel</button>
-
                 <button id="merchantBtn" style="background: #fb8c00; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleMerchantStats()">Merchant Stats</button>
-
             </div>
 
         </div>
+<div id="adminPanel" class="admin-dashboard" style="display:none; border: 2px solid #1da1f1; margin-top: 15px;">
+    <h3 style="margin-top:0; font-weight: 900; color: #1da1f1;">🛡️ Admin Portal</h3>
+    
+    <div style="margin-bottom: 20px;">
+        <h4 style="font-size: 12px; text-transform: uppercase; color: #657786;">Manage Merchants</h4>
+        <div id="merchantList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
+            <p>Loading merchants...</p>
+        </div>
+    </div>
 
+    <div>
+        <h4 style="font-size: 12px; text-transform: uppercase; color: #657786;">Live Jhapats</h4>
+        <div id="adminDealList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
+            <p>Loading deals...</p>
+        </div>
+    </div>
+</div>
+        
         <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-top: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
-
         <div style="text-align: right; margin-top: 5px;">
-
         <a href="javascript:void(0)" onclick="resetLocation()" style="font-size: 10px; color: #1da1f1; text-decoration: none; font-weight: 700;">🔄 Update Location</a>
-
     </div>
 
     </div>
@@ -937,6 +940,59 @@ function detectLocation() {
     // 4. Trigger the fresh GPS request
     detectLocation();
 }
+
+    // --- ADMIN FUNCTIONS ---
+
+async function loadAdminData() {
+    if (!currentUser || currentUser.role !== 'admin') return;
+
+    // 1. Fetch and show Merchants
+    try {
+        const userRes = await fetch('/api/admin/users'); // Ensure your Go backend has this
+        const users = await userRes.json();
+        const merchantContainer = document.getElementById('merchantList');
+        
+        merchantContainer.innerHTML = users.map(user => `
+            <div class="admin-row">
+                <span><b>${user.username}</b> (${user.tier || 'Free'})</span>
+                <select onchange="updateMerchantTier('${user.username}', this.value)" style="font-size: 10px; padding: 2px;">
+                    <option value="free" ${user.tier === 'free' ? 'selected' : ''}>Free</option>
+                    <option value="silver" ${user.tier === 'silver' ? 'selected' : ''}>Silver</option>
+                    <option value="gold" ${user.tier === 'gold' ? 'selected' : ''}>Gold</option>
+                </select>
+            </div>
+        `).join('');
+
+        // 2. Show Deals with Delete option
+        const dealContainer = document.getElementById('adminDealList');
+        dealContainer.innerHTML = allDeals.map(deal => `
+            <div class="admin-row">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;">${deal.content}</span>
+                <button onclick="deleteJhapat(${deal.id})" style="background: #e0245e; color:white; border:none; border-radius:4px; padding: 2px 5px; cursor:pointer;">Delete</button>
+            </div>
+        `).join('');
+
+    } catch (e) { console.error("Admin Load Error:", e); }
+}
+
+async function updateMerchantTier(username, tier) {
+    const res = await fetch(`/api/admin/update-tier`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ username, tier })
+    });
+    if (res.ok) alert("Tier updated!");
+}
+
+async function deleteJhapat(id) {
+    if (!confirm("Are you sure you want to delete this deal?")) return;
+    const res = await fetch(`/api/admin/delete-jhapat/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+        alert("Deleted!");
+        loadTweets(); // Refresh feed
+        loadAdminData(); // Refresh admin list
+    }
+}
     function toggleMobileLogin() { document.querySelector('.sidebar').classList.toggle('mobile-visible'); }
     function goHome() { window.scrollTo(0, 0); loadTweets(); }
     window.onload = () => { loadTweets(); detectLocation(); };
@@ -950,3 +1006,4 @@ function detectLocation() {
 </body>
 
 </html> 
+
