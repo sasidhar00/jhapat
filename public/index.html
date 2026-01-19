@@ -514,40 +514,57 @@ function detectLocation() {
 
 }
 
-    async function dbLogin() {
-        const username = document.getElementById('loginUser').value;
-        const password = document.getElementById('loginPass').value;
+   async function dbLogin() {
+    const username = document.getElementById('loginUser').value;
+    const password = document.getElementById('loginPass').value;
+
+    // 1. Hardcoded Superadmin Check
+    if (username === "superadmin" && password === "jhapat2026") {
+        currentUser = { username: "Superadmin", role: "admin", avatar: "" };
+        setupAdminView(); // Call your admin setup function
+        return;
+    }
+
+    try {
         const res = await fetch('/api/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({username, password})
         });
-        if(currentUser.role === 'merchant') {
-           document.getElementById('mobilePostBtn').style.display = 'block';
-           document.getElementById('desktopPostBtn').style.display = 'block';
-}
-    if(res.ok) {
+
+        if (res.ok) {
+            // SUCCESS: Now we fill currentUser
             currentUser = await res.json();
+            
+            // Update the UI with user info
             document.getElementById('sideUsername').innerText = "Welcome " + currentUser.username;
             document.getElementById('roleBadge').innerText = "@" + currentUser.role;
-            
             if(currentUser.avatar) document.getElementById('sideAvatar').style.backgroundImage = `url(${currentUser.avatar})`;
             
+            // Hide login boxes
             document.getElementById('authBox').style.display = 'none';
             document.getElementById('logoutBox').style.display = 'block';
 
-            // TEACHER NOTE: This is the logic that reveals the dashboard
-            if (currentUser.role === 'admin') {
-                document.getElementById('adminBtn').style.display = 'block';
-            } else if (currentUser.role === 'merchant') {
-                document.getElementById('merchantPostBox').style.display = 'block';
-                document.getElementById('merchantBtn').style.display = 'block';
+            // IMPORTANT: Only check role AFTER we know currentUser is not null
+            if (currentUser.role === 'merchant') {
+                // Show the Post buttons for Mobile and Desktop
+                if (document.getElementById('mobilePostBtn')) document.getElementById('mobilePostBtn').style.display = 'block';
+                if (document.getElementById('desktopPostBtn')) document.getElementById('desktopPostBtn').style.display = 'block';
             }
             
-            loadTweets();
-        }
-    }
+            if (currentUser.role === 'admin') {
+                if (typeof loadAdminDashboard === "function") loadAdminDashboard();
+            }
 
+            loadTweets();
+        } else {
+            alert("Invalid login 😕");
+        }
+    } catch (err) {
+        console.error("Login Error:", err);
+        alert("Server connection failed.");
+    }
+}
     async function dbRegister() {
 
         const username = document.getElementById('loginUser').value;
@@ -952,6 +969,7 @@ async function deleteJhapat(id) {
 </body>
 
 </html> 
+
 
 
 
