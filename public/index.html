@@ -901,34 +901,63 @@ async function deleteJhapat(id) {
         const query = document.getElementById('topSearch').value.toLowerCase();
         renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(query)));
     }
-    async function postMerchantDeal() {
-        const content = document.getElementById('dealContent').value;
-        const category = document.getElementById('dealCategory').value;
-        const price = document.getElementById('dealPrice').value;
-        const area = document.getElementById('dealArea').value;
-        const deal = {
-            user: currentUser.username,
-            content,
-            category,
-            image: base64DealImg,
-            timer: "1h",
-            left: parseInt(document.getElementById('dealLeft').value) || 10,
-            price: document.getElementById('dealPrice').value,
-            area: document.getElementById('dealArea').value
-        };
-        const res = await fetch('/api/merchant/deal', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(deal)
-        });
-        if (res.ok) {
-            base64DealImg = "";
-            document.getElementById('dealContent').value = "";
-            document.getElementById('dealPrice').value = "";
-            document.getElementById('dealArea').value = "";
-            loadTweets();
+
+    function openPostModal() {
+    const modal = document.getElementById('postModal');
+    if (modal) {
+        modal.style.display = 'flex'; // Shows the modal
+        
+        // Mobile UX: Make it slide up from the bottom
+        if (window.innerWidth < 1024) {
+            modal.style.alignItems = 'flex-end';
+            const content = document.getElementById('modalContent');
+            if (content) content.style.borderRadius = '20px 20px 0 0';
         }
+    } else {
+        console.error("The element 'postModal' was not found in the HTML.");
     }
+}
+
+function closePostModal() {
+    document.getElementById('postModal').style.display = 'none';
+}
+   async function postMerchantDeal() {
+    // We now grab values from the MODAL IDs
+    const content = document.getElementById('modalDealContent').value.trim();
+    const price = document.getElementById('modalDealPrice').value.trim();
+    const area = document.getElementById('modalDealArea').value.trim();
+
+    if (!content) {
+        alert("Please describe the deal!");
+        return;
+    }
+
+    const dealData = {
+        user: currentUser.username,
+        content: content,
+        price: price || "Special Offer",
+        area: area || userCity || "Nearby",
+        category: "Offer", // You can add a select for this in the modal too
+        avatar: currentUser.avatar
+    };
+
+    const res = await fetch('/api/merchant/deal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dealData)
+    });
+
+    if (res.ok) {
+        alert("Jhapat Live! 🎉");
+        closePostModal(); // Hide the modal
+        // Clear inputs
+        document.getElementById('modalDealContent').value = '';
+        document.getElementById('modalDealPrice').value = '';
+        loadTweets(); // Refresh the feed
+    } else {
+        alert("Failed to post deal.");
+    }
+}
     window.onload = () => { loadTweets(); detectLocation(); };
     setInterval(loadTweets, 30000);
 </script>
@@ -965,10 +994,27 @@ async function deleteJhapat(id) {
         </div>
     </div>
 </div>
-    
+    <div id="postModal" style="display: none; position: fixed; z-index: 9000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 10px;">
+    <div id="modalContent" style="background: white; width: 100%; max-width: 500px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3 style="margin:0; color:#faad14;">🏪 New Jhapat</h3>
+            <span onclick="closePostModal()" style="cursor:pointer; font-size:24px; font-weight:bold;">×</span>
+        </div>
+
+        <textarea id="modalDealContent" rows="3" placeholder="What's the offer?" style="width:100%; border:1px solid #ddd; border-radius:10px; padding:10px; margin-bottom:10px; font-family:inherit; box-sizing:border-box;"></textarea>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <input type="text" id="modalDealPrice" placeholder="Price (₹)" style="padding:12px; border:1px solid #ddd; border-radius:10px; box-sizing:border-box;">
+            <input type="text" id="modalDealArea" placeholder="Area" style="padding:12px; border:1px solid #ddd; border-radius:10px; box-sizing:border-box;">
+        </div>
+
+        <button onclick="postMerchantDeal()" style="width:100%; background:#faad14; color:white; border:none; padding:15px; border-radius:30px; font-weight:900; font-size:16px; cursor:pointer;">POST LIVE NOW</button>
+    </div>
+</div>
 </body>
 
 </html> 
+
 
 
 
