@@ -9,191 +9,103 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
         /* --- BRAND THEME & RESPONSIVE CORE --- */
-
         body { 
-
             background: #f7f7f7; 
-
             font-family: 'Montserrat', sans-serif; 
-
             margin: 0; 
-
             padding-top: 160px; 
-
             padding-bottom: 80px; 
-
             color: #222;
-
             -webkit-font-smoothing: antialiased;
-
             overflow-x: hidden;
-
         }
-
         footer {
-
             text-align: center;
-
             padding: 30px 15px;
-
             color: #657786;
-
             background: #fff;
-
             border-top: 1px solid #eee;
-
             width: 100%;
-
             position: relative;
-
             z-index: 10;
-
             margin-top: 40px;
-
         }
-
         .bottom-nav { 
-
             display: none; 
-
             position: fixed; 
-
             bottom: 0; 
-
             width: 100%; 
-
             background: white; 
-
             height: 70px; 
-
             z-index: 5000;
-
             border-top: 1px solid #eee;
-
             justify-content: space-around; 
-
             align-items: center; 
-
         }
-
         /* FIXED NAV */
-
         nav { 
-
             background: #000; 
-
             height: 60px; 
-
             position: fixed; 
-
             top: 0; 
-
             width: 100%; 
-
             z-index: 3000; 
-
             display: flex; 
-
             justify-content: center; 
-
             align-items: center; 
-
         }
-
         .nav-content { width: 100%; max-width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-sizing: border-box; }
-
         
-
         /* STICKY CATEGORY BAR */
 
         .category-container {
-
             position: fixed;
-
             top: 60px; 
-
-            width: 100%;
-
+           width: 100%;
             background: white;
-
             z-index: 2500;
-
             display: flex;
-
             gap: 12px;
-
             padding: 12px 20px;
-
             overflow-x: auto;
-
             border-bottom: 1px solid #eee;
-
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-
             scrollbar-width: none;
-
         }
-
         .category-container::-webkit-scrollbar { display: none; }
-
         .category-chip { background: #f0f0f0; border: none; color: #444; padding: 10px 20px; border-radius: 25px; font-size: 14px; cursor: pointer; font-weight: 700; white-space: nowrap; }
-
         .category-chip.active { background: #1da1f1; color: white; }
 
         /* GRID SYSTEM FIX - ENSURES 3 COLUMNS */
 
         .container { 
-
             width: 100%; 
-
             max-width: 1190px; 
-
             margin: 0 auto; 
-
             display: grid; 
-
             grid-template-columns: 290px 590px 290px; 
-
             gap: 15px; 
-
             padding: 0 10px; 
-
             box-sizing: border-box; 
-
             align-items: start;
-
         }
-
         
 
         /* AIRBNB STYLE CARDS */
 
         .tweet { background: white; border-radius: 12px; border: 1px solid #e1e8ed; margin-bottom: 25px; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s; position: relative; flex-shrink: 0; }
-
         .image-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #eee; }
-
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
         /* FLOATING BADGES */
-
         .badge-gold-float { position: absolute; top: 12px; left: 12px; background: #fab005; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-
         .new-tag { background: #00ba7c; color: white; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 900; }
-
         /* SIDEBARS */
-
         .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
-
         .profile-bg { background: #1da1f2; height: 95px; background-size: cover; }
-
         .avatar { width: 72px; height: 72px; border-radius: 12px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
-
         .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
-
         .login-box input, .login-box select { width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 16px; font-family: inherit; }
-
         /* MOBILE OVERRIDES */
-
         @media (max-width: 1024px) {
             body { padding-top: 155px; padding-bottom: 80px; }
             .container { grid-template-columns: 1fr; padding: 0; gap: 0; }
@@ -209,59 +121,32 @@
         /* TICKER SYSTEM FIX */
 
         .main-feed {
-
             height: 850px;
-
             overflow: hidden; 
-
             position: relative;
-
             display: block; 
-
             background: #fff;
-
             border-radius: 12px;
-
             border: 1px solid #e1e8ed;
-
         }
-
         .search-container-fixed {
-
             position: sticky;
-
             top: 0;
-
             background: #fff;
-
             z-index: 1000; 
-
             padding: 15px;
-
             border-bottom: 1px solid #eee;
-
         }
-
         #feedContentArea {
-
             flex-grow: 1;
-
             overflow: hidden;
-
             position: relative;
-
         }
-
         #feedContainer {
-
             display: flex;
-
             flex-direction: column;
-
             padding-top: 20px;
-
             animation: tickerVertical 35s linear infinite;
-
         }
 
         #feedContainer:hover { animation-play-state: paused; }
@@ -365,7 +250,12 @@
                     <span id="roleBadge" style="color:#657786; font-size: 13px;">@jhapat_user</span>
                 </div>
             </div>
-         
+            <div class="sidebar">
+    <button id="desktopPostBtn" onclick="openPostModal()" style="display:none; width:100%; background:#faad14; color:white; border:none; padding:12px; border-radius:25px; font-weight:900; margin-bottom:15px; cursor:pointer; font-family: inherit;">
+        + Create Jhapat
+    </button>
+    
+    </div>
 
             <div class="login-box" id="authBox">
                 <input type="text" id="loginUser" placeholder="Username">
@@ -437,13 +327,9 @@
     </div>
 
     <div class="main-feed">
-
         <div class="search-container-fixed">
-
             <div id="liveStatus" style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; font-weight: 800; color: #ff0000;">
-
                 <span class="pulse-dot"></span> LIVE DEALS
-
             </div>
             <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid #ddd; font-family: inherit; resize: none; box-sizing: border-box;"></textarea>
             <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
@@ -481,21 +367,15 @@
                     <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
                 </div>
                 <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900;" onclick="postMerchantDeal()">Post Live Jhapat</button>
-            </div>
-        
+            </div> 
     </div>
 </div>
 
 <footer>powered by <strong>kanams.ai</strong></footer>
-
 <script>
-
     let currentUser = null;
-
     let allDeals = [];
-
     let userCity = null;
-
     let timerInterval = null;
 
     let base64Avatar = "";
@@ -642,6 +522,10 @@ function detectLocation() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({username, password})
         });
+        if(currentUser.role === 'merchant') {
+           document.getElementById('mobilePostBtn').style.display = 'block';
+           document.getElementById('desktopPostBtn').style.display = 'block';
+}
     if(res.ok) {
             currentUser = await res.json();
             document.getElementById('sideUsername').innerText = "Welcome " + currentUser.username;
@@ -1032,13 +916,43 @@ async function deleteJhapat(id) {
     setInterval(loadTweets, 30000);
 </script>
 <div class="bottom-nav">
-    <div class="bottom-nav-item active" onclick="goHome()">🏠 Home</div>
+    <div class="bottom-nav-item" onclick="goHome()">🏠 Home</div>
+    
+    <div id="mobilePostBtn" onclick="openPostModal()" style="display:none; text-align:center; flex:1;">
+        <div style="font-size:24px;">➕</div>
+        <div style="font-size:10px;">Post</div>
+    </div>
     <div class="bottom-nav-item" onclick="document.getElementById('searchJhapatsText').focus()">🔍 Search</div>
     <div class="bottom-nav-item" onclick="toggleMobileLogin()">👤 Profile</div>
 </div>
+<div id="postModal" style="display: none; position: fixed; z-index: 9000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; padding: 15px;">
+    <div id="modalContent" style="background: white; width: 100%; max-width: 500px; padding: 25px; border-radius: 20px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <h3 style="margin-top:0; color:#856404;">🏪 Post a Live Jhapat</h3>
+        
+        <textarea id="modalDealContent" rows="3" placeholder="Describe your offer (e.g. 1+1 on Burgers!)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; margin-bottom: 10px;"></textarea>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+            <input type="text" id="modalDealPrice" placeholder="Price (₹)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+            <input type="text" id="modalDealArea" placeholder="Area" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+        </div>
+
+        <select id="modalDealCategory" style="width:100%; padding:12px; border-radius:10px; margin-bottom: 15px; border: 1px solid #ddd;">
+            <option value="Food">🍔 Food</option>
+            <option value="Shop">🛍️ Shop</option>
+            <option value="Offer">🔥 General Offer</option>
+        </select>
+
+        <div style="display: flex; gap: 10px;">
+            <button onclick="closePostModal()" style="flex: 1; background: #eee; padding: 14px; border-radius: 25px; border: none; font-weight: 700; cursor: pointer;">Cancel</button>
+            <button onclick="postMerchantDeal()" style="flex: 2; background: #faad14; color: white; padding: 14px; border-radius: 25px; border: none; font-weight: 900; cursor: pointer;">Post Live Now</button>
+        </div>
+    </div>
+</div>
+    
 </body>
 
 </html> 
+
 
 
 
