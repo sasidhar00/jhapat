@@ -911,6 +911,7 @@ function openPostModal(deal = null) {
 }
 
 async function postMerchantDeal() {
+    // Determine if we are updating or creating
     const url = editingId ? `/api/merchant/edit/${editingId}` : '/api/merchant/deal';
     const method = editingId ? 'PUT' : 'POST';
 
@@ -919,7 +920,8 @@ async function postMerchantDeal() {
         content: document.getElementById('modalDealContent').value,
         price: document.getElementById('modalDealPrice').value,
         area: document.getElementById('modalDealArea').value,
-        left: parseInt(document.getElementById('modalDealLeft').value),
+        left: parseInt(document.getElementById('modalDealLeft').value) || 10,
+        timer: document.getElementById('modalExpiry').value || "2h", // New field
         category: document.getElementById('modalDealCategory').value
     };
 
@@ -933,6 +935,7 @@ async function postMerchantDeal() {
         alert(editingId ? "Jhapat Updated! ✅" : "Jhapat Live! 🎉");
         closePostModal();
         loadTweets();
+        editingId = null; // Clear editing state
     }
 }
 </script>
@@ -1004,6 +1007,7 @@ async function postMerchantDeal() {
 </body>
 
 </html> 
+
 
 
 
