@@ -514,16 +514,9 @@ function detectLocation() {
 
 }
 
-   async function dbLogin() {
+async function dbLogin() {
     const username = document.getElementById('loginUser').value;
     const password = document.getElementById('loginPass').value;
-
-    // 1. Hardcoded Superadmin Check
-    if (username === "superadmin" && password === "jhapat2026") {
-        currentUser = { username: "Superadmin", role: "admin", avatar: "" };
-        setupAdminView(); // Call your admin setup function
-        return;
-    }
 
     try {
         const res = await fetch('/api/login', {
@@ -533,76 +526,47 @@ function detectLocation() {
         });
 
         if (res.ok) {
-            // SUCCESS: Now we fill currentUser
             currentUser = await res.json();
             
-            // Update the UI with user info
+            // UI Updates
             document.getElementById('sideUsername').innerText = "Welcome " + currentUser.username;
-            document.getElementById('roleBadge').innerText = "@" + currentUser.role;
-            if(currentUser.avatar) document.getElementById('sideAvatar').style.backgroundImage = `url(${currentUser.avatar})`;
-            
-            // Hide login boxes
             document.getElementById('authBox').style.display = 'none';
             document.getElementById('logoutBox').style.display = 'block';
 
-            // IMPORTANT: Only check role AFTER we know currentUser is not null
-            if (currentUser.role === 'merchant') {
-                // Show the Post buttons for Mobile and Desktop
-                if (document.getElementById('mobilePostBtn')) document.getElementById('mobilePostBtn').style.display = 'block';
-                if (document.getElementById('desktopPostBtn')) document.getElementById('desktopPostBtn').style.display = 'block';
-            }
-            
+            // If the server says this is an admin, show the dashboard
             if (currentUser.role === 'admin') {
-                if (typeof loadAdminDashboard === "function") loadAdminDashboard();
+                document.getElementById('adminPanel').style.display = 'block';
+                loadAdminData(); 
+            } else if (currentUser.role === 'merchant') {
+                document.getElementById('merchantPostBox').style.display = 'block';
             }
-
             loadTweets();
         } else {
-            alert("Invalid login 😕");
+            alert("Login failed!");
         }
     } catch (err) {
-        console.error("Login Error:", err);
-        alert("Server connection failed.");
+        console.error(err);
     }
 }
     async function dbRegister() {
-
         const username = document.getElementById('loginUser').value;
-
         const password = document.getElementById('loginPass').value;
-
         const role = document.getElementById('loginRole').value;
-
         const res = await fetch('/api/register', {
-
             method: 'POST',
-
             headers: { 'Content-Type': 'application/json' },
-
             body: JSON.stringify({ username, password, role, avatar: base64Avatar })
-
         });
-
         if (res.ok) {
-
             const data = await res.json();
-
             alert("Success! Recovery Key: " + data.recovery_key);
-
         } else alert("Failed");
-
     }
-
-    function showReset() {
-
-        document.getElementById('authBox').style.display = 'none';
-
+   function showReset() {
+       document.getElementById('authBox').style.display = 'none';
         document.getElementById('resetBox').style.display = 'block';
-
     }
-
     async function dbReset() {
-
         const username = document.getElementById('resetUser').value;
 
         const recoveryKey = document.getElementById('resetKey').value;
@@ -1040,6 +1004,7 @@ async function postMerchantDeal() {
 </body>
 
 </html> 
+
 
 
 
