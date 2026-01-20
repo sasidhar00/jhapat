@@ -948,22 +948,16 @@ async function postMerchantDeal() {
     <div class="bottom-nav-item" onclick="document.getElementById('searchJhapatsText').focus()">🔍 Search</div>
     <div class="bottom-nav-item" onclick="toggleMobileLogin()">👤 Profile</div>
 </div>
+
+<div id="postModal" style="display: none; position: fixed; z-index: 9000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 15px;">
     <div id="modalContent" style="background: white; width: 100%; max-width: 500px; padding: 25px; border-radius: 20px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-        <h3 style="margin-top:0; color:#856404;">🏪 Post a Live Jhapat</h3>     
-        <textarea id="modalDealContent" rows="3" placeholder="Describe your offer (e.g. 1+1 on Burgers!)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; margin-bottom: 10px;"></textarea>       
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-            <input type="text" id="modalDealPrice" placeholder="Price (₹)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
-            <input type="text" id="modalDealArea" placeholder="Area" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3 id="modalTitle" style="margin:0; color:#856404;">🏪 Post a Live Jhapat</h3>
+            <span onclick="closePostModal()" style="cursor:pointer; font-size:24px; font-weight:bold;">×</span>
         </div>
-        <select id="modalDealCategory" style="width:100%; padding:12px; border-radius:10px; margin-bottom: 15px; border: 1px solid #ddd;">
-            <option value="Food">🍔 Food</option>
-            <option value="Shop">🛍️ Shop</option>
-            <option value="Offer">🔥 General Offer</option>
-        </select>
-   <div id="postModal" style="display: none; position: fixed; z-index: 9000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 15px;">
-    <div id="modalContent" style="background: white; width: 100%; max-width: 500px; padding: 25px; border-radius: 20px; position: relative;">
-        <h3 id="modalTitle" style="margin-top:0; color:#856404;">🏪 Post a Live Jhapat</h3>       
-        <textarea id="modalDealContent" rows="3" placeholder="Describe offer..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; margin-bottom: 10px;"></textarea>
+        
+        <textarea id="modalDealContent" rows="3" placeholder="Describe your offer (e.g. 1+1 on Burgers!)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box;"></textarea>       
+        
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
             <input type="text" id="modalDealPrice" placeholder="Price (₹)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
             <input type="text" id="modalDealArea" placeholder="Area" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
@@ -974,12 +968,16 @@ async function postMerchantDeal() {
                 <option value="Travel">✈️ Travel</option>
             </select>
         </div>
+
         <div style="display: flex; gap: 10px;">
             <button onclick="closePostModal()" style="flex: 1; background: #eee; padding: 14px; border-radius: 25px; border: none; cursor: pointer;">Cancel</button>
             <button onclick="postMerchantDeal()" id="modalSubmitBtn" style="flex: 2; background: #faad14; color: white; padding: 14px; border-radius: 25px; border: none; font-weight: 900; cursor: pointer;">Post Live Now</button>
         </div>
     </div>
 </div>
-</div>
+
+</body>
+</html>
 </body>
 </html> 
+
