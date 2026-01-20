@@ -127,38 +127,39 @@ func main() {
 		return c.JSON(fiber.Map{"status": "registered", "recovery_key": recoveryKey})
 	})
 
-	app.Post("/api/login", func(c *fiber.Ctx) error {
-		u := new(User)
-		c.BodyParser(u)
+app.Post("/api/login", func(c *fiber.Ctx) error {
+        u := new(User)
+        c.BodyParser(u)
 
-		adminUser := os.Getenv("ADMIN_USER")
-		adminPass := os.Getenv("ADMIN_PASS")
-		if (adminUser != "" && u.Username == adminUser && u.Password == adminPass) || (u.Username == "superadmin" && u.Password == "jhapat2026") {
-			return c.JSON(fiber.Map{
-				"username": "admin",
-				"role":     "admin",
-				"tier":     "gold",
-				"status":    "approved",
-			})
-		}
+        // SUPERADMIN CHECK - Now hidden from "View Source"
+        if u.Username == "superadmin" && u.Password == "jhapat2026" {
+            return c.JSON(fiber.Map{"username": "admin", "role": "admin", "tier": "gold", "status": "approved"})
+        }
 
-		var dbPass, dbRole, dbStatus, dbAvatar, tier string
-		err := db.QueryRow("SELECT password, role, tier, status, avatar FROM users WHERE username = ?", u.Username).
-			Scan(&dbPass, &dbRole, &tier, &dbStatus, &dbAvatar)
-		if err != nil {
-			return c.Status(401).SendString("Invalid credentials")
-		}
+        var dbPass, dbRole, dbStatus, dbAvatar, tier string
+        err := db.QueryRow("SELECT password, role, tier, status, avatar FROM users WHERE username = ?", u.Username).
+            Scan(&dbPass, &dbRole, &tier, &dbStatus, &dbAvatar)
+        if err != nil || bcrypt.CompareHashAndPassword([]byte(dbPass), []byte(u.Password)) != nil {
+            return c.Status(401).SendString("Invalid credentials")
+        }
 
-		if err := bcrypt.CompareHashAndPassword([]byte(dbPass), []byte(u.Password)); err != nil {
-			return c.Status(401).SendString("Invalid credentials")
-		}
+        if dbRole == "merchant" && dbStatus != "approved" {
+            return c.Status(403).SendString("Account pending approval")
+        }
+        return c.JSON(fiber.Map{"username": u.Username, "role": dbRole, "tier": tier, "avatar": dbAvatar})
+    })
 
-		if dbRole == "merchant" && dbStatus != "approved" {
-			return c.Status(403).SendString("Account pending approval")
-		}
-		return c.JSON(fiber.Map{"username": u.Username, "role": dbRole, "tier": tier, "avatar": dbAvatar})
-	})
-
+	app.Put("/api/merchant/edit/:id", func(c *fiber.Ctx) error {
+        id := c.Params("id")
+        t := new(Jhapat)
+        c.BodyParser(t)
+        // Update specific fields: Content, Price, Units Left (left), and Category
+        _, err := db.Exec("UPDATE jhapats SET content = ?, price = ?, left = ?, category = ? WHERE id = ?", 
+            t.Content, t.Price, t.Left, t.Category, id)
+        if err != nil { return c.Status(500).SendString("Update failed") }
+        return c.SendStatus(200)
+    })
+	
 	app.Get("/api/tweets", func(c *fiber.Ctx) error {
 		rows, err := db.Query("SELECT * FROM jhapats ORDER BY is_premium DESC, id DESC")
 		if err != nil {
