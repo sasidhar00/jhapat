@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
-        /* --- BRAND THEME & RESPONSIVE CORE --- */
         body { 
             background: #f7f7f7; 
             font-family: 'Montserrat', sans-serif; 
@@ -42,7 +41,6 @@
             justify-content: space-around; 
             align-items: center; 
         }
-        /* FIXED NAV */
         nav { 
             background: #000; 
             height: 60px; 
@@ -54,14 +52,19 @@
             justify-content: center; 
             align-items: center; 
         }
-        .nav-content { width: 100%; max-width: 1190px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; box-sizing: border-box; }
-        
-        /* STICKY CATEGORY BAR */
-
+        .nav-content { 
+            width: 100%; 
+            max-width: 1190px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 15px; 
+            box-sizing: border-box; 
+        }
         .category-container {
             position: fixed;
             top: 60px; 
-           width: 100%;
+            width: 100%;
             background: white;
             z-index: 2500;
             display: flex;
@@ -73,11 +76,18 @@
             scrollbar-width: none;
         }
         .category-container::-webkit-scrollbar { display: none; }
-        .category-chip { background: #f0f0f0; border: none; color: #444; padding: 10px 20px; border-radius: 25px; font-size: 14px; cursor: pointer; font-weight: 700; white-space: nowrap; }
+        .category-chip { 
+            background: #f0f0f0; 
+            border: none; 
+            color: #444; 
+            padding: 10px 20px; 
+            border-radius: 25px; 
+            font-size: 14px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            white-space: nowrap; 
+        }
         .category-chip.active { background: #1da1f1; color: white; }
-
-        /* GRID SYSTEM FIX - ENSURES 3 COLUMNS */
-
         .container { 
             width: 100%; 
             max-width: 1190px; 
@@ -89,42 +99,104 @@
             box-sizing: border-box; 
             align-items: start;
         }
-        
-
-        /* AIRBNB STYLE CARDS */
-
-        .tweet { background: white; border-radius: 12px; border: 1px solid #e1e8ed; margin-bottom: 25px; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s; position: relative; flex-shrink: 0; }
-        .image-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #eee; }
+        .tweet { 
+            background: white; 
+            border-radius: 12px; 
+            border: 1px solid #e1e8ed; 
+            margin-bottom: 25px; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            transition: transform 0.2s; 
+            position: relative; 
+            flex-shrink: 0; 
+        }
+        .image-wrapper { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            overflow: hidden; 
+            background: #eee; 
+        }
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        /* FLOATING BADGES */
-        .badge-gold-float { position: absolute; top: 12px; left: 12px; background: #fab005; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .new-tag { background: #00ba7c; color: white; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 900; }
-        /* SIDEBARS */
-        .profile-card { background: white; border: 1px solid #e1e8ed; margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
+        .badge-gold-float { 
+            position: absolute; 
+            top: 12px; 
+            left: 12px; 
+            background: #fab005; 
+            color: #000; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-weight: 900; 
+            font-size: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+        }
+        .new-tag { 
+            background: #00ba7c; 
+            color: white; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 10px; 
+            font-weight: 900; 
+        }
+        .profile-card { 
+            background: white; 
+            border: 1px solid #e1e8ed; 
+            margin-bottom: 15px; 
+            border-radius: 12px; 
+            overflow: hidden; 
+        }
         .profile-bg { background: #1da1f2; height: 95px; background-size: cover; }
-        .avatar { width: 72px; height: 72px; border-radius: 12px; border: 4px solid white; background: #ccd6dd; position: absolute; top: -30px; background-size: cover; background-position: center; }
-        .login-box { padding: 15px; border-top: 1px solid #f5f8fa; background: #fff; }
-        .login-box input, .login-box select { width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 16px; font-family: inherit; }
-        /* MOBILE OVERRIDES */
+        .avatar { 
+            width: 72px; 
+            height: 72px; 
+            border-radius: 12px; 
+            border: 4px solid white; 
+            background: #ccd6dd; 
+            position: absolute; 
+            top: -30px; 
+            background-size: cover; 
+            background-position: center; 
+        }
+        .login-box { 
+            padding: 15px; 
+            border-top: 1px solid #f5f8fa; 
+            background: #fff; 
+        }
+        .login-box input, .login-box select { 
+            width: 100%; 
+            margin-bottom: 8px; 
+            padding: 12px; 
+            border: 1px solid #e1e8ed; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-family: inherit; 
+        }
+        .gold-badge {
+            background: #fab005;
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+            box-shadow: 0 2px 6px rgba(250,173,20,0.4);
+            display: inline-block;
+        }
         @media (max-width: 1024px) {
             body { padding-top: 155px; padding-bottom: 80px; }
             .container { grid-template-columns: 1fr; padding: 0; gap: 0; }
             .sidebar, .right-sidebar { display: none; }
             .tweet { border-radius: 0; border-left: none; border-right: none; margin-bottom: 20px; }
-            .mobile-login-pill { display: flex !important; align-items: center; gap: 8px; background: #333; padding: 8px 16px; border-radius: 25px; color: white; font-weight: 700; font-size: 14px; cursor: pointer; }
+            .mobile-login-pill { display: flex !important; align-items: center; gap: 8px; background: #333; padding: 8px 16px; border-radius: 5px; color: white; font-weight: 700; font-size: 14px; cursor: pointer; }
             .bottom-nav { display: flex; }
-            #topSearch { width: 110px; }
             .sidebar.mobile-visible { display: block !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 4000; background: white; overflow-y: auto; padding-top: 60px; }
-            .right-sidebar { display: block !important; }
         }
-
-        /* TICKER SYSTEM FIX */
-
         .main-feed {
-            height: 850px;
-            overflow: hidden; 
+            height: auto;
+            overflow: auto;
             position: relative;
-            display: block; 
+            display: block;
             background: #fff;
             border-radius: 12px;
             border: 1px solid #e1e8ed;
@@ -133,85 +205,60 @@
             position: sticky;
             top: 0;
             background: #fff;
-            z-index: 1000; 
+            z-index: 1000;
             padding: 15px;
             border-bottom: 1px solid #eee;
         }
         #feedContentArea {
             flex-grow: 1;
-            overflow: hidden;
+            overflow: auto;
             position: relative;
         }
         #feedContainer {
             display: flex;
             flex-direction: column;
             padding-top: 20px;
-            animation: tickerVertical 35s linear infinite;
+            animation: none;
         }
-
         #feedContainer:hover { animation-play-state: paused; }
-
         @keyframes tickerVertical {
-
             0% { transform: translateY(0); }
-
             100% { transform: translateY(-50%); }
-
         }
-
-        /* PULSE DOT */
-
-        .pulse-dot { height: 10px; width: 10px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
-
-        @keyframes pulse { 0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { transform: scale(0.9); } }
-
-        .admin-dashboard { background: white; padding: 15px; border-radius: 12px; border: 1px solid #e1e8ed; display: none; margin-bottom:15px; }
-
-        .qr-modal { display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; color: white; padding: 20px; }
-
-        #toast { visibility: hidden; min-width: 250px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 6000; right: 30px; bottom: 30px; }
-
+        .pulse-dot { 
+            height: 10px; width: 10px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; 
+        }
+        @keyframes pulse { 
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 
+            100% { transform: scale(0.9); } 
+        }
+        .admin-dashboard { 
+            background: white; padding: 15px; border-radius: 12px; border: 1px solid #e1e8ed; display: none; margin-bottom:15px; 
+        }
+        .qr-modal { 
+            display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); 
+            justify-content: center; align-items: center; flex-direction: column; color: white; padding: 20px; 
+        }
+        #toast { 
+            visibility: hidden; min-width: 250px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; 
+            position: fixed; z-index: 6000; right: 30px; bottom: 30px; 
+        }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-/* Blue Tick Style */
-.blue-tick {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 14px;
-    height: 14px;
-    background-color: #1da1f1;
-    color: white;
-    font-size: 10px;
-    border-radius: 50%;
-    margin-left: 4px;
-}
-
-/* Tier Badges */
-.tier-badge {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: 800;
-    margin-left: 5px;
-}
-.tier-gold { background: #fab005; color: #000; }
-.tier-silver { background: #ccd6dd; color: #000; }
-
-/* Admin List Rows */
-.admin-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
+        .blue-tick {
+            display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; background-color: #1da1f1;
+            color: white; font-size: 10px; border-radius: 50%; margin-left: 4px;
+        }
+        .tier-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 5px; }
+        .tier-gold { background: #fab005; color: #000; }
+        .tier-silver { background: #ccd6dd; color: #000; }
+        .admin-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .gold-card { border: 2px solid #fab005 !important; background: linear-gradient(135deg, #fffbe6, #fffaf0); box-shadow: 0 4px 15px rgba(250,173,20,0.3); }
     </style>
-
 </head>
-
 <body>
 <div id="toast">🔥 New Jhapat Alert!</div>
-<div id="qrModal" class="qr-modal" onclick="this.style.display='none'">
+<div id="qrModal" class="qr-modal" onclick="event.target === this && (this.style.display='none')">
     <div id="qrcode" style="background:white; padding:10px; border-radius:10px;"></div>
     <h3 id="couponText" style="margin-top:20px; font-weight: 800;"></h3>
     <p>Show this to merchant to redeem</p>
@@ -222,7 +269,11 @@
         <div onclick="goHome()" style="cursor: pointer;">
             <img src="/logo.png" alt="Logo" style="height: 70px;" onerror="this.src='https://img.icons8.com/color/48/falcon.png'">
         </div>
-        <input type="text" id="topSearch" onkeyup="filterOffers()" placeholder="Search Jhapat" style="border-radius: 20px; padding: 10px 18px; background: #222; border: none; color: white; outline:none; font-family: inherit;">
+        <div id="headerStats" style="color:white; font-size:13px; font-weight:700; display:flex; gap:20px; align-items:center;">
+            <div><span id="totalCreated">0</span> Created</div>
+            <div><span id="totalGrabbed">0</span> Grabbed</div>
+            <div><span id="totalRemaining">0</span> Remaining</div>
+        </div>
         <div class="mobile-login-pill" onclick="toggleMobileLogin()">
             <span>Login</span>
             <span style="font-size: 18px;">👤</span>
@@ -234,9 +285,9 @@
     <div class="category-chip active" id="catAll" onclick="filterCategory('')">All</div>
     <div class="category-chip" id="catNearby" onclick="filterNearby()" style="display:none;">🏠 Nearby</div>
     <div class="category-chip" onclick="filterCategory('Food')">🍔 Food</div>
-   <div class="category-chip" onclick="filterCategory('Travel')">✈️ Travel</div>
     <div class="category-chip" onclick="filterCategory('Shop')">🛍️ Shop</div>
     <div class="category-chip" onclick="filterCategory('Health')">🏋️ Health</div>
+    <div class="category-chip" onclick="filterCategory('Travel')">✈️ Travel</div>
 </div>
 
 <div class="container">
@@ -250,32 +301,35 @@
                     <span id="roleBadge" style="color:#657786; font-size: 13px;">@jhapat_user</span>
                 </div>
             </div>
-            <div class="sidebar">
-    <button id="desktopPostBtn" onclick="openPostModal()" style="display:none; width:100%; background:#faad14; color:white; border:none; padding:12px; border-radius:25px; font-weight:900; margin-bottom:15px; cursor:pointer; font-family: inherit;">
-        + Create Jhapat
-    </button>
-    
-    </div>
 
             <div class="login-box" id="authBox">
                 <input type="text" id="loginUser" placeholder="Username">
-                <input type="password" id="loginPass" placeholder="Password">
+                <input type="password" id="loginPass" placeholder="Password (min 8 chars)">
+                <input type="password" id="loginPassConfirm" placeholder="Confirm Password">
+                <div id="passwordStrength" style="height:6px; background:#eee; margin:8px 0; border-radius:3px; overflow:hidden;">
+                    <div id="strengthBar" style="height:100%; width:0%; transition:width 0.3s;"></div>
+                </div>
+                <small id="strengthText" style="font-size:11px; color:#777;">Password strength: Weak</small>
+
                 <select id="loginRole">
                     <option value="user">User</option>
-                   <option value="merchant">Merchant</option>
-               </select>
+                    <option value="merchant">Merchant</option>
+                </select>
+
                 <div style="margin-bottom:12px;">
                     <label style="font-size:11px; color:gray; font-weight: 700;">Profile Pic (Optional):</label>
                     <input type="file" onchange="encodeImageFileAsURL(this, 'avatar')">
                 </div>
-              <div style="margin-bottom:15px; font-size:12px; color:#657786; line-height: 1.5;">
-                   <input type="checkbox" id="acceptTerms" style="width: auto; cursor: pointer;"> 
-                        Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Terms</a> 
-                         & <a href="/privacy.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Privacy</a>
-            </div>
+                <div style="margin-bottom:15px; font-size:12px; color:#657786; line-height: 1.5;">
+                    <input type="checkbox" id="acceptTerms" style="width: auto; cursor: pointer;">
+                    Agree to <a href="/terms.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Terms</a> 
+                    & <a href="/privacy.html" style="color:#1da1f1; font-weight: 700; text-decoration: none;">Privacy</a>
+                </div>
                 <button style="background: #1da1f1; color: white; width: 100%; padding: 14px; border:none; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbRegister()">Register New</button>
                 <button style="background: white; border: 2px solid #1da1f1; color: #1da1f1; width: 100%; margin-top: 10px; padding: 12px; border-radius:25px; font-weight:900; cursor:pointer;" onclick="dbLogin()">Login</button>
-                <p style="text-align:center; font-size:12px; margin-top: 15px;"><a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a></p>
+                <p style="text-align:center; font-size:12px; margin-top: 15px;">
+                    <a href="javascript:void(0)" onclick="showReset()" style="color:#1da1f1; font-weight: 600; text-decoration: none;">Forgot Password?</a>
+                </p>
                 <button style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; font-size:11px; cursor:pointer; opacity: 0.5;" onclick="seedData()">[Dev] Seed Data</button>
             </div>
 
@@ -293,37 +347,28 @@
                 <button id="adminBtn" style="background: #495057; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleAdminDashboard()">Admin Panel</button>
                 <button id="merchantBtn" style="background: #fb8c00; color: white; width: 100%; padding:12px; border:none; border-radius:25px; font-weight:900; margin-top:10px; display:none;" onclick="toggleMerchantStats()">Merchant Stats</button>
             </div>
+        </div>
 
+        <div id="adminPanel" class="admin-dashboard" style="display:none; border: 2px solid #1da1f1; margin-top: 15px;">
+            <h3 style="margin-top:0; font-weight: 900; color: #1da1f1;">🛡️ Admin Portal</h3>
+            <div style="margin-bottom: 20px;">
+                <h4 style="font-size: 12px; text-transform: uppercase; color: #657786;">Manage Merchants</h4>
+                <div id="merchantList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
+                    <p>Loading merchants...</p>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size: 12px; text-transform: uppercase; color: #657786;">Live Jhapats</h4>
+                <div id="adminDealList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
+                    <p>Loading deals...</p>
+                </div>
+            </div>
         </div>
-<div id="adminPanel" class="admin-dashboard" style="display:none; border: 2px solid #1da1f1; margin-top: 15px;">
-    <h3 style="margin-top:0; font-weight: 900; color: #1da1f1;">🛡️ Admin Portal</h3>
-    
-    <div style="margin-bottom: 20px;">
-        <h4 style="font-size: 12px; text-transform: uppercase; color: #657786;">Manage Merchants</h4>
-        <div id="merchantList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
-            <p>Loading merchants...</p>
-        </div>
-    </div>
 
-    <div>
-        <h4 style="font-size: 12px; text-transform: uppercase; color: #657786;">Live Jhapats</h4>
-        <div id="adminDealList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
-            <p>Loading deals...</p>
-        </div>
-    </div>
-</div>
-<div id="merchantStats" class="admin-dashboard" style="display:none; border: 2px solid #fb8c00; margin-top: 15px;">
-    <h3 style="margin-top:0; font-weight: 900; color: #fb8c00;">📊 Merchant Stats</h3>
-    <div id="merchantDealList" style="max-height: 200px; overflow-y: auto; font-size: 12px;">
-        <p>Loading deals...</p>
-    </div>
-</div>
-        
         <div id="geoBadge" style="background: #f0f7ff; color: #1da1f2; border: 1px solid #1da1f2; padding: 10px; border-radius: 12px; font-size: 14px; margin-top: 15px; display: none; font-weight: 700;">📍 Detecting...</div>
         <div style="text-align: right; margin-top: 5px;">
-        <a href="javascript:void(0)" onclick="resetLocation()" style="font-size: 10px; color: #1da1f1; text-decoration: none; font-weight: 700;">🔄 Update Location</a>
-    </div>
-
+            <a href="javascript:void(0)" onclick="resetLocation()" style="font-size: 10px; color: #1da1f1; text-decoration: none; font-weight: 700;">🔄 Update Location</a>
+        </div>
     </div>
 
     <div class="main-feed">
@@ -334,650 +379,764 @@
             <textarea id="searchJhapatsText" rows="1" placeholder="Search for local offers..." style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid #ddd; font-family: inherit; resize: none; box-sizing: border-box;"></textarea>
             <button style="background: #1da1f1; color: white; width:100%; margin-top:10px; padding:12px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="searchJhapats()">Search Now</button>
         </div>
+
         <div id="feedContentArea">
-             <div id="feedContainer"></div>
+            <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
+                <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
+                <textarea id="dealContent" rows="2" placeholder="Describe your offer (e.g. Buy 1 Get 1 Free Pizza)"></textarea>
+                <select id="dealCategory" style="width:100%; margin-top:12px; padding:12px; border-radius:10px; font-size:14px;">
+                    <option value="">Choose Category</option>
+                    <option value="Food">🍔 Food</option>
+                    <option value="Shop">🛍️ Shop</option>
+                    <option value="Health">🏋️ Health & Fitness</option>
+                    <option value="Travel">✈️ Travel</option>
+                    <option value="Entertainment">🎥 Entertainment</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+                    <input type="text" id="dealPrice" placeholder="Price (e.g. ₹299)">
+                    <input type="text" id="dealArea" placeholder="Area (e.g. Kukatpally)">
+                </div>
+                <div style="margin:15px 0;">
+                    <label style="font-size:13px; color:#555;">Upload Deal Photo (optional)</label>
+                    <input type="file" accept="image/*" onchange="encodeImageFileAsURL(this, 'deal')">
+                </div>
+                <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900; cursor:pointer;" onclick="postMerchantDeal()">Post Live Jhapat 🚀</button>
+            </div>
+
+            <div id="feedContainer"></div>
         </div>
     </div>
 
     <div class="right-sidebar">
         <div class="profile-card" style="padding: 15px; border: 2px solid #fab005; background: #fffbe6;">
             <strong style="color: #fab005; font-size: 16px; font-weight: 900; display: block; margin-bottom: 10px;">✨ Gold Spotlight</strong>
-            <div id="goldSpotlight"><p style="font-size:13px; color: #666;">Scanning local premium offers...</p></div>
+           <div id="goldCustomersList">
+               <p style="font-size:13px; color: #666;">Scanning local premium offers...</p>
+           </div>
         </div>
-        <div id="merchantPostBox" style="background: #fffbe6; border: 1px solid #ffe58f; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: none;">
-                <h4 style="margin:0 0 10px 0; color:#856404; font-weight: 900;">🏪 Post a Live Jhapat</h4>
-                <textarea id="dealContent" rows="2" placeholder="Describe offer"></textarea>
-                <select id="dealCategory" style="width:100%; margin-top:10px; padding:12px; border-radius:10px;">
-                    <option value="Offer">🔥 Hot Offer</option>
-                    <option value="Food">🍔 Food</option>
-                    <option value="Shop">🛍️ Shop</option>
-                    <option value="Travel"> Travel</option>
-                    <option value="Health"> Health</option>
-                </select>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                    <input type="text" id="dealPrice" placeholder="Price">
-                    <input type="text" id="dealArea" placeholder="Area">
-                </div>
-               <div style="margin-top:10px;">
-                    <label style="font-size:13px; font-weight:700;">How many units to give?</label>
-                    <input type="number" id="dealLeft" value="10" min="1" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
-              </div>
-                <div style="margin-top:10px;">
-                    <label style="font-size:11px; color:gray; font-weight: 700;">Deal Image (Optional):</label>
-                    <input type="file" onchange="encodeImageFileAsURL(this, 'deal')">
-                </div>
-                <button style="background: #faad14; color: white; width:100%; margin-top:15px; padding:14px; border-radius:25px; border:none; font-weight:900;" onclick="postMerchantDeal()">Post Live Jhapat</button>
-            </div> 
+<div id="merchantDashboard" style="display:none; background:white; padding:15px; border-radius:12px; border: 2px solid #fb8c00; margin-top:15px;">
+    <h3 style="margin-top:0; font-weight:900; color:#fb8c00;">🏪 Merchant Dashboard</h3>
+    
+    <div style="margin-bottom:20px; background:#fff8f0; padding:10px; border-radius:10px;">
+        <h4 style="font-size:12px; margin-top:0;">REDEEM CODE</h4>
+        <input type="text" id="redeemCodeInput" placeholder="Enter QR Code (e.g. JPT-ABC)" style="margin-bottom:5px;">
+        <button onclick="verifyJhapatCode()" style="background:#fb8c00; color:white; width:100%; border:none; padding:10px; border-radius:10px; font-weight:800; cursor:pointer;">Verify & Redeem</button>
+    </div>
+
+    <h4 style="font-size:12px; text-transform:uppercase; color:#657786;">Active Claims (Jhapats)</h4>
+    <div id="claimsList" style="max-height:300px; overflow-y:auto; font-size:12px;">
+        <p>No claims yet...</p>
+    </div>
+</div>
     </div>
 </div>
 
 <footer>powered by <strong>kanams.ai</strong></footer>
+
 <script>
     let currentUser = null;
     let allDeals = [];
     let userCity = null;
     let timerInterval = null;
-
     let base64Avatar = "";
-
     let base64DealImg = "";
 
     function encodeImageFileAsURL(element, type) {
-
         const file = element.files[0];
-
         const reader = new FileReader();
-
         reader.onloadend = () => {
-
             if(type === 'avatar') base64Avatar = reader.result;
-
             else base64DealImg = reader.result;
-
         }
-
         if (file) reader.readAsDataURL(file);
-
     }
 
     async function seedData() {
-
         if(!confirm("Populate sample jhapats?")) return;
-
         try {
-
             const res = await fetch('/api/admin/seed', { method: 'POST' });
-
             if(res.ok) loadTweets();
-
         } catch(e) { console.error(e); }
-
     }
 
-function detectLocation() {
-
-    const badge = document.getElementById('geoBadge');
-
-    
-
-    // 1. Instant check: If userCity is already set in this session or localStorage
-
-    const cachedCity = localStorage.getItem('jhapat_cached_city');
-
-    
-
-    if (userCity || cachedCity) {
-
-        userCity = userCity || cachedCity; // Use global variable if available, else use storage
-
-        badge.style.display = 'block';
-
-        badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-
-        document.getElementById('catNearby').style.display = 'inline-block';
-
-        return; 
-
-    }
-
-    // 2. If nothing is cached, proceed with GPS
-
-    if ("geolocation" in navigator) {
-
-        badge.style.display = 'block';
-
-        badge.innerHTML = "📍 Requesting location access...";
-
-        
-
-        navigator.geolocation.getCurrentPosition(async (position) => {
-
-            const { latitude, longitude } = position.coords;
-
-            
-
-            // Set a timeout for the fetch itself
-
-            const controller = new AbortController();
-
-            const id = setTimeout(() => controller.abort(), 4000); // 4 second fetch timeout
-
-            try {
-
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`, { signal: controller.signal });
-
-                const data = await res.json();
-
-                clearTimeout(id);
-
-                
-
-                userCity = data.address.city || data.address.town || data.address.suburb || data.address.village || data.address.county;
-
-                
-
-                if (userCity) {
-
-                    localStorage.setItem('jhapat_cached_city', userCity);
-
-                    badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
-
-                    document.getElementById('catNearby').style.display = 'inline-block';
-
-                } else {
-
-                    badge.innerHTML = "📍 Location found, city unknown.";
-
+    function detectLocation() {
+        const badge = document.getElementById('geoBadge');
+        const cachedCity = localStorage.getItem('jhapat_cached_city');
+        if (userCity || cachedCity) {
+            userCity = userCity || cachedCity;
+            badge.style.display = 'block';
+            badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+            document.getElementById('catNearby').style.display = 'inline-block';
+            return;
+        }
+        if ("geolocation" in navigator) {
+            badge.style.display = 'block';
+            badge.innerHTML = "📍 Requesting location access...";
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude, longitude } = position.coords;
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`);
+                    const data = await res.json();
+                    userCity = data.address.city || data.address.town || data.address.suburb || data.address.village || data.address.county;
+                    if (userCity) {
+                        localStorage.setItem('jhapat_cached_city', userCity);
+                        badge.innerHTML = `📍 Jhapats near <b>${userCity}</b>`;
+                        document.getElementById('catNearby').style.display = 'inline-block';
+                    }
+                } catch (e) {
+                    badge.innerHTML = "📍 Could not detect city.";
                 }
-
-            } catch (e) { 
-
-                badge.innerHTML = "📍 Connection error. Showing nearby."; 
-
-                userCity = "Nearby"; // Fallback so it stops requesting
-
-            }
-
-        }, (error) => {
-
-            badge.innerHTML = "📍 Location access denied.";
-
-        }, {
-
-            enableHighAccuracy: false, 
-
-            timeout: 5000 // 5 seconds for the GPS hardware to respond
-
-        });
-
+            }, () => {
+                badge.innerHTML = "📍 Location access denied.";
+            });
+        }
     }
 
-}
-
-async function dbLogin() {
-    const username = document.getElementById('loginUser').value;
-    const password = document.getElementById('loginPass').value;
-
-    try {
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
-        });
-
-        if (res.ok) {
+    async function dbLogin() {
+        const username = document.getElementById('loginUser').value.trim();
+        const password = document.getElementById('loginPass').value;
+        if (!username || !password) {
+            alert("Please fill username and password! 🖊️");
+            return;
+        }
+        try {
+            console.log("Login attempt:", username);
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            });
+            console.log("Login status:", res.status);
+            if (!res.ok) {
+                const msg = await res.text();
+                console.log("Login error from server:", msg);
+                alert(msg || "Login failed! Wrong username or password 😔");
+                return;
+            }
             currentUser = await res.json();
-            
-            // UI Updates
+            console.log("Login success!", currentUser);
             document.getElementById('sideUsername').innerText = "Welcome " + currentUser.username;
+            document.getElementById('roleBadge').innerText = "@" + currentUser.role;
+            if(currentUser.avatar) document.getElementById('sideAvatar').style.backgroundImage = `url(${currentUser.avatar})`;
             document.getElementById('authBox').style.display = 'none';
             document.getElementById('logoutBox').style.display = 'block';
-
-            // If the server says this is an admin, show the dashboard
             if (currentUser.role === 'admin') {
-                document.getElementById('adminPanel').style.display = 'block';
-                loadAdminData(); 
+                document.getElementById('adminBtn').style.display = 'block';
+                loadAdminData();
             } else if (currentUser.role === 'merchant') {
+                document.getElementById('merchantBtn').style.display = 'block';
                 document.getElementById('merchantPostBox').style.display = 'block';
             }
             loadTweets();
-        } else {
-            alert("Login failed!");
+            updateHeaderStats();
+            loadGoldSpotlight();
+        } catch(e) {
+            console.error("Login network error:", e);
+            alert("Something went wrong — check internet or server 😢 (" + e.message + ")");
         }
-    } catch (err) {
-        console.error(err);
     }
-}
+
     async function dbRegister() {
-        const username = document.getElementById('loginUser').value;
-        const password = document.getElementById('loginPass').value;
+        const username = document.getElementById('loginUser').value.trim();
+        const pass = document.getElementById('loginPass').value;
+        const confirmPass = document.getElementById('loginPassConfirm').value;
         const role = document.getElementById('loginRole').value;
-        const res = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, role, avatar: base64Avatar })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            alert("Success! Recovery Key: " + data.recovery_key);
-        } else alert("Failed");
+        if (!username || !pass) {
+            alert("Username and password needed! 🖊️");
+            return;
+        }
+        if (pass.length < 8) {
+            alert("Password must be at least 8 characters long! 🔒");
+            return;
+        }
+        if (pass !== confirmPass) {
+            alert("Passwords don't match! 😕 Check again.");
+            return;
+        }
+        if (!document.getElementById('acceptTerms').checked) {
+            alert("Please accept terms & privacy! 📜");
+            return;
+        }
+        try {
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username, password: pass, role, avatar: base64Avatar })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                alert("Registered safely! 🎉\nYour recovery key: " + data.recovery_key + "\nSave it like treasure! 🔐");
+            } else {
+                const msg = await res.text();
+                alert(msg || "Registration failed 😔");
+            }
+        } catch(e) {
+            alert("Network problem → " + e);
+        }
     }
-   function showReset() {
-       document.getElementById('authBox').style.display = 'none';
+
+    function showReset() {
+        document.getElementById('authBox').style.display = 'none';
         document.getElementById('resetBox').style.display = 'block';
     }
+
     async function dbReset() {
-        const username = document.getElementById('resetUser').value;
-
-        const recoveryKey = document.getElementById('resetKey').value;
-
+        const username = document.getElementById('resetUser').value.trim();
+        const recoveryKey = document.getElementById('resetKey').value.trim();
         const newPassword = document.getElementById('resetNewPass').value;
-
-        const res = await fetch('/api/reset-password', {
-
-            method: 'POST',
-
-            headers: { 'Content-Type': 'application/json' },
-
-            body: JSON.stringify({ username, recoveryKey, newPassword })
-
-        });
-
-        if (res.ok) { alert("Updated!"); location.reload(); }
-
-        else alert("Incorrect details");
-
+        if (!username || !recoveryKey || !newPassword) {
+            alert("All fields required! 🖊️");
+            return;
+        }
+        try {
+            const res = await fetch('/api/reset-password', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username, recoveryKey, newPassword })
+            });
+            if (res.ok) {
+                alert("Password updated! Please login now 😊");
+                location.reload();
+            } else {
+                alert(await res.text() || "Wrong recovery key or username");
+            }
+        } catch(e) {
+            alert("Network issue → " + e);
+        }
     }
 
-    function dbLogout() { location.reload(); }
+    function dbLogout() {
+        currentUser = null;
+        location.reload();
+    }
+
+    async function updateHeaderStats() {
+        try {
+            const res = await fetch('/api/tweets');
+            if (!res.ok) return;
+            const deals = await res.json() || [];
+            let totalCreated = deals.length;
+            let totalGrabbed = 0;
+            let totalRemaining = 0;
+            deals.forEach(d => {
+                totalGrabbed += d.claimed || 0;
+                totalRemaining += d.left || 0;
+            });
+            document.getElementById('totalCreated').innerText = totalCreated;
+            document.getElementById('totalGrabbed').innerText = totalGrabbed;
+            document.getElementById('totalRemaining').innerText = totalRemaining;
+        } catch(e) {
+            console.log("Header stats oops:", e);
+        }
+    }
 
     async function loadTweets() {
-
         try {
-
             const res = await fetch('/api/tweets');
-
+            if (!res.ok) {
+                const text = await res.text();
+                console.error("Server said oops:", res.status, text);
+                document.getElementById('feedContainer').innerHTML = '<p style="color:red; text-align:center;">Oops! Could not load deals right now 😔</p>';
+                return;
+            }
             const data = await res.json() || [];
-
             allDeals = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
             renderDeals(allDeals);
+            updateHeaderStats();
+        } catch (e) {
+            console.error("Feed error:", e);
+            document.getElementById('feedContainer').innerHTML = '<p style="color:red; text-align:center;">Network issue — try again! 📡</p>';
+        }
+    }
 
-            const goldDeals = allDeals.filter(d => d.is_premium === 1).slice(0,3);
-
-            document.getElementById('goldSpotlight').innerHTML = goldDeals.map(d => `
-
-                <div style="margin-bottom:10px; font-size:13px;">
-
-                    <strong>${d.user}</strong>: ${d.content} <span style="color:#fab005;">${d.price}</span>
-
-                </div>
-
-            `).join('');
-
-        } catch (e) { console.error(e); }
-
+    function startCountdown(elementId, hoursLeft) {
+        if (!hoursLeft || isNaN(hoursLeft)) return;
+        let remaining = hoursLeft * 3600;
+        const timer = setInterval(() => {
+            remaining--;
+            if (remaining <= 0) {
+                clearInterval(timer);
+                document.getElementById(elementId).innerHTML = "Deal Ended! 😢";
+                return;
+            }
+            const h = Math.floor(remaining / 3600);
+            const m = Math.floor((remaining % 3600) / 60);
+            const s = remaining % 60;
+            let display = "";
+            if (h > 0) display += `${h}h `;
+            display += `${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+            let color = "#27ae60";
+            if (remaining <= 12 * 3600) color = "#f39c12";
+            if (remaining <= 3 * 3600) color = "#e74c3c";
+            document.getElementById(elementId).innerHTML = `<span style="color:${color};">${display} left ⏰</span>`;
+        }, 1000);
+        if (!window.activeTimers) window.activeTimers = {};
+        window.activeTimers[elementId] = timer;
     }
 
     function renderDeals(data) {
-        const isOwner = currentUser && currentUser.username === t.user;
-        const canEdit = isOwner && (currentUser.tier === 'gold' || currentUser.tier === 'silver');
-
-     return `
-    <div class="tweet ${t.is_premium ? 'gold-card' : ''}">
-        <div style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
-             <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width: 40px; height: 40px; border-radius: 50%;">
-                <div>
-                    <div style="font-weight: 800; font-size: 15px; display: flex; align-items: center;">
-                        ${t.user} 
-                        ${t.tier === 'gold' ? '<span class="blue-tick">✓</span>' : ''}
-                    </div>
-                </div>
-             </div>
-             ${canEdit ? `<button onclick='openEditModal(${JSON.stringify(t)})' style="background:none; border:none; cursor:pointer; font-size:18px;">✏️</button>` : ''}
-        </div>
-        </div>
-`;
-        if (!data || data.length === 0) return;
-        const topTen = data.slice(0, 10);
-        const tickerList = [...topTen, ...topTen];
+        if (!data || data.length === 0) {
+            document.getElementById('feedContainer').innerHTML = 
+                '<p style="text-align:center; color:#777; padding:40px;">No deals yet... Come back soon! 🕒</p>';
+            return;
+        }
+        const tickerList = data;
         document.getElementById('feedContainer').innerHTML = tickerList.map(t => {
-            const isNew = (new Date().getTime() - new Date(t.timestamp).getTime()) < (15 * 60 * 1000);
-            const imgHTML = t.image && t.image.length > 5 ? `<div class="image-wrapper"><img src="${t.image}">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>` : '';
+            const timestamp = t.timestamp ? new Date(t.timestamp) : new Date();
+            const isNew = (Date.now() - timestamp.getTime()) < (15 * 60 * 1000);
+            const imgHTML = t.image && t.image.length > 5
+                ? `<div class="image-wrapper"><img src="${t.image}" alt="deal image">${t.is_premium ? '<div class="badge-gold-float">✨ GOLD</div>' : ''}</div>`
+                : '';
             return `
                 <div class="tweet ${t.is_premium ? 'gold-card' : ''}">
                     <div style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <img src="${t.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width: 40px; height: 40px; border-radius: 50%;">
                             <div>
-                    <div style="font-weight: 800; font-size: 15px; display: flex; align-items: center;">
-                       ${t.user} 
-                       ${t.verified ? '<span class="blue-tick">✓</span>' : ''}
-                        ${t.tier === 'gold' ? '<span class="tier-badge tier-gold">GOLD</span>' : ''}
-                       ${t.tier === 'silver' ? '<span class="tier-badge tier-silver">SILVER</span>' : ''}
-                       </div>
+                               <div style="font-weight: 800; font-size: 15px; display: flex; align-items: center;">
+    ${t.user}
+    ${t.verified ? '<span class="blue-tick">✓</span>' : ''}
+    ${t.is_gold === 1 ? '<span class="gold-badge">GOLD ✨</span>' : ''}
+    ${t.tier === 'gold' || t.is_premium ? '<span class="tier-badge tier-gold">GOLD</span>' : ''}
+    ${t.tier === 'silver' ? '<span class="tier-badge tier-silver">SILVER</span>' : ''}
+</div>
                                 <div style="color: #657786; font-size: 11px;">📍 ${t.area || 'Nearby'}</div>
                             </div>
                         </div>
                         ${isNew ? '<span class="new-tag">NEW</span>' : ''}
                     </div>
                     ${imgHTML}
-
-                 <div style="padding: 20px;">
-    <div style="margin-bottom: 10px; font-size: 14px; color: #1da1f1; font-weight: 700;">
-        ${t.category ? `🏷️ ${t.category}` : '🔥 Hot Deal'}
-    </div>
-
-    <strong style="font-size: 22px; font-weight: 800; display:block; margin-bottom:10px;">${t.content}</strong>
-
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <span style="font-weight: 900; font-size: 24px;">${t.price}</span>
-
-        <div style="font-size: 15px; font-weight: 700; color: #e0245e;">
-            ⏰ ${t.timer} left • ${t.left} units remaining
-        </div>
-
-        <button onclick="jhapatDeal(${t.id})" style="background: #1da1f1; color: white; padding: 12px 30px; border:none; border-radius: 15px; font-weight: 900; cursor:pointer;">
-            JHAPAT NOW!
-        </button>
-    </div>
-</div>
+                    <div style="padding: 20px;">
+                        <strong style="font-size: 22px; font-weight: 800; display:block; margin-bottom:12px;">
+                            ${t.content}
+                        </strong>
+                        <div style="margin-bottom:15px; font-size:14px; color:#555; display:flex; flex-wrap:wrap; gap:15px; justify-content:space-between; align-items:center;">
+                            <div>
+                                <span style="font-weight:700; color:#3498db;">${t.category || 'Offer'}</span>
+                            </div>
+                            <div>
+                                <span style="font-weight:700; color:#2ecc71;">${t.left || 0}</span> remaining
+                                <span style="color:#95a5a6; font-size:12px;"> (offered 10)</span>
+                            </div>
+                            <div id="timer-${t.id}" style="font-weight:700;">
+                                Loading timer...
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 900; font-size: 24px;">${t.price}</span>
+                            <button onclick="jhapatDeal(${t.id})"
+        style="background: #1da1f1; color: white; padding: 12px 30px; border:none; border-radius: 15px; font-weight: 900; cursor:${currentUser && t.user === currentUser.username ? 'not-allowed' : 'pointer'}; opacity:${currentUser && t.user === currentUser.username ? '0.5' : '1'};"
+        ${currentUser && t.user === currentUser.username ? 'disabled' : ''}>
+    JHAPAT
+</button>
+${currentUser && currentUser.role === 'merchant' && t.user === currentUser.username && currentUser.is_gold === 1 ? `
+    <button onclick="editJhapat(${t.id})"
+            style="background:#fab005; color:#000; padding:8px 16px; border:none; border-radius:10px; font-weight:700; cursor:pointer; margin-left:10px;">
+        Edit Deal ✏️
+    </button>
+` : ''}
+                        </div>
+                    </div>
                 </div>
             `;
-
         }).join('');
 
+        tickerList.forEach(t => {
+            if (t.timer && t.timer.includes("h")) {
+                const hours = parseInt(t.timer.replace("h", ""));
+                if (!isNaN(hours)) {
+                    startCountdown(`timer-${t.id}`, hours);
+                }
+            }
+        });
+        updateHeaderStats();
     }
-
-    const qrcode = new QRCode(document.getElementById("qrcode"), { width: 220, height: 220 });
 
     async function jhapatDeal(id) {
-
         if(!currentUser) { alert("Login first!"); toggleMobileLogin(); return; }
-
+              const deal = allDeals.find(d => d.id === id);
+              if (deal && deal.user === currentUser.username) {
+        alert("Hehe! You can’t Jhapat your own deal, silly! 😜\nLet others enjoy too!");
+        return;
+    }
         const code = "JPT-" + Math.random().toString(36).substr(2, 6).toUpperCase();
-
-        const res = await fetch(`/api/jhapat/claim/${id}`, { 
-
-            method: 'POST', headers: {'Content-Type': 'application/json'}, 
-
-            body: JSON.stringify({username: currentUser.username, code: code}) 
-
-        });
-        if(res.ok) {
-           document.getElementById('qrModal').style.display = 'flex';
-            document.getElementById('couponText').innerText = "COUPON: " + code;
-            qrcode.clear(); qrcode.makeCode(code);
-            loadTweets();
-        }
-    }
-
-   function filterCategory(cat) {
-    document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-    const clicked = document.querySelector(`.category-chip[onclick="filterCategory('${cat}')"]`);
-    if (clicked) clicked.classList.add('active');
-    if(!cat) { 
-        document.getElementById('catAll').classList.add('active');
-        renderDeals(allDeals); 
-        return; 
-    }
-    renderDeals(allDeals.filter(d => d.category === cat));
-}
-    function resetLocation() {
-   // 1. Clear the memory
-    localStorage.removeItem('jhapat_cached_city');
-    // 2. Clear the variable
-   userCity = null;
-    // 3. Hide the badge temporarily
-    document.getElementById('geoBadge').style.display = 'none';
-    document.getElementById('catNearby').style.display = 'none';
-    // 4. Trigger the fresh GPS request
-    detectLocation();
-}
-
-    // --- ADMIN FUNCTIONS ---
-
-async function loadAdminData() {
-    if (!currentUser || currentUser.role !== 'admin') return;
-
-    // 1. Fetch and show Merchants
-    try {
-        const userRes = await fetch('/api/admin/users'); // Ensure your Go backend has this
-        const users = await userRes.json();
-        const merchantContainer = document.getElementById('merchantList');
-        
-        merchantContainer.innerHTML = users.map(user => `
-            <div class="admin-row">
-                <span><b>${user.username}</b> (${user.tier || 'Free'}) ${user.status === 'pending' ? '<span style="color:red;">Pending</span>' : ''}</span>
-                <select onchange="updateMerchantTier('${user.username}', this.value)" style="font-size: 10px; padding: 2px;">
-                    <option value="free" ${user.tier === 'free' ? 'selected' : ''}>Free</option>
-                    <option value="silver" ${user.tier === 'silver' ? 'selected' : ''}>Silver</option>
-                    <option value="gold" ${user.tier === 'gold' ? 'selected' : ''}>Gold</option>
-                </select>
-                ${user.status === 'pending' ? `<button onclick="approveMerchant(${user.id})" style="background:green; color:white; padding:2px 5px; border:none; border-radius:4px;">Approve</button>` : ''}
-            </div>
-        `).join('');
-
-        // 2. Show Deals with Delete option
-        const dealContainer = document.getElementById('adminDealList');
-        dealContainer.innerHTML = allDeals.map(deal => `
-            <div class="admin-row">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;">${deal.content}</span>
-                <button onclick="deleteJhapat(${deal.id})" style="background: #e0245e; color:white; border:none; border-radius:4px; padding: 2px 5px; cursor:pointer;">Delete</button>
-            </div>
-        `).join('');
-
-    } catch (e) { console.error("Admin Load Error:", e); }
-}
-
-async function updateMerchantTier(username, tier) {
-    const res = await fetch(`/api/admin/update-tier`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ username, tier })
-    });
-    if (res.ok) alert("Tier updated!");
-}
-
-async function approveMerchant(id) {
-    const res = await fetch(`/api/admin/approve/${id}`, {method: 'POST'});
-    if (res.ok) {
-        alert("Approved!");
-        loadAdminData();
-    }
-}
-
-async function adminDeleteJhapat(id) {
-    // 1. Safety check
-    if (!id) {
-        alert("Error: Jhapat ID not found.");
-        return;
-    }
-
-    // 2. Confirmation popup
-    if (!confirm("Are you sure you want to delete this Jhapat permanently?")) {
-        return;
-    }
-
-    try {
-        // 3. Send the DELETE request to the Go Backend
-        const res = await fetch(`/api/admin/delete-jhapat/${id}`, {
-            method: 'DELETE'
-        });
-
-        if (res.ok) {
-            alert("Jhapat deleted successfully! 🗑️");
-            
-            // 4. Refresh both the public feed and the admin list
-            loadTweets(); 
-            if (typeof loadAdminDashboard === "function") {
-                loadAdminDashboard(); 
+        try {
+            const res = await fetch(`/api/jhapat/claim/${id}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: currentUser.username, code: code})
+            });
+            if(res.ok) {
+                document.getElementById('qrModal').style.display = 'flex';
+                document.getElementById('couponText').innerText = "COUPON: " + code;
+                document.getElementById('qrcode').innerHTML = '';
+                new QRCode(document.getElementById('qrcode'), code);
+                loadTweets();
+                updateHeaderStats();
+            } else {
+                alert("Could not claim this deal right now 😔");
             }
-        } else {
-            const errorText = await res.text();
-            alert("Failed to delete: " + errorText);
+        } catch(e) {
+            alert("Network problem → " + e);
         }
-    } catch (err) {
-        console.error("Delete request failed:", err);
-        alert("Connection error. Is the server running?");
     }
-}    
-async function deleteJhapat(id) {
-    if (!confirm("Are you sure you want to delete this deal?")) return;
-    const res = await fetch(`/api/admin/delete-jhapat/${id}`, { method: 'DELETE' });
-    if (res.ok) {
-        alert("Deleted!");
-        loadTweets(); // Refresh feed
-        loadAdminData(); // Refresh admin list
+
+    function filterCategory(cat) {
+        document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+        document.querySelector(`[onclick="filterCategory('${cat}')"]`)?.classList.add('active');
+        if(!cat) {
+            renderDeals(allDeals);
+            return;
+        }
+        const filtered = allDeals.filter(d => (d.category || '').toLowerCase() === cat.toLowerCase());
+        renderDeals(filtered);
+        if (filtered.length === 0) {
+            document.getElementById('feedContainer').innerHTML = 
+                '<p style="text-align:center; color:#e67e22; padding:40px;">No ' + cat + ' deals right now 😔 Check later!</p>';
+        }
+    }
+
+    function filterNearby() {
+        if (!userCity) {
+            alert("Location not detected yet!");
+            return;
+        }
+        const filtered = allDeals.filter(d => d.area && d.area.toLowerCase().includes(userCity.toLowerCase()));
+        renderDeals(filtered);
+    }
+
+    function resetLocation() {
+        localStorage.removeItem('jhapat_cached_city');
+        userCity = null;
+        document.getElementById('geoBadge').style.display = 'none';
+        document.getElementById('catNearby').style.display = 'none';
+        detectLocation();
+    }
+
+    async function loadAdminData() {
+        if (!currentUser || currentUser.role !== 'admin') return;
+        try {
+            const userRes = await fetch('/api/admin/users');
+            const users = await userRes.json() || [];
+            const merchantContainer = document.getElementById('merchantList');
+            if (!users || users.length === 0) {
+                merchantContainer.innerHTML = '<p style="color:#777; text-align:center;">No merchants yet... Register one! 😊</p>';
+            } else {
+                merchantContainer.innerHTML = users.map(user => `
+    <div class="admin-row" style="padding:8px 0; border-bottom:1px solid #eee; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+       <span style="flex:1;">
+    <b>${user.username}</b>
+    ${user.is_gold === 1 ? '<span class="gold-badge">GOLD ✨</span>' : ''}
+    <small style="color:#666;">(${user.tier || 'Free'})</small>
+    - <span style="color: ${user.status === 'pending' ? '#e67e22' : '#27ae60'}">
+        ${user.status}
+    </span>
+</span>        
+        ${user.status === 'pending' ? `
+            <button onclick="approveMerchant(${user.id})"
+                    style="background:#28a745; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700;">
+                Approve Now
+            </button>
+        ` : `
+            <span style="color:#27ae60; font-weight:700;">Approved ✅</span>
+        `}
+        
+        <!-- New Gold toggle button -->
+        <button onclick="toggleGold(${user.id}, ${user.is_gold})"
+                style="background:${user.is_gold === 1 ? '#e74c3c' : '#fab005'}; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700; margin-left:8px;">
+            ${user.is_gold === 1 ? 'Remove Gold' : 'Make Gold ✨'}
+        </button>
+    </div>
+`).join('');
+            }
+            const dealContainer = document.getElementById('adminDealList');
+            dealContainer.innerHTML = allDeals.map(deal => `
+                <div class="admin-row">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;">${deal.content}</span>
+                    <button onclick="deleteJhapat(${deal.id})" style="background: #e0245e; color:white; border:none; border-radius:4px; padding: 2px 5px; cursor:pointer;">Delete</button>
+                </div>
+            `).join('');
+        } catch (e) {
+            console.error("Admin Load Error:", e);
+            document.getElementById('merchantList').innerHTML = '<p style="color:red;">Error loading merchants 😔</p>';
+        }
+    }
+
+async function loadGoldSpotlight() {
+    try {
+        // We use the public tweets endpoint instead of the restricted admin endpoint
+        const res = await fetch('/api/tweets');
+        if (!res.ok) return;
+        
+        const deals = await res.json() || [];
+        
+        // Extract unique merchants who have 'gold' or 'is_premium' deals
+        const goldMerchants = [];
+        const seen = new Set();
+
+        deals.forEach(d => {
+            if ((d.tier === 'gold' || d.is_premium === 1) && !seen.has(d.user)) {
+                goldMerchants.push({
+                    username: d.user,
+                    avatar: d.avatar
+                });
+                seen.add(d.user);
+            }
+        });
+
+        const container = document.getElementById('goldCustomersList');
+        if (!container) return;
+        
+        if (goldMerchants.length === 0) {
+            container.innerHTML = '<p style="color:#777; text-align:center; font-size:12px;">No gold stars shining yet ✨<br>Become the first one!</p>';
+            return;
+        }
+
+        container.innerHTML = goldMerchants.map(u => `
+            <div style="padding:10px 0; border-bottom:1px solid rgba(250,176,5,0.2); display:flex; align-items:center; gap:10px;">
+                <img src="${u.avatar || 'https://img.icons8.com/color/48/falcon.png'}" style="width:36px; height:36px; border-radius:50%; border: 2px solid #fab005;">
+                <div>
+                    <strong style="color:#856404; font-size:13px;">${u.username}</strong>
+                    <span class="gold-badge" style="font-size:9px;">GOLD ✨</span><br>
+                    <small style="color:#b08d05; font-size:10px; font-weight:700;">Premium Merchant</small>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) {
+        console.log("Gold spotlight error:", e);
     }
 }
-    function toggleMobileLogin() { document.querySelector('.sidebar').classList.toggle('mobile-visible'); }
-    function goHome() { window.scrollTo(0, 0); loadTweets(); }
+
+    async function approveMerchant(id) {
+        console.log("Approve clicked for ID:", id);
+        if (!confirm("Approve this merchant?")) return;
+        try {
+            const res = await fetch(`/api/admin/approve/${id}`, { method: 'POST' });
+            console.log("Approve response:", res.status);
+            if (res.ok) {
+                alert("Approved! 🎉");
+                loadAdminData();
+            } else {
+                alert("Failed: " + await res.text());
+            }
+        } catch(e) {
+            alert("Network error → " + e);
+        }
+    }
+
     function toggleAdminDashboard() {
         const panel = document.getElementById('adminPanel');
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
         if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
             loadAdminData();
         }
     }
+
     async function toggleMerchantStats() {
-        const panel = document.getElementById('merchantStats');
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        if (panel.style.display === 'block') {
-            loadMerchantData();
+        if (!currentUser || currentUser.role !== 'merchant') {
+            alert("Only merchants can see stats! 😊");
+            return;
         }
-    }
-    async function loadMerchantData() {
         try {
             const res = await fetch(`/api/merchant/stats/${currentUser.username}`);
-            const deals = await res.json();
-            const dealContainer = document.getElementById('merchantDealList');
-            dealContainer.innerHTML = deals.map(deal => `
-                <div class="admin-row">
-                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;">${deal.content}</span>
-                    <span>Claimed: ${deal.claimed} / Left: ${deal.left}</span>
-                </div>
-            `).join('');
-        } catch (e) { console.error(e); }
+            if (!res.ok) {
+                alert("Oops! Could not load stats.");
+                return;
+            }
+            const stats = await res.json();
+            let message = "Your Deal Stats:\n\n";
+            if (stats.length === 0) {
+                message += "No deals yet... Post one! 🚀";
+            } else {
+                stats.forEach(s => {
+                    message += `${s.content}\n Left: ${s.left} | Claimed: ${s.claimed}\n\n`;
+                });
+            }
+            alert(message);
+        } catch(e) {
+            alert("Network problem → " + e);
+        }
     }
-  async function filterNearby() {
-    document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-    document.getElementById('catNearby').classList.add('active');
-    if (!userCity) { 
-        alert("Oops, location not set yet – click 'Update Location' first!"); 
-        detectLocation(); 
-        return; 
+
+    async function postMerchantDeal() {
+        if (!currentUser || currentUser.role !== 'merchant') {
+            alert("Only approved merchants can post deals! 😊");
+            return;
+        }
+        const content = document.getElementById('dealContent').value.trim();
+        const category = document.getElementById('dealCategory').value;
+        const price = document.getElementById('dealPrice').value.trim();
+        const area = document.getElementById('dealArea').value.trim();
+        if (!content) {
+            alert("Please write what yummy offer you are giving! 🍕");
+            return;
+        }
+        if (!category) {
+            alert("Please choose a category! 🍔🛍️🏋️");
+            return;
+        }
+        try {
+            const res = await fetch('/api/merchant/deal', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    User: currentUser.username,
+                    Content: content,
+                    Category: category,
+                    Price: price,
+                    Area: area,
+                    Left: 10,
+                    Timer: "24h",
+                    Image: base64DealImg || ""
+                })
+            });
+            if (res.ok) {
+                alert("Yayy! Your " + category + " deal is live now! 🎉");
+                document.getElementById('dealContent').value = '';
+                document.getElementById('dealCategory').value = '';
+                document.getElementById('dealPrice').value = '';
+                document.getElementById('dealArea').value = '';
+                base64DealImg = "";
+                loadTweets();
+                updateHeaderStats();
+            } else {
+                const errorText = await res.text();
+                alert("Oops! Server said: " + errorText);
+            }
+        } catch(e) {
+            alert("Network oopsie → " + e);
+        }
     }
+
+    function toggleMobileLogin() {
+        document.querySelector('.sidebar').classList.toggle('mobile-visible');
+    }
+
+    function goHome() {
+        window.scrollTo(0, 0);
+        loadTweets();
+    }
+
+async function toggleGold(userId, currentGold) {
+    const action = currentGold === 1 ? "remove" : "make";
+    if (!confirm(`Really ${action} this merchant GOLD?`)) return;
+
     try {
-        const res = await fetch(`/api/tweets/nearby/${encodeURIComponent(userCity)}`);
-        const data = await res.json();
-        renderDeals(data);
-    } catch(e){ alert("Tiny bug – check internet or location!"); }
-}
-    function searchJhapats() {
-        const query = document.getElementById('searchJhapatsText').value.toLowerCase();
-        renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(query) || d.user.toLowerCase().includes(query)));
+        const res = await fetch(`/api/admin/toggle-gold/${userId}`, {
+            method: 'POST'
+        });
+        if (res.ok) {
+            alert(`Done! Merchant is now ${currentGold === 1 ? 'normal' : 'GOLD'} ✨`);
+            loadAdminData(); // refresh list
+            loadGoldSpotlight(); // refresh right sidebar gold list
+        } else {
+            alert("Failed: " + await res.text());
+        }
+    } catch(e) {
+        alert("Oops! Network problem → " + e);
     }
-    function filterOffers() {
-        const query = document.getElementById('topSearch').value.toLowerCase();
-        renderDeals(allDeals.filter(d => d.content.toLowerCase().includes(query)));
+}
+
+function editJhapat(id) {
+    alert("Edit deal coming soon! ✏️\n\nFor now: Tell Venkata you want to edit deal #" + id + " — we’ll make a full editor next! 🚀");
+    // Later: open a form with current content, price, etc.
+}
+
+function searchJhapats() {
+    const term = document.getElementById('searchJhapatsText').value.trim().toLowerCase();
+    
+    if (!term) {
+        // Show all deals again if search is empty
+        renderDeals(allDeals);
+        return;
     }
 
- function closePostModal() {
-    document.getElementById('postModal').style.display = 'none';
-}
-let editingId = null; // Important: tracks if we are editing or creating
+    // Filter deals that match the search word in content, price, area or category
+    const filtered = allDeals.filter(d => 
+        (d.content || '').toLowerCase().includes(term) ||
+        (d.price || '').toLowerCase().includes(term) ||
+        (d.area || '').toLowerCase().includes(term) ||
+        (d.category || '').toLowerCase().includes(term)
+    );
 
-function openPostModal(deal = null) {
-    if (deal) {
-        // We are EDITING
-        editingId = deal.id;
-        document.getElementById('modalTitle').innerText = "✏️ Edit Jhapat";
-        document.getElementById('modalDealContent').value = deal.content;
-        document.getElementById('modalDealPrice').value = deal.price;
-        document.getElementById('modalDealArea').value = deal.area;
-        document.getElementById('modalDealLeft').value = deal.left;
-        document.getElementById('modalDealCategory').value = deal.category;
-        document.getElementById('modalSubmitBtn').innerText = "Update Jhapat";
+    renderDeals(filtered);
+
+    // Cute feedback if nothing found
+    if (filtered.length === 0) {
+        document.getElementById('feedContainer').innerHTML = 
+            '<p style="text-align:center; color:#e74c3c; padding:40px;">No deals match "' + term + '" 😔 Try something else!</p>';
+    }
+}
+
+async function toggleMerchantDashboard() {
+    const panel = document.getElementById('merchantDashboard');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
     } else {
-        // We are CREATING NEW
-        editingId = null;
-        document.getElementById('modalTitle').innerText = "🏪 Post a Live Jhapat";
-        document.getElementById('modalSubmitBtn').innerText = "Post Live Now";
-        // Clear fields
+        panel.style.display = 'block';
+        loadMerchantClaims();
     }
-    document.getElementById('postModal').style.display = 'flex';
 }
 
-async function postMerchantDeal() {
-    // Determine if we are updating or creating
-    const url = editingId ? `/api/merchant/edit/${editingId}` : '/api/merchant/deal';
-    const method = editingId ? 'PUT' : 'POST';
+async function loadMerchantClaims() {
+    try {
+        const res = await fetch(`/api/merchant/claims/${currentUser.username}`);
+        const claims = await res.json() || [];
+        const list = document.getElementById('claimsList');
+        
+        if (claims.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:#999;">No one has jhapatted your deals yet 😔</p>';
+            return;
+        }
 
-    const data = {
-        user: currentUser.username,
-        content: document.getElementById('modalDealContent').value,
-        price: document.getElementById('modalDealPrice').value,
-        area: document.getElementById('modalDealArea').value,
-        left: parseInt(document.getElementById('modalDealLeft').value) || 10,
-        timer: document.getElementById('modalExpiry').value || "2h", // New field
-        category: document.getElementById('modalDealCategory').value
+        list.innerHTML = claims.map(c => `
+            <div style="padding:10px; border-bottom:1px solid #eee; background:#fff;">
+                <div style="font-weight:800; color:#fb8c00;">${c.code}</div>
+                <div>User: <b>${c.user}</b></div>
+                <div style="font-size:10px; color:#657786;">Deal: ${c.content}</div>
+                <div style="font-size:9px; color:#999;">${new Date(c.timestamp).toLocaleString()}</div>
+            </div>
+        `).join('');
+    } catch (e) { console.error(e); }
+}
+
+async function verifyJhapatCode() {
+    const code = document.getElementById('redeemCodeInput').value.trim();
+    if (!code) return;
+
+    try {
+        const res = await fetch('/api/merchant/verify-code', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ code })
+        });
+
+        if (res.ok) {
+            alert("✅ Valid Code! You can fulfill the order.");
+            document.getElementById('redeemCodeInput').value = '';
+            loadMerchantClaims();
+        } else {
+            alert("❌ Invalid Code or already used.");
+        }
+    } catch (e) { alert("Network error"); }
+}
+    window.onload = () => {
+        loadTweets();
+        detectLocation();
+        updateHeaderStats();
+        loadGoldSpotlight();
     };
 
-    const res = await fetch(url, {
-        method: method,
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-    });
-
-    if (res.ok) {
-        alert(editingId ? "Jhapat Updated! ✅" : "Jhapat Live! 🎉");
-        closePostModal();
-        loadTweets();
-        editingId = null; // Clear editing state
-    }
-}
+    setInterval(loadTweets, 30000);
 </script>
+
 <div class="bottom-nav">
-    <div class="bottom-nav-item" onclick="goHome()">🏠 Home</div>   
-    <div id="mobilePostBtn" onclick="openPostModal()" style="display:none; text-align:center; flex:1;">
-        <div style="font-size:24px;">➕</div>
-        <div style="font-size:10px;">Post</div>
-    </div>
+    <div class="bottom-nav-item active" onclick="goHome()">🏠 Home</div>
     <div class="bottom-nav-item" onclick="document.getElementById('searchJhapatsText').focus()">🔍 Search</div>
     <div class="bottom-nav-item" onclick="toggleMobileLogin()">👤 Profile</div>
 </div>
-
-<div id="postModal" style="display: none; position: fixed; z-index: 9000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 15px;">
-    <div id="modalContent" style="background: white; width: 100%; max-width: 500px; padding: 25px; border-radius: 20px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h3 id="modalTitle" style="margin:0; color:#856404;">🏪 Post a Live Jhapat</h3>
-            <span onclick="closePostModal()" style="cursor:pointer; font-size:24px; font-weight:bold;">×</span>
-        </div>
-        
-        <textarea id="modalDealContent" rows="3" placeholder="Describe your offer (e.g. 1+1 on Burgers!)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box;"></textarea>       
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-            <input type="text" id="modalDealPrice" placeholder="Price (₹)" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
-            <input type="text" id="modalDealArea" placeholder="Area" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
-            <input type="number" id="modalDealLeft" placeholder="Units Left" style="padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
-            <select id="modalDealCategory" style="padding:12px; border-radius:10px; border: 1px solid #ddd;">
-                <option value="Food">🍔 Food</option>
-                <option value="Shop">🛍️ Shop</option>
-                <option value="Travel">✈️ Travel</option>
-            </select>
-        </div>
-
-        <div style="display: flex; gap: 10px;">
-            <button onclick="closePostModal()" style="flex: 1; background: #eee; padding: 14px; border-radius: 25px; border: none; cursor: pointer;">Cancel</button>
-            <button onclick="postMerchantDeal()" id="modalSubmitBtn" style="flex: 2; background: #faad14; color: white; padding: 14px; border-radius: 25px; border: none; font-weight: 900; cursor: pointer;">Post Live Now</button>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>
-</body>
-</html> 
-
